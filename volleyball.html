@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रतगल जन्माष्टमी महोत्सव 2026</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        hindi: ['Mukta', 'sans-serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        krishna: {
+                            blue: '#1E3A8A',
+                            gold: '#F59E0B',
+                            dark: '#0F172A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D97706; }
+        
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Language display logic */
+        body.lang-hi .lang-en { display: none !important; }
+        body.lang-en .lang-hi { display: none !important; }
+
+        /* Hide YouTube UI */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1; /* Keep it subtle */
+            z-index: 0;
+        }
+        .lyrics-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="lang-hi bg-orange-50 font-sans text-gray-800 antialiased selection:bg-krishna-gold selection:text-white">
+
+    <header class="bg-gradient-to-r from-orange-600 to-red-600 text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="hover:text-yellow-300 transition flex items-center gap-2 font-bold">
+                    <i class="fa-solid fa-arrow-left"></i> Home
+                </a>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-xl md:text-2xl font-bold font-hindi tracking-wide">Janamastami 2026</h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="promptAdmin()" title="Admin Login" class="text-yellow-300 hover:text-white transition">
+                        <i class="fa-solid fa-lock"></i>
+                    </button>
+                    <button onclick="toggleLanguage()" class="bg-white text-orange-600 px-3 py-1 rounded-full shadow-md hover:bg-yellow-100 transition flex items-center gap-1 font-bold text-sm">
+                        <i class="fa-solid fa-language"></i> <span class="lang-hi">EN</span><span class="lang-en">HI</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="py-16 px-4 bg-orange-50 min-h-[80vh]">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-b-4 border-blue-600 flex flex-col">
+                    <div class="h-32 bg-blue-600 flex items-center justify-center text-white text-5xl relative overflow-hidden">
+                        <i class="fa-solid fa-volleyball z-10"></i>
+                        <h4 class="z-10 ml-4 text-3xl font-bold font-hindi"><span class="lang-hi">वॉलीबॉल</span><span class="lang-en">Volleyball</span></h4>
+                        <i class="fa-solid fa-volleyball absolute -right-4 -bottom-4 text-8xl opacity-20"></i>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">
+                                    <span class="lang-hi">बॉयज वॉलीबॉल टूर्नामेंट</span><span class="lang-en">Ratgal Youth Volleyball Championship</span>
+                                </h4>
+                                <ul class="space-y-1 text-sm text-gray-700 font-semibold mt-2">
+                                    <li><i class="fa-solid fa-calendar text-blue-500 w-5"></i> <span class="lang-hi">2 और 3 सितंबर 2026 (शाम)</span><span class="lang-en">2nd & 3rd Sept 2026, Evenings</span></li>
+                                    <li><i class="fa-solid fa-location-dot text-red-500 w-5"></i> <span class="lang-hi">पुलिस चौकी, सेक्टर 7</span><span class="lang-en">Police Chowki, Sector 7</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-6">
+                            <h5 class="font-bold text-blue-800 mb-2 text-sm uppercase tracking-wide">
+                                <i class="fa-solid fa-user-plus mr-1"></i> <span class="lang-hi">रजिस्ट्रेशन फॉर्म</span><span class="lang-en">Registration Form</span>
+                            </h5>
+                            <form id="vbForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                                <div>
+                                    <input type="text" id="playerName" required placeholder="Player Name (आपका नाम)" class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <input type="tel" id="playerPhone" required placeholder="Phone Number (फ़ोन नंबर)" class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <input type="number" id="playerAge" required placeholder="Age (उम्र)" min="10" max="60" class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <select id="playerExp" required class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm bg-white">
+                                        <option value="" disabled selected>खेलने का स्तर (Experience Level)</option>
+                                        <option value="Rank1">Rank 1: Beginner (शुरुआती)</option>
+                                        <option value="Rank2">Rank 2: Novice (नौसिखिया)</option>
+                                        <option value="Rank3">Rank 3: Intermediate (मध्यम)</option>
+                                        <option value="Rank4">Rank 4: Advanced (उन्नत)</option>
+                                        <option value="Rank5">Rank 5: Pro (प्रो)</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-700 bg-white px-3 py-2 rounded border border-gray-300">
+                                    <input type="checkbox" id="isResident" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 cursor-pointer">
+                                    <label for="isResident" class="cursor-pointer">क्या आप रतगल गाँव के निवासी हैं? (Ratgal Resident)</label>
+                                </div>
+                                <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded shadow transition text-sm flex items-center justify-center gap-2 mt-2">
+                                    <i class="fa-solid fa-paper-plane"></i> <span class="lang-hi">नाम दर्ज करें</span><span class="lang-en">Submit Name</span>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Registered Players List -->
+                        <div>
+                            <h5 class="font-bold text-gray-700 mb-3 text-sm flex items-center justify-between">
+                                <span><i class="fa-solid fa-users text-blue-500 mr-1"></i> <span class="lang-hi">रजिस्टर्ड खिलाड़ी</span><span class="lang-en">Registered Players</span></span>
+                                <div class="flex items-center gap-2">
+                                    <!-- Admin Unlock Button -->
+                                    <button onclick="promptAdmin()" id="adminUnlockBtn" title="Admin Access" class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded shadow hover:bg-gray-300 transition flex items-center gap-1 font-bold">
+                                        <i class="fa-solid fa-lock text-red-500"></i> Admin
+                                    </button>
+                                    <!-- Hidden Excel Button (Shows after PIN) -->
+                                    <button onclick="downloadExcel()" id="excelBtn" title="Download Excel" class="hidden bg-green-600 text-white text-xs px-2 py-1 rounded shadow hover:bg-green-700 transition flex items-center gap-1 font-bold">
+                                        <i class="fa-solid fa-file-excel"></i> Excel
+                                    </button>
+                                    <span class="text-xs font-normal text-blue-600 bg-blue-100 px-2 py-1 rounded-full animate-pulse"><i class="fa-solid fa-circle-dot text-[10px]"></i> Live</span>
+                                </div>
+                            </h5>
+                            <div id="registeredList" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto hide-scroll p-1">
+                                <p class="text-sm text-gray-400 italic"><span class="lang-hi">लोड हो रहा है...</span><span class="lang-en">Loading...</span></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center">
+        <p class="mb-2">Made with <i class="fa-solid fa-heart text-red-500 mx-1 animate-pulse"></i> by <strong><span class="lang-en">PRINCE SAINI / RATGAL YUVA SANGH</span> <span class="lang-hi">Prince Saini / रतगल युवा संघ</span></strong></p>
+        <p class="text-sm">RATGAL JANAMASHTAMI 2026</p>
+    </footer>
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-75 z-[100] hidden flex items-center justify-center px-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl transform scale-105">
+            <div class="text-green-500 text-6xl mb-4"><i class="fa-solid fa-circle-check"></i></div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                <span class="lang-hi">रजिस्ट्रेशन सफल!</span><span class="lang-en">Registration Successful!</span>
+            </h3>
+            <p class="text-gray-600 mb-6 text-sm">
+                <span class="lang-hi">आपका नाम लिस्ट में जुड़ गया है। पर्चियों का इंतज़ार करें!</span>
+                <span class="lang-en">Your name is added to the list. Wait for the chits!</span>
+            </p>
+            <button onclick="closeModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full shadow transition w-full">
+                OK
+            </button>
+        </div>
+    </div>
+<!-- Admin Login Modal -->
+    <div id="pinModal" class="fixed inset-0 bg-black bg-opacity-75 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-105">
+            <h3 class="text-xl font-bold text-gray-800 mb-2 border-b pb-2"><i class="fa-solid fa-lock text-red-500 mr-2"></i>Admin Access</h3>
+            <p class="text-gray-600 mb-4 text-sm mt-2">लॉगिन क्रेडेंशियल्स दर्ज करें (Admin):</p>
+            <input type="text" id="adminSecretCode" class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 font-bold text-sm text-center tracking-widest uppercase" placeholder="10-CHAR SECRET CODE" maxlength="10">
+            <input type="email" id="adminEmailInput" class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 font-semibold text-sm" placeholder="Admin Email">
+            <input type="password" id="adminPasswordInput" class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 text-center text-2xl tracking-widest font-bold" placeholder="****">
+            <div class="flex justify-end gap-2">
+                <button onclick="closePinModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition">Cancel</button>
+                <button onclick="verifyAdminLogin()" id="adminLoginBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition shadow-lg">Login</button>
+            </div>
+            <p id="pinErrorMsg" class="text-red-500 text-xs mt-3 hidden font-semibold bg-red-50 p-2 rounded"><i class="fa-solid fa-triangle-exclamation"></i> <span id="pinErrorText">गलत जानकारी! कृपया दोबारा प्रयास करें।</span></p>
+        </div>
+    </div>
+<!-- Custom Notification Alert (New) -->
+    <div id="customAlert" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-[80] hidden bg-gray-900 border border-gray-700 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 ease-in-out">
+        <i id="alertIcon" class="fa-solid fa-bell text-yellow-400"></i>
+        <span id="customAlertMsg" class="text-sm font-bold">Message</span>
+    </div>
+<!-- YouTube IFrame Player API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+        <!-- YouTube IFrame Player API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, addDoc, collection, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnWY6SQcVprHlT_pvbD1P5C5rOhtGGgQI",
+            authDomain: "ratgal-event.firebaseapp.com",
+            projectId: "ratgal-event",
+            storageBucket: "ratgal-event.firebasestorage.app",
+            messagingSenderId: "260753298195",
+            appId: "1:260753298195:web:780b6dd7291647325140e6",
+            measurementId: "G-H90ZW347F9"
+        };
+        
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            
+            onAuthStateChanged(auth, (user) => {
+                if(user && !user.isAnonymous) {
+                    sessionStorage.setItem('ratgal_admin_logged_in', 'true');
+                    unlockAdminUI();
+                }
+            });
+        } catch(e) { console.error("Firebase init fallback to local"); }
+
+        if(sessionStorage.getItem('ratgal_admin_logged_in') === 'true') {
+            setTimeout(() => unlockAdminUI(), 100);
+        }
+
+        // Custom Alert Logic
+        window.showCustomAlert = function(message, type="success") {
+            const alertBox = document.getElementById('customAlert');
+            const alertMsg = document.getElementById('customAlertMsg');
+            const alertIcon = document.getElementById('alertIcon');
+            
+            alertMsg.innerText = message;
+            if(type === "error") {
+                alertIcon.className = "fa-solid fa-circle-exclamation text-red-500";
+            } else {
+                alertIcon.className = "fa-solid fa-circle-check text-green-500";
+            }
+            alertBox.classList.remove('hidden');
+            setTimeout(() => alertBox.classList.add('hidden'), 4000);
+        }
+
+        // Admin Access Logic (Firebase Auth) Custom Modal
+        let failedAttempts = 0;
+
+        window.promptAdmin = function() {
+            document.getElementById('pinModal').classList.remove('hidden');
+            document.getElementById('adminSecretCode').value = '';
+            document.getElementById('adminEmailInput').value = '';
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('pinErrorMsg').classList.add('hidden');
+            setTimeout(() => document.getElementById('adminSecretCode').focus(), 100);
+        }
+
+        window.closePinModal = function() {
+            document.getElementById('pinModal').classList.add('hidden');
+        }
+
+        function handleFailedAttempt() {
+            failedAttempts++;
+            if (failedAttempts >= 3) {
+                document.getElementById('adminLoginBtn').disabled = true;
+                document.getElementById('adminLoginBtn').classList.add('opacity-50', 'cursor-not-allowed');
+                document.getElementById('pinErrorText').innerText = "🚫 बहुत सारे गलत प्रयास! 30 सेकंड के लिए ब्लॉक किया गया।";
+                document.getElementById('pinErrorMsg').classList.remove('hidden');
+                
+                setTimeout(() => {
+                    failedAttempts = 0;
+                    document.getElementById('adminLoginBtn').disabled = false;
+                    document.getElementById('adminLoginBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+                    document.getElementById('pinErrorMsg').classList.add('hidden');
+                }, 30000);
+            }
+        }
+
+        window.verifyAdminLogin = async function() {
+            if (failedAttempts >= 3) return;
+
+            const secretCode = document.getElementById('adminSecretCode').value.trim().toUpperCase();
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value;
+            const btn = document.getElementById('adminLoginBtn');
+            const originalText = btn.innerHTML;
+            
+            document.getElementById('pinErrorMsg').classList.add('hidden');
+
+            // 1. Extra security layer (10-character code)
+            if (secretCode !== "RATGAL2026") {
+                handleFailedAttempt();
+                document.getElementById('pinErrorText').innerText = "❌ गलत Secret Code!";
+                document.getElementById('pinErrorMsg').classList.remove('hidden');
+                return;
+            }
+            
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i>`;
+            btn.disabled = true;
+
+            try {
+                if(!auth || !auth.app) throw new Error("Firebase auth not configured.");
+                await signInWithEmailAndPassword(auth, email, password);
+                
+                // Success
+                failedAttempts = 0; // reset on success
+                unlockAdminUI();
+                showCustomAlert("एक्सेस स्वीकृत! अब आप Excel डाउनलोड कर सकते हैं।", "success");
+            } catch (error) {
+                console.error("Admin Auth Error:", error);
+                handleFailedAttempt();
+                if(failedAttempts < 3) {
+                    document.getElementById('pinErrorText').innerText = "❌ गलत Email या Password!";
+                    document.getElementById('pinErrorMsg').classList.remove('hidden');
+                }
+            } finally {
+                if (failedAttempts < 3) {
+                    btn.disabled = false;
+                }
+                btn.innerHTML = originalText;
+            }
+        }
+
+        function unlockAdminUI() {
+            document.getElementById('pinModal').classList.add('hidden');
+            document.getElementById('adminUnlockBtn').classList.add('hidden');
+            document.getElementById('excelBtn').classList.remove('hidden');
+            
+            const adminControls = document.getElementById('adminGlobalControls');
+            if(adminControls) {
+                adminControls.classList.remove('hidden');
+                adminControls.classList.add('flex');
+            }
+            
+            const userControls = document.getElementById('userSyncControls');
+            if(userControls) {
+                userControls.classList.add('hidden');
+            }
+        }
+        
+        // 1. Data Store
+        let publicPlayers = [];
+
+        // 2. Function to display players randomly
+        function renderPlayers() {
+            const listDiv = document.getElementById('registeredList');
+            listDiv.innerHTML = ''; 
+            
+            if(publicPlayers.length === 0) {
+                listDiv.innerHTML = `<p class="text-sm text-gray-400 italic">अभी कोई खिलाड़ी नहीं है। / No players yet.</p>`;
+                return;
+            }
+
+            // Shuffle the array to show randomly as requested
+            let shuffledPlayers = [...publicPlayers].sort(() => Math.random() - 0.5);
+
+            shuffledPlayers.forEach(player => {
+                listDiv.innerHTML += `
+                    <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-md border border-blue-200">
+                        <i class="fa-solid fa-user text-blue-400 mr-1"></i> ${player.name}
+                    </span>
+                `;
+            });
+        }
+
+        // Initialize Firebase listeners if available
+        if(db) {
+            const pubCol = collection(db, "volleyball_registrations_public");
+            onSnapshot(pubCol, (snapshot) => {
+                publicPlayers = [];
+                snapshot.forEach((doc) => {
+                    if (doc.id !== 'music_sync_state') {
+                        publicPlayers.push(doc.data());
+                    }
+                });
+                renderPlayers();
+            });
+        } else {
+            // Local fallback
+            publicPlayers = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+            renderPlayers();
+        }
+
+        window.handleFormSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i>`;
+            btn.disabled = true;
+
+            const name = document.getElementById('playerName').value;
+            const phone = document.getElementById('playerPhone').value;
+            const age = document.getElementById('playerAge').value;
+            const exp = document.getElementById('playerExp').value;
+            const isResident = document.getElementById('isResident').checked;
+
+            try {
+                if(db) {
+                    const pubCol = collection(db, "volleyball_registrations_public");
+                    const privCol = collection(db, "volleyball_registrations_private");
+                    
+                    const docRef = await addDoc(pubCol, {
+                        name: name,
+                        timestamp: Date.now()
+                    });
+                    
+                    await setDoc(doc(privCol, docRef.id), {
+                        name: name,
+                        phone: phone,
+                        age: age,
+                        exp: exp,
+                        isResident: isResident,
+                        timestamp: Date.now()
+                    });
+                } else {
+                    // Fallback to local storage
+                    const players = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+                    players.push({name, phone, age, exp, isResident});
+                    localStorage.setItem('vbPlayers', JSON.stringify(players));
+                    renderPlayers(); // re-render
+                }
+                
+                document.getElementById('vbForm').reset();
+                document.getElementById('successModal').classList.remove('hidden');
+            } catch (error) {
+                console.error("Error saving: ", error);
+                showCustomAlert("Error saving registration. Please check Firebase Firestore Rules.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // 4. Excel Download Feature
+        window.downloadExcel = async function() {
+            // Check auth 
+            if(!auth.currentUser) {
+                showCustomAlert("Access Denied", "error");
+                return;
+            }
+            
+            showCustomAlert("Excel डाउनलोड हो रहा है...", "success");
+            
+            let allData = [];
+            
+            if(db) {
+                try {
+                    const privCol = collection(db, "volleyball_registrations_private");
+                    const snapshot = await getDocs(privCol);
+                    snapshot.forEach(doc => {
+                        if (doc.id !== 'music_sync_state' && doc.data().name) {
+                            allData.push(doc.data());
+                        }
+                    });
+                } catch(e) {
+                    console.error("Fetch error", e);
+                    showCustomAlert("Error fetching data. Check permissions.", "error");
+                    return;
+                }
+            } else {
+                allData = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+            }
+            
+            if(allData.length === 0) {
+                showCustomAlert("कोई डेटा नहीं मिला", "error");
+                return;
+            }
+            
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Name,Phone Number,Age,Experience Level,Resident\n";
+            allData.forEach(function(rowArray) {
+                let isRes = rowArray.isResident ? "Yes" : "No";
+                let row = `"${rowArray.name || ''}","${rowArray.phone || ''}","${rowArray.age || ''}","${rowArray.exp || ''}","${isRes}"`;
+                csvContent += row + "\r\n";
+            });
+            
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "volleyball_registrations_2026.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        let currentLang = 'hi';
+        
+        window.toggleLanguage = function() {
+            const body = document.body;
+            const btnText = document.getElementById('langBtnText');
+            if (body.classList.contains('lang-hi')) {
+                body.classList.remove('lang-hi');
+                body.classList.add('lang-en');
+                if(btnText) btnText.textContent = 'हिंदी';
+                localStorage.setItem('preferredLang', 'en');
+            } else {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-hi');
+                if(btnText) btnText.textContent = 'English';
+                localStorage.setItem('preferredLang', 'hi');
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            document.body.classList.remove('lang-en', 'lang-hi');
+            document.body.classList.add('lang-' + savedLang);
+            const btnText = document.getElementById('langBtnText');
+            if (btnText) {
+                btnText.textContent = savedLang === 'en' ? 'हिंदी' : 'English';
+            }
+        });
+        
+
+        function onAudioPause() {
+            isPlaying = false;
+        }
+
+        // Attach events to all audio elements
+        Object.values(audioElements).forEach(audioEl => {
+            if(audioEl) {
+                audioEl.addEventListener('play', onAudioPlay);
+                audioEl.addEventListener('pause', onAudioPause);
+                audioEl.addEventListener('ended', onAudioPause);
+            }
+        });
+
+        window.joinLiveSync = async function() {
+            // Need user interaction to play audio
+            if(currentAudio) {
+                currentAudio.muted = true;
+                currentAudio.play().then(() => {
+                    currentAudio.pause();
+                    currentAudio.muted = false;
+                }).catch(e => console.log("Autoplay prevented"));
+            }
+
+            document.getElementById('joinSyncBtn').classList.add('hidden');
+            document.getElementById('syncStatus').classList.remove('hidden');
+            document.getElementById('syncStatus').classList.add('flex');
+
+            const syncChannel = new BroadcastChannel('ratgal_music_sync');
+            syncChannel.onmessage = (event) => {
+                handleSyncData(event.data);
+            };
+
+            if (db) {
+                try {
+                    if (auth && !auth.currentUser) {
+                        await signInAnonymously(auth);
+                        await new Promise(resolve => onAuthStateChanged(auth, user => { if(user) resolve(user); }));
+                    }
+                    const syncDocRef = doc(db, "volleyball_registrations_public", "music_sync_state");
+                    globalSyncUnsubscribe = onSnapshot(syncDocRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            handleSyncData(docSnap.data());
+                        }
+                    });
+                } catch(e) { }
+            }
+        }
+
+        function handleSyncData(data) {
+            if (data.songId && data.songId !== currentSongId) {
+                if(currentAudio) {
+                    currentAudio.pause(); // Pause old
+                    currentAudio.classList.add('hidden');
+                }
+                currentSongId = data.songId;
+                currentAudio = audioElements[currentSongId];
+            }
+            if (!currentAudio) return;
+            
+            if (data.isPlaying) {
+                currentAudio.classList.remove('hidden');
+                const now = Date.now();
+                const elapsed = (now - data.startTime) / 1000; 
+                currentAudio.currentTime = data.seekTime + elapsed;
+                currentAudio.play().catch(e => console.log("Play failed", e));
+            } else {
+                currentAudio.pause();
+            }
+        }
+
+        window.globalPlay = async function(songId) {
+            if(!audioElements[songId]) return;
+            
+            if(currentSongId !== songId) {
+                if(currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.classList.add('hidden');
+                }
+                currentSongId = songId;
+                currentAudio = audioElements[songId];
+            }
+            currentAudio.classList.remove('hidden');
+            const state = {
+                songId: songId,
+                isPlaying: true,
+                startTime: Date.now(),
+                seekTime: currentAudio.currentTime || 0
+            };
+            publishSyncState(state);
+            currentAudio.play().catch(e => console.log(e));
+        }
+
+        window.globalPause = async function() {
+            if(!currentAudio) return;
+            const state = {
+                songId: currentSongId,
+                isPlaying: false,
+                startTime: Date.now(),
+                seekTime: currentAudio.currentTime || 0
+            };
+            publishSyncState(state);
+            currentAudio.pause();
+        }
+
+        async function publishSyncState(state) {
+            const syncChannel = new BroadcastChannel('ratgal_music_sync');
+            syncChannel.postMessage(state);
+
+            if(db && auth.currentUser) {
+                try {
+                    const syncDocRef = doc(db, "volleyball_registrations_public", "music_sync_state");
+                    await setDoc(syncDocRef, state, { merge: true });
+                } catch(e) { }
+            }
+        }
+
+        // Scrolling logic removed as lyrics are embedded in video
+
+        window.closeModal = function() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // --- Photo Carousel Auto-Scroll Logic ---
+        const carousel = document.getElementById('photoCarousel');
+        let carouselInterval;
+
+        function startCarousel() {
+            carouselInterval = setInterval(() => {
+                if(!carousel) return;
+                
+                const firstImg = carousel.querySelector('img');
+                if(!firstImg) return;
+                
+                // एक इमेज की चौड़ाई + गैप (gap-4 = 16px)
+                const scrollAmount = firstImg.clientWidth + 16; 
+                
+                // अगर स्क्रॉल करते हुए बिल्कुल आखिरी फोटो पर पहुँच गए हैं, out of view है तो वापस शुरू में ले जाएं
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // अगली फोटो पर स्लाइड करें
+                    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            }, 2500); // हर 2.5 सेकंड में नई फोटो आएगी
+        }
+
+        // Start scrolling on load
+        if(carousel) {
+            startCarousel();
+            // Pause auto-scroll when user touches or hovers over it
+            carousel.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+            carousel.addEventListener('mouseleave', startCarousel);
+            carousel.addEventListener('touchstart', () => clearInterval(carouselInterval), {passive: true});
+            carousel.addEventListener('touchend', startCarousel, {passive: true});
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रतगल जन्माष्टमी महोत्सव 2026</title>
+
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;800&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        hindi: ['Mukta', 'sans-serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        krishna: {
+                            blue: '#1E3A8A',
+                            gold: '#F59E0B',
+                            dark: '#0F172A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #F59E0B;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D97706;
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Language display logic */
+        body.lang-hi .lang-en {
+            display: none !important;
+        }
+
+        body.lang-en .lang-hi {
+            display: none !important;
+        }
+
+        /* Hide YouTube UI */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1;
+            /* Keep it subtle */
+            z-index: 0;
+        }
+
+        .lyrics-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body
+    class="lang-hi bg-orange-50 font-sans text-gray-800 antialiased selection:bg-krishna-gold selection:text-white overflow-x-hidden w-full">
+
+    <header class="w-full bg-gradient-to-r from-orange-600 to-red-600 text-white sticky top-0 z-50 shadow-lg">
+        <div class="w-[95%] max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="w-10"></div> <!-- spacer -->
+                <h1 class="text-xl md:text-3xl font-extrabold font-sans tracking-widest text-center flex-1">
+                    JANAMASTAMI 2026
+                </h1>
+                <div class="flex items-center gap-3">
+                    <button onclick="promptAdmin()" title="Admin Login"
+                        class="text-yellow-300 hover:text-white transition">
+                        <i class="fa-solid fa-lock"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Event Cards Section -->
+    <section class="py-12 px-4 bg-orange-50">
+        <div class="w-[95%] max-w-[2400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+
+            <!-- Card 1: Ratgal Dahi Handi Card (Info Only) -->
+            <div
+                class="bg-white rounded-2xl shadow-lg border-t-4 border-yellow-500 p-8 flex flex-col justify-center items-center text-center transform transition duration-300">
+                <div class="w-64 h-64 mb-4 flex justify-center items-center">
+                    <img src="media/mainmanhandi.jpeg" alt="Dahi Handi" class="w-full h-full object-cover rounded-lg" style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ratgal Dahi Handi</h3>
+                <p class="text-sm text-gray-500 font-semibold"><i class="fa-solid fa-calendar text-yellow-500 mr-1"></i> 4
+                    Sept 2026, 4:00 PM</p>
+            </div>
+
+            <!-- Card 2: Ratgal Music Live Card (Clickable) -->
+            <a href="music-live.html"
+                class="block bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-xl border-2 border-yellow-600 p-8 flex flex-col justify-center items-center text-center transform hover:scale-105 transition duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-yellow-500 opacity-0 group-hover:opacity-10 transition"></div>
+                <i class="fa-solid fa-music text-6xl text-yellow-400 mb-6 animate-pulse mt-4"></i>
+                <h3 class="text-2xl font-bold text-white mb-2">Ratgal Music Live</h3>
+                <p class="text-sm text-gray-300 font-semibold mb-4 z-10"><i
+                        class="fa-solid fa-calendar text-yellow-400 mr-1"></i> 4 Sept 2026, 4:30 PM</p>
+                <span class="inline-block bg-yellow-500 text-black font-bold px-6 py-2 text-sm rounded-full shadow-lg z-10">Join
+                    Now <i class="fa-solid fa-arrow-right ml-1"></i></span>
+            </a>
+
+            <!-- Card 3: Ratgal Volleyball Match Card (Clickable) -->
+            <a href="volleyball.html"
+                class="block bg-white rounded-2xl shadow-xl border-t-4 border-blue-600 p-8 flex flex-col justify-center items-center text-center transform hover:scale-105 transition duration-300">
+                <div class="w-64 h-64 mb-4 flex justify-center items-center">
+                    <img src="media/vollyicon.webp" alt="Volleyball" class="w-full h-full object-cover rounded-lg" style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ratgal Volleyball Match</h3>
+                <p class="text-sm text-gray-500 font-semibold mb-4"><i class="fa-solid fa-calendar text-blue-500 mr-1"></i> 2nd
+                    & 3rd Sept 2026</p>
+                <span class="inline-block bg-blue-600 text-white font-bold px-6 py-2 text-sm rounded-full shadow-lg">Register
+                    Here <i class="fa-solid fa-pen-to-square ml-1"></i></span>
+            </a>
+
+            <!-- Card 4: Ratgal Event 2025 Archive Card (Clickable PDF) -->
+            <a href="archive.html"
+                class="block bg-white rounded-2xl shadow-xl border-t-4 border-red-600 p-8 flex flex-col justify-center items-center text-center transform hover:scale-105 transition duration-300">
+                <div class="w-64 h-64 mb-4 flex justify-center items-center">
+                    <img src="media/archiveicon.jpg" alt="Archive" class="w-full h-full object-cover rounded-lg" style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ratgal Event 2025 Archive</h3>
+                <p class="text-sm text-gray-500 font-semibold mb-4"><i class="fa-solid fa-book-open text-red-500 mr-1"></i> View
+                    past memories & videos</p>
+                <span class="inline-block bg-red-600 text-white font-bold px-6 py-2 text-sm rounded-full shadow-lg">View Archive
+                    <i class="fa-solid fa-arrow-right ml-1"></i></span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- The Cosmic Play of Janmashtami Section -->
+    <section
+        class="py-24 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]">
+
+        <!-- Decorative background elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+            <div
+                class="absolute -top-20 -left-20 w-96 h-96 bg-orange-500 rounded-full mix-blend-screen filter blur-[100px] animate-pulse">
+            </div>
+            <div class="absolute top-1/2 -right-20 w-96 h-96 bg-red-600 rounded-full mix-blend-screen filter blur-[120px] animate-pulse"
+                style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="w-[90%] max-w-[1600px] mx-auto relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h2
+                    class="text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 mb-8 drop-shadow-lg tracking-wide uppercase">
+                    The Cosmic Play of Janmashtami
+                </h2>
+                <p
+                    class="text-base md:text-xl text-gray-300 font-light max-w-4xl mx-auto leading-relaxed border-l-4 border-r-4 border-orange-500 px-6 py-2">
+                    When we gather to celebrate Janmashtami in the heart of village Ratgal, we are not simply
+                    re-enacting ancient history; we are participating in a profound cosmic mechanism that bends time,
+                    space, and human illusion.
+                </p>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-12 mt-12">
+
+                <!-- The Architect of Time -->
+                <div
+                    class="bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-3xl p-8 md:p-10 hover:bg-gray-800/60 transition duration-500 group shadow-2xl relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition duration-1000 transform group-hover:rotate-180">
+                        <i class="fa-solid fa-hourglass-half text-7xl md:text-9xl"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div
+                                class="bg-gradient-to-br from-yellow-400 to-orange-600 w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:-rotate-12 transition duration-500 shrink-0">
+                                <i class="fa-solid fa-hourglass-half text-2xl text-white"></i>
+                            </div>
+                            <h3
+                                class="text-2xl md:text-4xl font-bold text-white group-hover:text-yellow-400 transition">
+                                The Architect of Time<br><span
+                                    class="text-base md:text-xl text-gray-400 font-medium block mt-1">Krishna & Sudama</span></h3>
+                        </div>
+                        <div class="space-y-6 text-gray-300 text-base md:text-lg leading-relaxed">
+                            <p>
+                                Consider the beautiful reunion of Lord Krishna and His dear friend, Sudama. When the
+                                impoverished Brahmin visited Dwarka with a mere handful of beaten rice, Krishna did not
+                                just snap His fingers to build a new house for him. <strong class="text-white">He
+                                    rewrote the very threads of time.</strong>
+                            </p>
+
+                            <!-- Creative Image Integration -->
+                            <div
+                                class="my-10 relative group/img2 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(234,179,8,0.15)] border border-yellow-500/30">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent z-10 pointer-events-none transition duration-500 group-hover/img2:opacity-80">
+                                </div>
+                                <img src="media/ARCOFTIME.jpeg" alt="Krishna and Sudama"
+                                    class="w-full h-auto transform group-hover/img2:scale-105 transition duration-1000 ease-in-out filter sepia-[0.2] contrast-125 brightness-90 group-hover/img2:sepia-0 group-hover/img2:brightness-110">
+                                <div
+                                    class="absolute bottom-6 left-6 z-20 transform translate-y-2 group-hover/img2:translate-y-0 transition duration-500">
+                                    <span
+                                        class="bg-yellow-600/80 backdrop-blur-md text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-yellow-400/50 shadow-lg whitespace-nowrap inline-flex items-center">
+                                        <i class="fa-solid fa-clock-rotate-left text-orange-200 mr-2 animate-pulse"></i>Rewriting Time
+                                    </span>
+                                </div>
+                            </div>
+
+                            <p>
+                                By the time Sudama returned home, his humble hut had not just been replaced—the
+                                magnificent palace had <em class="text-yellow-200">always</em> been there. The memories
+                                of the passers-by, the history of the town, and the physical fabric of reality were
+                                instantly altered in perfect, unnoticeable proportion.
+                            </p>
+
+                            <div
+                                class="mt-8 bg-gray-900/80 border-l-4 border-yellow-500 p-6 md:p-8 rounded-r-2xl italic text-gray-400 text-base shadow-inner">
+                                "This teaches us a brilliant cosmic truth: humanity is trapped in the illusion of linear
+                                time, only noticing relative, day-to-day changes. The divine, however, operates in
+                                absolute transformations, molding the past, present, and future in a single stroke of
+                                compassion to erase suffering entirely without the mind even realizing the shift."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ratgal Dahi Handi -->
+                <div
+                    class="bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-3xl p-8 md:p-10 hover:bg-gray-800/60 transition duration-500 group shadow-2xl relative overflow-hidden">
+                    <div
+                        class="absolute bottom-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition duration-1000 transform group-hover:scale-110">
+                        <i class="fa-solid fa-jar text-7xl md:text-9xl"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div
+                                class="bg-gradient-to-br from-red-500 to-orange-600 w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-500 shrink-0">
+                                <i class="fa-solid fa-people-group text-2xl text-white"></i>
+                            </div>
+                            <h3
+                                class="text-2xl md:text-4xl font-bold text-white group-hover:text-orange-400 transition">
+                                Ratgal Dahi Handi<br><span
+                                    class="text-base md:text-xl text-gray-400 font-medium block mt-1">Shattering the Cage of
+                                    "I"</span></h3>
+                        </div>
+                        <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-8">
+                            This mastery over the physical universe is exactly what we celebrate during the Ratgal Dahi
+                            Handi festival. The earthen pot suspended high above the streets of Ratgal is much more than
+                            a vessel for buttermilk; it is a living metaphor for the human ego.
+                        </p>
+
+                        <!-- Creative Image Integration -->
+                        <div
+                            class="my-10 relative group/img rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(249,115,22,0.15)] border border-orange-500/30">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent z-10 pointer-events-none transition duration-500 group-hover/img:opacity-80">
+                            </div>
+                            <img src="media/MAINHANDIPIC.jpeg" alt="Dahi Handi Breaking"
+                                class="w-full h-auto transform group-hover/img:scale-105 transition duration-1000 ease-in-out filter sepia-[0.2] contrast-125 brightness-90 group-hover/img:sepia-0 group-hover/img:brightness-110">
+                            <div
+                                class="absolute bottom-6 left-6 z-20 transform translate-y-2 group-hover/img:translate-y-0 transition duration-500">
+                                <span
+                                    class="bg-orange-500/80 backdrop-blur-md text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-orange-400/50 shadow-lg whitespace-nowrap inline-flex items-center">
+                                    <i class="fa-solid fa-bolt text-yellow-300 mr-2 animate-pulse"></i>Shattering Space
+                                    & Time
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-8">
+                            <div class="flex gap-5 items-start group/item">
+                                <div
+                                    class="mt-1 bg-gray-700/80 p-4 rounded-2xl group-hover/item:bg-orange-500/20 transition">
+                                    <i class="fa-solid fa-jar text-orange-400 text-base md:text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2 flex flex-wrap items-center">The Clay Pot <span
+                                            class="text-orange-400 text-xs font-bold uppercase tracking-widest ml-2 bg-orange-900/30 px-3 py-1 rounded-full border border-orange-500/30 whitespace-nowrap">The
+                                            Ego</span></h4>
+                                    <p class="text-gray-400 text-lg leading-relaxed">It represents the rigid, earthly
+                                        cage of human identity, hardened by our accumulated desires, habits, and the
+                                        stubborn sense of "I" that separates us from the rest of the universe.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5 items-start group/item">
+                                <div
+                                    class="mt-1 bg-gray-700/80 p-4 rounded-2xl group-hover/item:bg-yellow-500/20 transition">
+                                    <i class="fa-solid fa-droplet text-yellow-300 text-base md:text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2">The White Butter <span
+                                            class="text-yellow-300 text-xs font-bold uppercase tracking-widest ml-2 bg-yellow-900/30 px-3 py-1 rounded-full border border-yellow-500/30">Cosmic
+                                            Purity</span></h4>
+                                    <p class="text-gray-400 text-lg leading-relaxed">The rich butter spilling forth
+                                        symbolizes pure, unconfigured consciousness—the joyful essence of life, finally
+                                        liberated from the confines of mortal limitations.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5 items-start group/item">
+                                <div
+                                    class="mt-1 bg-gray-700/80 p-4 rounded-2xl group-hover/item:bg-red-500/20 transition">
+                                    <i class="fa-solid fa-users text-red-400 text-base md:text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2 flex flex-wrap items-center">The Human Pyramid <span
+                                            class="text-red-400 text-xs font-bold uppercase tracking-widest ml-2 bg-red-900/30 px-3 py-1 rounded-full border border-red-500/30 whitespace-nowrap">Universal
+                                            Unity</span></h4>
+                                    <p class="text-gray-400 text-lg leading-relaxed">A single soul cannot break the
+                                        illusion of space and time while acting out of selfish ambition. The towering
+                                        pyramid proves that only by discarding individual egos, supporting one another,
+                                        and uniting in a selfless focus can humanity reach divine heights.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Conclusion -->
+            <div class="mt-20 mb-8 text-center relative">
+                <div
+                    class="absolute left-1/2 top-0 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent">
+                </div>
+                <p
+                    class="text-xl md:text-3xl font-light text-orange-200 italic max-w-5xl mx-auto leading-relaxed pt-12 px-4 drop-shadow-md">
+                    "As the Govindas of Ratgal rise together this Janmashtami, they are not just reaching for a prize.
+                    They are shattering the illusions of the universe and letting pure, unbound joy rain down upon the
+                    village."
+                </p>
+                <div class="mt-10 flex justify-center items-center text-2xl md:text-4xl text-yellow-500 space-x-4 md:space-x-6">
+                    <i class="fa-solid fa-sparkles text-2xl animate-pulse"></i>
+                    <i class="fa-solid fa-dharmachakra text-4xl md:text-5xl animate-[spin_10s_linear_infinite] text-orange-500"></i>
+                    <i class="fa-solid fa-sparkles text-2xl animate-pulse" style="animation-delay: 0.5s;"></i>
+                </div>
+
+                <!-- Philosophy Book Reader Button -->
+                <div class="mt-12">
+                    <a href="philosophy.html" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold text-base md:text-lg px-6 md:px-10 py-3 md:py-4 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.4)] transition transform hover:-translate-y-1 hover:scale-105 border border-orange-400/50">
+                        <i class="fa-solid fa-book-open-reader text-2xl"></i>
+                        <span>OUR PHILOSOPHY</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Photo Gallery (Glimpses) -->
+    <section class="py-12 px-4 bg-orange-50">
+        <div class="w-[95%] max-w-[2400px] mx-auto text-center">
+            <h2
+                class="text-2xl md:text-3xl font-bold text-gray-800 inline-block border-b-4 border-double border-red-500 pb-1 mb-6 md:mb-10">
+                Glimpses of Past Events</h2>
+
+            <div id="past-events-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
+                    <img src="media/2024MEDIA/IMG-20240824-WA0023.jpg"
+                        class="w-full h-full object-cover hover:scale-110 transition duration-500" alt="Past Event 1">
+                </div>
+                <div class="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
+                    <img src="media/2024MEDIA/IMG-20240824-WA0025.jpg"
+                        class="w-full h-full object-cover hover:scale-110 transition duration-500" alt="Past Event 2">
+                </div>
+                <div class="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
+                    <img src="media/2024MEDIA/IMG-20240826-WA0058.jpg"
+                        class="w-full h-full object-cover hover:scale-110 transition duration-500" alt="Past Event 3">
+                </div>
+                <div class="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
+                    <img src="media/2024MEDIA/IMG-20240824-WA0027.jpg"
+                        class="w-full h-full object-cover hover:scale-110 transition duration-500" alt="Past Event 4">
+                </div>
+            </div>
+
+            <a href="archive.html"
+                class="inline-block bg-red-600 text-white font-bold px-8 py-3 rounded-full shadow-lg hover:bg-red-700 transition">View
+                Full Archive Gallery</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10 text-center flex flex-col items-center gap-4">
+        <a href="practice.html"
+            class="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 px-6 py-2 rounded-full font-bold transition border border-gray-700 hover:border-gray-500 shadow-lg mb-2">
+            <i class="fa-solid fa-microphone-lines text-orange-500"></i>
+            Volunteer Karaoke Practice
+        </a>
+        <p class="mb-1">Made with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by <strong>Prince Saini / रतगल युवा संघ</strong>
+        </p>
+        <p class="text-sm">RATGAL JANAMASHTAMI 2026</p>
+    </footer>
+    <!-- Admin Login Modal -->
+    <div id="pinModal"
+        class="fixed inset-0 bg-black bg-opacity-75 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-105">
+            <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 border-b pb-2"><i
+                    class="fa-solid fa-lock text-red-500 mr-2"></i>Admin Access</h3>
+            <p class="text-gray-600 mb-4 text-sm mt-2">लॉगिन क्रेडेंशियल्स दर्ज करें (Admin):</p>
+            <input type="text" id="adminSecretCode"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 font-bold text-sm text-center tracking-widest uppercase"
+                placeholder="10-CHAR SECRET CODE" maxlength="10">
+            <input type="email" id="adminEmailInput"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 font-semibold text-sm"
+                placeholder="Admin Email">
+            <input type="password" id="adminPasswordInput"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 text-center text-xl md:text-2xl tracking-widest font-bold"
+                placeholder="****">
+            <div class="flex justify-end gap-2">
+                <button onclick="closePinModal()"
+                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition">Cancel</button>
+                <button onclick="verifyAdminLogin()" id="adminLoginBtn"
+                    class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition shadow-lg">Login</button>
+            </div>
+            <p id="pinErrorMsg" class="text-red-500 text-xs mt-3 hidden font-semibold bg-red-50 p-2 rounded"><i
+                    class="fa-solid fa-triangle-exclamation"></i> <span id="pinErrorText">गलत जानकारी! कृपया दोबारा
+                    प्रयास करें।</span></p>
+        </div>
+    </div>
+    <!-- Custom Notification Alert (New) -->
+    <div id="customAlert"
+        class="fixed top-20 left-1/2 transform -translate-x-1/2 z-[80] hidden bg-gray-900 border border-gray-700 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 ease-in-out">
+        <i id="alertIcon" class="fa-solid fa-bell text-yellow-400"></i>
+        <span id="customAlertMsg" class="text-sm font-bold">Message</span>
+    </div>
+    <!-- YouTube IFrame Player API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- YouTube IFrame Player API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, addDoc, collection, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnWY6SQcVprHlT_pvbD1P5C5rOhtGGgQI",
+            authDomain: "ratgal-event.firebaseapp.com",
+            projectId: "ratgal-event",
+            storageBucket: "ratgal-event.firebasestorage.app",
+            messagingSenderId: "260753298195",
+            appId: "1:260753298195:web:780b6dd7291647325140e6",
+            measurementId: "G-H90ZW347F9"
+        };
+
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            onAuthStateChanged(auth, (user) => {
+                if (user && !user.isAnonymous) {
+                    sessionStorage.setItem('ratgal_admin_logged_in', 'true');
+                    unlockAdminUI();
+                }
+            });
+        } catch (e) { console.error("Firebase init fallback to local"); }
+
+        // Check if admin is already authenticated via sessionStorage
+        if (sessionStorage.getItem('ratgal_admin_logged_in') === 'true') {
+            setTimeout(() => unlockAdminUI(), 100);
+        }
+
+        // Custom Alert Logic
+        window.showCustomAlert = function (message, type = "success") {
+            const alertBox = document.getElementById('customAlert');
+            const alertMsg = document.getElementById('customAlertMsg');
+            const alertIcon = document.getElementById('alertIcon');
+
+            alertMsg.innerText = message;
+            if (type === "error") {
+                alertIcon.className = "fa-solid fa-circle-exclamation text-red-500";
+            } else {
+                alertIcon.className = "fa-solid fa-circle-check text-green-500";
+            }
+            alertBox.classList.remove('hidden');
+            setTimeout(() => alertBox.classList.add('hidden'), 4000);
+        }
+
+        // Admin Access Logic (Firebase Auth) Custom Modal
+        let failedAttempts = 0;
+
+        window.promptAdmin = function () {
+            document.getElementById('pinModal').classList.remove('hidden');
+            document.getElementById('adminSecretCode').value = '';
+            document.getElementById('adminEmailInput').value = '';
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('pinErrorMsg').classList.add('hidden');
+            setTimeout(() => document.getElementById('adminSecretCode').focus(), 100);
+        }
+
+        window.closePinModal = function () {
+            document.getElementById('pinModal').classList.add('hidden');
+        }
+
+        function handleFailedAttempt() {
+            failedAttempts++;
+            if (failedAttempts >= 3) {
+                document.getElementById('adminLoginBtn').disabled = true;
+                document.getElementById('adminLoginBtn').classList.add('opacity-50', 'cursor-not-allowed');
+                document.getElementById('pinErrorText').innerText = "🚫 बहुत सारे गलत प्रयास! 30 सेकंड के लिए ब्लॉक किया गया।";
+                document.getElementById('pinErrorMsg').classList.remove('hidden');
+
+                setTimeout(() => {
+                    failedAttempts = 0;
+                    document.getElementById('adminLoginBtn').disabled = false;
+                    document.getElementById('adminLoginBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+                    document.getElementById('pinErrorMsg').classList.add('hidden');
+                }, 30000);
+            }
+        }
+
+        window.verifyAdminLogin = async function () {
+            if (failedAttempts >= 3) return;
+
+            const secretCode = document.getElementById('adminSecretCode').value.trim().toUpperCase();
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value;
+            const btn = document.getElementById('adminLoginBtn');
+            const originalText = btn.innerHTML;
+
+            document.getElementById('pinErrorMsg').classList.add('hidden');
+
+            // 1. Extra security layer (10-character code)
+            if (secretCode !== "RATGAL2026") {
+                handleFailedAttempt();
+                document.getElementById('pinErrorText').innerText = "❌ गलत Secret Code!";
+                document.getElementById('pinErrorMsg').classList.remove('hidden');
+                return;
+            }
+
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i>`;
+            btn.disabled = true;
+
+            try {
+                // By default, if Firebase auth isn't setup with keys, it throws an error.
+                if (!auth || !auth.app) throw new Error("Firebase auth not configured. Using local bypass for testing.");
+                await signInWithEmailAndPassword(auth, email, password);
+
+                // Success
+                failedAttempts = 0; // reset on success
+                unlockAdminUI();
+                showCustomAlert("एक्सेस स्वीकृत! अब आप Excel डाउनलोड कर सकते हैं।", "success");
+            } catch (error) {
+                // If it's a test and Firebase isn't configured, bypass for local testing if credentials are "admin@ratgal.com" / "admin"
+                if (email === "admin@ratgal.com" && password === "admin") {
+                    failedAttempts = 0;
+                    sessionStorage.setItem('ratgal_admin_logged_in', 'true');
+                    unlockAdminUI();
+                    showCustomAlert("Local Demo Mode: एक्सेस स्वीकृत!", "success");
+                } else {
+                    console.error("Admin Auth Error:", error);
+                    handleFailedAttempt();
+                    if (failedAttempts < 3) {
+                        document.getElementById('pinErrorText').innerText = "❌ गलत Email या Password!";
+                        document.getElementById('pinErrorMsg').classList.remove('hidden');
+                    }
+                }
+            } finally {
+                if (failedAttempts < 3) {
+                    btn.disabled = false;
+                }
+                btn.innerHTML = originalText;
+            }
+        }
+
+        function unlockAdminUI() {
+            document.getElementById('pinModal').classList.add('hidden');
+            document.getElementById('adminUnlockBtn').classList.add('hidden');
+            document.getElementById('excelBtn').classList.remove('hidden');
+
+            const adminControls = document.getElementById('adminGlobalControls');
+            if (adminControls) {
+                adminControls.classList.remove('hidden');
+                adminControls.classList.add('flex');
+            }
+
+            const userControls = document.getElementById('userSyncControls');
+            if (userControls) {
+                userControls.classList.add('hidden');
+            }
+        }
+
+        // 1. Data Store
+        let publicPlayers = [];
+
+        // 2. Function to display players randomly
+        function renderPlayers() {
+            const listDiv = document.getElementById('registeredList');
+            listDiv.innerHTML = '';
+
+            if (publicPlayers.length === 0) {
+                listDiv.innerHTML = `<p class="text-sm text-gray-400 italic">अभी कोई खिलाड़ी नहीं है। / No players yet.</p>`;
+                return;
+            }
+
+            // Shuffle the array to show randomly as requested
+            let shuffledPlayers = [...publicPlayers].sort(() => Math.random() - 0.5);
+
+            shuffledPlayers.forEach(player => {
+                listDiv.innerHTML += `
+                    <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-md border border-blue-200">
+                        <i class="fa-solid fa-user text-blue-400 mr-1"></i> ${player.name}
+                    </span>
+                `;
+            });
+        }
+
+        // Initialize Firebase listeners if available
+        if (db) {
+            const pubCol = collection(db, "volleyball_registrations_public");
+            onSnapshot(pubCol, (snapshot) => {
+                publicPlayers = [];
+                snapshot.forEach((doc) => {
+                    publicPlayers.push(doc.data());
+                });
+                renderPlayers();
+            });
+        } else {
+            // Local fallback
+            publicPlayers = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+            renderPlayers();
+        }
+
+        // 3. Handle Form Submit (Public & Private data separation)
+        window.handleFormSubmit = async function (e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i>`;
+            btn.disabled = true;
+
+            const name = document.getElementById('playerName').value;
+            const phone = document.getElementById('playerPhone').value;
+
+            try {
+                if (db) {
+                    const pubCol = collection(db, "volleyball_registrations_public");
+                    const privCol = collection(db, "volleyball_registrations_private");
+
+                    const docRef = await addDoc(pubCol, {
+                        name: name,
+                        timestamp: Date.now()
+                    });
+
+                    await setDoc(doc(privCol, docRef.id), {
+                        name: name,
+                        phone: phone,
+                        timestamp: Date.now()
+                    });
+                } else {
+                    // Fallback to local storage
+                    const players = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+                    players.push({ name, phone });
+                    localStorage.setItem('vbPlayers', JSON.stringify(players));
+                    renderPlayers(); // re-render
+                }
+
+                document.getElementById('vbForm').reset();
+                document.getElementById('successModal').classList.remove('hidden');
+            } catch (error) {
+                console.error("Error saving: ", error);
+                showCustomAlert("Error saving registration", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // 4. Excel Download Feature
+        window.downloadExcel = async function () {
+            // Check auth (allow local fallback if credentials are 'admin@ratgal.com')
+            if (!auth.currentUser && !(document.getElementById('adminEmailInput') && document.getElementById('adminEmailInput').value === "admin@ratgal.com")) {
+                showCustomAlert("Access Denied", "error");
+                return;
+            }
+
+            showCustomAlert("Excel डाउनलोड हो रहा है...", "success");
+
+            let allData = [];
+
+            if (db) {
+                try {
+                    const privCol = collection(db, "volleyball_registrations_private");
+                    const snapshot = await getDocs(privCol);
+                    snapshot.forEach(doc => {
+                        allData.push(doc.data());
+                    });
+                } catch (e) {
+                    console.error("Fetch error", e);
+                    showCustomAlert("Error fetching data. Check permissions.", "error");
+                    return;
+                }
+            } else {
+                allData = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+            }
+
+            if (allData.length === 0) {
+                showCustomAlert("कोई डेटा नहीं मिला", "error");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Name,Phone Number\n";
+            allData.forEach(function (rowArray) {
+                let row = `"${rowArray.name}","${rowArray.phone}"`;
+                csvContent += row + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "volleyball_registrations_2026.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        let currentLang = 'hi';
+        window.toggleLanguage = function () {
+            const body = document.body;
+            if (currentLang === 'hi') {
+                body.classList.remove('lang-hi');
+                body.classList.add('lang-en');
+                currentLang = 'en';
+            } else {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-hi');
+                currentLang = 'hi';
+            }
+        }
+
+        // --- Local Audio & Live Crowd Sync Logic ---
+        let currentAudio = null;
+        let isPlaying = false;
+        let globalSyncUnsubscribe = null;
+        let currentSongId = 'mahabharat_new'; // default
+
+        const audioElements = {
+            'mahabharat_new': document.getElementById('audio_mahabharat_new'),
+            'aarambh': document.getElementById('audio_aarambh'),
+            'mahabharat_old': document.getElementById('audio_mahabharat_old')
+        };
+
+        currentAudio = audioElements[currentSongId];
+
+        function onAudioPlay() {
+            isPlaying = true;
+        }
+
+        function onAudioPause() {
+            isPlaying = false;
+        }
+
+        // Attach events to all audio elements
+        Object.values(audioElements).forEach(audioEl => {
+            if (audioEl) {
+                audioEl.addEventListener('play', onAudioPlay);
+                audioEl.addEventListener('pause', onAudioPause);
+                audioEl.addEventListener('ended', onAudioPause);
+            }
+        });
+
+        window.joinLiveSync = async function () {
+            // Need user interaction to play audio
+            if (currentAudio) {
+                currentAudio.muted = true;
+                currentAudio.play().then(() => {
+                    currentAudio.pause();
+                    currentAudio.muted = false;
+                }).catch(e => console.log("Autoplay prevented"));
+            }
+
+            document.getElementById('joinSyncBtn').classList.add('hidden');
+            document.getElementById('syncStatus').classList.remove('hidden');
+            document.getElementById('syncStatus').classList.add('flex');
+
+            const syncChannel = new BroadcastChannel('ratgal_music_sync');
+            syncChannel.onmessage = (event) => {
+                handleSyncData(event.data);
+            };
+
+            if (db) {
+                try {
+                    if (auth && !auth.currentUser) {
+                        await signInAnonymously(auth);
+                        await new Promise(resolve => onAuthStateChanged(auth, user => { if (user) resolve(user); }));
+                    }
+                    const syncDocRef = doc(db, "volleyball_registrations_public", "music_sync_state");
+                    globalSyncUnsubscribe = onSnapshot(syncDocRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            handleSyncData(docSnap.data());
+                        }
+                    });
+                } catch (e) { }
+            }
+        }
+
+        function handleSyncData(data) {
+            if (data.songId && data.songId !== currentSongId) {
+                if (currentAudio) {
+                    currentAudio.pause(); // Pause old
+                    currentAudio.classList.add('hidden');
+                }
+                currentSongId = data.songId;
+                currentAudio = audioElements[currentSongId];
+            }
+            if (!currentAudio) return;
+
+            if (data.isPlaying) {
+                currentAudio.classList.remove('hidden');
+                const now = Date.now();
+                const elapsed = (now - data.startTime) / 1000;
+                currentAudio.currentTime = data.seekTime + elapsed;
+                currentAudio.play().catch(e => console.log("Play failed", e));
+            } else {
+                currentAudio.pause();
+            }
+        }
+
+        window.globalPlay = async function (songId) {
+            if (!audioElements[songId]) return;
+
+            if (currentSongId !== songId) {
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.classList.add('hidden');
+                }
+                currentSongId = songId;
+                currentAudio = audioElements[songId];
+            }
+            currentAudio.classList.remove('hidden');
+            const state = {
+                songId: songId,
+                isPlaying: true,
+                startTime: Date.now(),
+                seekTime: currentAudio.currentTime || 0
+            };
+            publishSyncState(state);
+            currentAudio.play().catch(e => console.log(e));
+        }
+
+        window.globalPause = async function () {
+            if (!currentAudio) return;
+            const state = {
+                songId: currentSongId,
+                isPlaying: false,
+                startTime: Date.now(),
+                seekTime: currentAudio.currentTime || 0
+            };
+            publishSyncState(state);
+            currentAudio.pause();
+        }
+
+        async function publishSyncState(state) {
+            const syncChannel = new BroadcastChannel('ratgal_music_sync');
+            syncChannel.postMessage(state);
+
+            if (db && auth.currentUser) {
+                try {
+                    const syncDocRef = doc(db, "volleyball_registrations_public", "music_sync_state");
+                    await setDoc(syncDocRef, state, { merge: true });
+                } catch (e) { }
+            }
+        }
+
+        // Scrolling logic removed as lyrics are embedded in video
+
+        window.closeModal = function () {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // --- Photo Carousel Auto-Scroll Logic ---
+        const carousel = document.getElementById('photoCarousel');
+        let carouselInterval;
+
+        function startCarousel() {
+            carouselInterval = setInterval(() => {
+                if (!carousel) return;
+
+                const firstImg = carousel.querySelector('img');
+                if (!firstImg) return;
+
+                // एक इमेज की चौड़ाई + गैप (gap-4 = 16px)
+                const scrollAmount = firstImg.clientWidth + 16;
+
+                // अगर स्क्रॉल करते हुए बिल्कुल आखिरी फोटो पर पहुँच गए हैं, out of view है तो वापस शुरू में ले जाएं
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // अगली फोटो पर स्लाइड करें
+                    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            }, 2500); // हर 2.5 सेकंड में नई फोटो आएगी
+        }
+
+        // Start scrolling on load
+        if (carousel) {
+            startCarousel();
+            // Pause auto-scroll when user touches or hovers over it
+            carousel.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+            carousel.addEventListener('mouseleave', startCarousel);
+            carousel.addEventListener('touchstart', () => clearInterval(carouselInterval), { passive: true });
+            carousel.addEventListener('touchend', startCarousel, { passive: true });
+        }
+
+        // --- Randomize Gallery Images on Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const availableImages = [
+                "media/2024MEDIA/IMG-20240824-WA0023.jpg",
+                "media/2025MEDIA/ART AND CRAFT/IMG-20250816-WA0049.jpg",
+                "media/2025MEDIA/ART AND CRAFT/IMG-20250816-WA0050.jpg",
+                "media/2024MEDIA/IMG-20240826-WA0058.jpg",
+                "media/2024MEDIA/IMG-20240826-WA0062.jpeg",
+                "media/2024MEDIA/IMG-20240826-WA0100.jpg"
+            ];
+
+            // Fisher-Yates shuffle
+            for (let i = availableImages.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [availableImages[i], availableImages[j]] = [availableImages[j], availableImages[i]];
+            }
+
+            const galleryContainer = document.getElementById('past-events-gallery');
+            if (galleryContainer) {
+                const imgs = galleryContainer.querySelectorAll('img');
+                imgs.forEach((img, index) => {
+                    if (availableImages[index]) {
+                        // Apply a tiny fade-in effect to prevent pop-in if image was cached
+                        img.style.opacity = '0';
+                        img.src = availableImages[index];
+                        img.onload = () => {
+                            img.style.transition = 'opacity 0.5s ease-in-out';
+                            img.style.opacity = '1';
+                        };
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

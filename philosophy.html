@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalihanuvani: Book Reader & Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Yatra+One&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #faf6f0;
+            color: #292524;
+            overflow-x: hidden;
+        }
+        
+        .font-serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        body[data-lang="hi"] .font-serif-title {
+            font-family: 'Yatra One', cursive;
+            letter-spacing: 0.05em;
+        }
+
+        /* Language Toggle Logic */
+        body[data-lang="en"] .lang-hi { display: none !important; }
+        body[data-lang="hi"] .lang-en { display: none !important; }
+
+        .nav-btn-active {
+            background-color: #9a3412; /* amber-800 */
+            color: #ffffff !important;
+            box-shadow: 0 4px 6px -1px rgba(154, 52, 18, 0.25);
+        }
+
+        /* Scrollbar Styling */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1ebd9; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d4a373; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #bc6c25; }
+
+        /* Typography for Deep Reading */
+        .book-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.85;
+            font-size: 1.1rem;
+            color: #3f3f46;
+            text-align: justify;
+        }
+        body[data-lang="hi"] .book-content p {
+            font-size: 1.25rem;
+            line-height: 2;
+        }
+        .book-content h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.75rem;
+            color: #78350f;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+        }
+        body[data-lang="hi"] .book-content h3 {
+            font-family: 'Yatra One', cursive;
+        }
+
+        /* TOC Active State */
+        .toc-active {
+            background-color: #fef3c7; /* amber-100 */
+            color: #9a3412; /* amber-800 */
+            border-left: 4px solid #9a3412;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            height: 320px;
+        }
+    </style>
+</head>
+<body data-lang="en" class="min-h-screen flex flex-col selection:bg-amber-200 selection:text-amber-900 transition-colors duration-300">
+
+    <header class="bg-stone-900 text-stone-100 border-b border-amber-900/40 sticky top-0 z-50 shadow-md">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col xl:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3 w-full xl:w-auto justify-between xl:justify-start">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">🪷</span>
+                    <div>
+                        <h1 class="font-serif-title text-xl sm:text-2xl font-bold tracking-wide text-amber-100">
+                            <span class="lang-en">KALIHANUVANI</span>
+                            <span class="lang-hi">कलिहनुवाणी</span>
+                        </h1>
+                        <p class="text-[0.65rem] text-amber-300/80 tracking-wider uppercase font-medium">
+                            <span class="lang-en">The Esoteric Text Reader</span>
+                            <span class="lang-hi">गूढ़ ग्रंथ पठन</span>
+                        </p>
+                    </div>
+                </div>
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" class="xl:ml-6 px-3 py-1.5 bg-stone-700 hover:bg-stone-600 border border-stone-500 rounded-lg text-xs font-bold transition-all shadow-inner flex items-center gap-2">
+                    <span class="text-amber-400">🌐</span>
+                    <span class="lang-en">EN / <span class="text-stone-400 font-normal">HI</span></span>
+                    <span class="lang-hi"><span class="text-stone-400 font-normal">EN</span> / HI</span>
+                </button>
+            </div>
+            
+            <!-- Navigation Bar - Reordered to push Simulators to the very end -->
+            <nav class="flex flex-wrap justify-center gap-1 bg-stone-800/80 p-1 rounded-xl border border-stone-700/60 text-xs sm:text-sm font-medium w-full xl:w-auto">
+                <button onclick="switchTab('reader')" id="tab-reader" class="nav-btn nav-btn-active px-3 py-1.5 rounded-lg transition-all duration-200">
+                    <span class="lang-en">📖 Read Book</span><span class="lang-hi">📖 पुस्तक पढ़ें</span>
+                </button>
+                <button onclick="switchTab('allegories')" id="tab-allegories" class="nav-btn text-stone-300 hover:text-white hover:bg-stone-700/50 px-3 py-1.5 rounded-lg transition-all duration-200">
+                    <span class="lang-en">📚 Parables</span><span class="lang-hi">📚 दृष्टांत</span>
+                </button>
+                <button onclick="switchTab('oracle')" id="tab-oracle" class="nav-btn text-amber-200 hover:text-white hover:bg-amber-900/50 px-3 py-1.5 rounded-lg transition-all duration-200 border border-transparent hover:border-amber-700/50">
+                    <span class="lang-en">✨ Oracle AI</span><span class="lang-hi">✨ दिव्य मार्गदर्शक</span>
+                </button>
+                <button onclick="switchTab('toolkit')" id="tab-toolkit" class="nav-btn text-stone-300 hover:text-white hover:bg-stone-700/50 px-3 py-1.5 rounded-lg transition-all duration-200">
+                    <span class="lang-en">🧘 Assessment</span><span class="lang-hi">🧘 जागृति</span>
+                </button>
+                <button onclick="switchTab('simulators')" id="tab-simulators" class="nav-btn text-stone-400 hover:text-white hover:bg-stone-700/50 px-3 py-1.5 rounded-lg transition-all duration-200 border-l border-stone-600/50 ml-1">
+                    <span class="lang-en">⚙️ Simulators</span><span class="lang-hi">⚙️ सिम्युलेटर</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="w-full flex-grow flex flex-col relative h-[calc(100vh-73px)] overflow-hidden">
+
+        <!-- SECTION 1: BOOK READER (Default View) -->
+        <section id="sec-reader" class="tab-content flex-grow flex h-full w-full">
+            
+            <!-- Mobile TOC Toggle -->
+            <button onclick="toggleMobileTOC()" class="md:hidden absolute bottom-6 right-6 z-40 bg-amber-800 text-white p-4 rounded-full shadow-2xl border border-amber-600 flex items-center justify-center">
+                <span class="lang-en">☰ Chapters</span>
+                <span class="lang-hi">☰ अध्याय</span>
+            </button>
+
+            <!-- Table of Contents Sidebar -->
+            <aside id="toc-sidebar" class="w-full md:w-80 lg:w-96 bg-stone-50 border-r border-stone-200 flex flex-col h-full absolute md:relative z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+                <div class="p-5 border-b border-stone-200 bg-white flex justify-between items-center">
+                    <h2 class="font-serif-title text-xl font-bold text-stone-800">
+                        <span class="lang-en">Index</span><span class="lang-hi">अनुक्रमणिका</span>
+                    </h2>
+                    <button onclick="toggleMobileTOC()" class="md:hidden text-stone-500 text-2xl">&times;</button>
+                </div>
+                
+                <div class="overflow-y-auto custom-scrollbar flex-grow p-4 space-y-6">
+                    
+                    <!-- Book 1 (Active) -->
+                    <div>
+                        <h3 class="text-xs font-bold tracking-widest text-amber-800 uppercase mb-3 px-2">
+                            <span class="lang-en">Book 1: Kalihanuvani</span>
+                            <span class="lang-hi">ग्रंथ १: कलिहनुवाणी</span>
+                        </h3>
+                        <ul id="toc-book1" class="space-y-1">
+                            <!-- Injected via JS -->
+                        </ul>
+                    </div>
+
+                    <!-- Book 2 (Future Proofing) -->
+                    <div>
+                        <h3 class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-3 px-2 border-t border-stone-200 pt-4">
+                            <span class="lang-en">Book 2: Upcoming</span>
+                            <span class="lang-hi">ग्रंथ २: आगामी</span>
+                        </h3>
+                        <ul class="space-y-1">
+                            <li>
+                                <div class="px-3 py-2 rounded-lg text-sm text-stone-400 flex items-center gap-2 bg-stone-100/50 cursor-not-allowed">
+                                    <span>🔒</span>
+                                    <span class="lang-en">Part 2 (Ch 13+) Coming Soon</span>
+                                    <span class="lang-hi">भाग 2 (अध्याय 13+) जल्द ही</span>
+                                </div>
+                                <p class="text-[0.65rem] px-8 text-stone-400 mt-1">
+                                    <span class="lang-en">Future chapters starting from Chapter 13 will be uploaded here from hard copies.</span>
+                                    <span class="lang-hi">अध्याय 13 से आगे के अध्याय यहाँ हार्ड कॉपी से अपलोड किए जाएंगे।</span>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- Reading Content Area -->
+            <article class="flex-grow bg-white h-full overflow-y-auto custom-scrollbar relative scroll-smooth" id="reader-scroll-area">
+                <div class="max-w-4xl mx-auto px-6 py-10 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+                    
+                    <!-- Chapter Header -->
+                    <div class="mb-12 text-center border-b border-amber-900/10 pb-10">
+                        <span id="reader-ch-num" class="text-amber-700 font-bold tracking-widest uppercase text-sm mb-3 block">--</span>
+                        <h1 id="reader-ch-title" class="font-serif-title text-4xl sm:text-5xl font-bold text-stone-900 mb-6 leading-tight">--</h1>
+                    </div>
+
+                    <!-- Chapter Text Body -->
+                    <div id="reader-ch-body" class="book-content pb-12">
+                        <!-- Content Injected via JS -->
+                    </div>
+
+                    <!-- Book Purchase Call to Action -->
+                    <div class="mb-12 bg-gradient-to-br from-amber-100/50 to-stone-100 border border-amber-800/20 rounded-2xl p-6 sm:p-8 shadow-sm relative overflow-hidden">
+                        <!-- Decorative background element -->
+                        <div class="absolute top-0 right-0 -mt-4 -mr-4 text-8xl opacity-5 select-none pointer-events-none">🪷</div>
+                        
+                        <div class="relative z-10 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                            <!-- Book Mockup/Icon -->
+                            <div class="w-24 h-32 bg-stone-900 rounded-lg shadow-lg flex-shrink-0 flex items-center justify-center border-[3px] border-amber-900/40 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent to-white/10"></div>
+                                <span class="text-amber-500 text-4xl">📖</span>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="flex-grow text-center sm:text-left">
+                                <h4 class="font-serif-title text-xl sm:text-2xl font-bold text-amber-950 mb-2">
+                                    <span class="lang-en">Dive Deeper: Read the Full Book</span>
+                                    <span class="lang-hi">गहराई में उतरें: संपूर्ण पुस्तक पढ़ें</span>
+                                </h4>
+                                <p class="text-stone-700 text-sm mb-5 leading-relaxed">
+                                    <span class="lang-en">The chapters presented here are highly condensed summaries. To fully grasp the profound mechanics of the soul, the universe, and the esoteric teachings of Hanuman, we highly recommend reading the complete, detailed book <strong>Kalihanuvani (Immortal Talks)</strong> by <strong>Shunya</strong>.</span>
+                                    <span class="lang-hi">यहाँ दिए गए अध्याय अत्यंत संक्षिप्त सारांश मात्र हैं। आत्मा के यांत्रिकी, ब्रह्मांड और हनुमान जी के गूढ़ उपदेशों को गहराई से समझने के लिए, <strong>शून्य (Shunya)</strong> द्वारा रचित संपूर्ण पुस्तक <strong>कलिहनुवाणी (Immortal Talks)</strong> अवश्य पढ़ें।</span>
+                                </p>
+                                
+                                <!-- Purchase Links -->
+                                <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
+                                    <a href="https://www.amazon.in/s?k=Kalihanuvani+Shunya" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-800 hover:bg-amber-900 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+                                        <span>🛒</span> 
+                                        <span class="lang-en">Get it on Amazon</span>
+                                        <span class="lang-hi">अमेज़न से प्राप्त करें</span>
+                                    </a>
+                                    <a href="https://the-gyan.in/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-800 hover:bg-stone-900 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+                                        <span>🌐</span> 
+                                        <span class="lang-en">Official Store</span>
+                                        <span class="lang-hi">आधिकारिक स्टोर</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination Footer -->
+                    <div class="border-t border-stone-200 pt-8 flex justify-between items-center pb-20 md:pb-8">
+                        <button onclick="navigateChapter(-1)" id="btn-prev-ch" class="px-5 py-2.5 rounded-lg text-stone-600 hover:text-amber-800 hover:bg-amber-50 font-medium transition flex items-center gap-2 border border-transparent hover:border-amber-200">
+                            <span>←</span> <span class="lang-en">Previous</span><span class="lang-hi">पिछला</span>
+                        </button>
+                        <button onclick="navigateChapter(1)" id="btn-next-ch" class="px-5 py-2.5 rounded-lg text-stone-600 hover:text-amber-800 hover:bg-amber-50 font-medium transition flex items-center gap-2 border border-transparent hover:border-amber-200">
+                            <span class="lang-en">Next</span><span class="lang-hi">अगला</span> <span>→</span>
+                        </button>
+                    </div>
+
+                </div>
+            </article>
+
+        </section>
+
+        
+        <!-- SECTION 2: PARABLE LIBRARY -->
+        <section id="sec-allegories" class="tab-content hidden h-full overflow-y-auto bg-[#faf6f0] p-6 sm:p-10">
+            <div class="max-w-6xl mx-auto space-y-8 pb-20">
+                <div class="bg-amber-900/10 border border-amber-800/20 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+                    <h2 class="font-serif-title text-2xl sm:text-3xl font-bold text-amber-950 mb-3 flex items-center gap-2">
+                        <span class="lang-en">📚 Parable & Case Study Library</span>
+                        <span class="lang-hi">📚 दृष्टांत और कथा लाइब्रेरी</span>
+                    </h2>
+                    <p class="text-stone-700 leading-relaxed text-sm sm:text-base">
+                        <span class="lang-en">Explore esoteric narratives and allegories extracted from the text of <em>Kalihanuvani</em>. Filter by thematic focus.</span>
+                        <span class="lang-hi"><em>कलिहनुवाणी</em> के पाठ से निकाले गए गूढ़ आख्यानों और दृष्टांतों का अन्वेषण करें।</span>
+                    </p>
+                </div>
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+                    <button onclick="filterParables('all')" class="parable-filter-btn px-4 py-2 rounded-lg bg-stone-900 text-white font-medium shadow-sm transition">
+                        <span class="lang-en">All Stories</span><span class="lang-hi">सभी कहानियाँ</span>
+                    </button>
+                    <button onclick="filterParables('karma')" class="parable-filter-btn px-4 py-2 rounded-lg bg-white border border-stone-300 text-stone-700 font-medium hover:bg-stone-100 transition">
+                        <span class="lang-en">Karma & Choice</span><span class="lang-hi">कर्म और विकल्प</span>
+                    </button>
+                    <button onclick="filterParables('attachment')" class="parable-filter-btn px-4 py-2 rounded-lg bg-white border border-stone-300 text-stone-700 font-medium hover:bg-stone-100 transition">
+                        <span class="lang-en">Attachment & Mind</span><span class="lang-hi">आसक्ति और मन</span>
+                    </button>
+                    <button onclick="filterParables('matrix')" class="parable-filter-btn px-4 py-2 rounded-lg bg-white border border-stone-300 text-stone-700 font-medium hover:bg-stone-100 transition">
+                        <span class="lang-en">Matrix & Soul</span><span class="lang-hi">मैट्रिक्स और आत्मा</span>
+                    </button>
+                </div>
+                <!-- Parables Grid -->
+                <div id="parables-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: DIVINE ORACLE (AI CHAT) -->
+        <section id="sec-oracle" class="tab-content hidden h-full overflow-y-auto bg-[#faf6f0] p-6 sm:p-10">
+            <div class="max-w-6xl mx-auto space-y-8 pb-20">
+                <div class="bg-gradient-to-br from-amber-900 to-stone-900 border border-amber-800/40 rounded-2xl p-6 sm:p-8 shadow-lg text-amber-100">
+                    <h2 class="font-serif-title text-2xl sm:text-3xl font-bold text-amber-200 mb-3 flex items-center gap-2">
+                        <span class="lang-en">✨ The Divine Oracle AI</span><span class="lang-hi">✨ दिव्य मार्गदर्शक</span>
+                    </h2>
+                    <p class="text-amber-100/80 leading-relaxed text-sm sm:text-base">
+                        <span class="lang-en">Converse with an AI attuned to the metaphysical laws of the <em>Kalihanuvani</em>. Share a dilemma to generate a custom parable.</span>
+                        <span class="lang-hi"><em>कलिहनुवाणी</em> के नियमों के अनुरूप एआई से बात करें। कस्टम दृष्टांत उत्पन्न करें।</span>
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- AI Chat Interface -->
+                    <div class="bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col h-[500px] overflow-hidden">
+                        <div class="bg-stone-100 p-4 border-b border-stone-200 font-bold text-stone-800">
+                            <span class="lang-en">Chat with the Oracle</span><span class="lang-hi">दिव्य मार्गदर्शक से बात करें</span>
+                        </div>
+                        <div id="chat-history" class="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar bg-stone-50/50">
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-amber-800 flex items-center justify-center text-white shrink-0 text-sm shadow-md">🪷</div>
+                                <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-stone-200 shadow-sm max-w-[85%] text-sm text-stone-800 leading-relaxed">
+                                    <span class="lang-en">Welcome, seeker. I am the Oracle. Ask me about the 14 Threads, Karma bindings, or the matrix of reality.</span>
+                                    <span class="lang-hi">स्वागत है, साधक। मैं ओरेकल हूँ। मुझसे 14 तारों, कर्म के बंधनों, या वास्तविकता के मैट्रिक्स के बारे में पूछें।</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-white border-t border-stone-200">
+                            <form id="ai-chat-form" class="flex gap-3 relative" onsubmit="handleChatSubmit(event)">
+                                <input type="text" id="ai-chat-input" placeholder="Ask a question..." class="lang-en-ph flex-grow p-3.5 pr-12 rounded-xl border border-stone-300 bg-stone-50 text-stone-800 focus:ring-2 focus:ring-amber-700 outline-none transition-shadow" autocomplete="off">
+                                <button type="submit" id="ai-chat-submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-amber-800 hover:bg-amber-900 text-white rounded-lg flex items-center justify-center transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 ml-1"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" /></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- AI Parable Generator -->
+                    <div class="bg-stone-50 p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col h-[500px]">
+                        <h3 class="font-serif-title text-xl font-bold text-amber-900 mb-2">
+                            <span class="lang-en">Generate Custom Parable</span><span class="lang-hi">कस्टम दृष्टांत बनाएँ</span>
+                        </h3>
+                        <div class="flex flex-col gap-3 shrink-0">
+                            <textarea id="ai-parable-input" rows="3" placeholder="e.g., I am stressed about my corporate job..." class="lang-en-ph w-full p-3 rounded-xl bg-white border border-stone-300 text-stone-800 focus:ring-2 focus:ring-amber-700 outline-none resize-none custom-scrollbar"></textarea>
+                            <button onclick="generateCustomParable()" id="ai-parable-btn" class="w-full px-6 py-3 bg-stone-800 hover:bg-stone-900 text-white font-bold rounded-xl transition shadow-sm">
+                                <span class="lang-en">Generate Parable</span><span class="lang-hi">दृष्टांत उत्पन्न करें</span>
+                            </button>
+                        </div>
+                        <div id="ai-parable-output" class="hidden mt-4 p-5 bg-white rounded-xl border border-stone-200 text-stone-700 text-sm leading-relaxed overflow-y-auto custom-scrollbar flex-grow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: JAGRITI SELF-ASSESSMENT -->
+        <section id="sec-toolkit" class="tab-content hidden h-full overflow-y-auto bg-[#faf6f0] p-6 sm:p-10">
+            <div class="max-w-4xl mx-auto space-y-8 pb-20">
+                <div class="bg-amber-900/10 border border-amber-800/20 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+                    <h2 class="font-serif-title text-2xl sm:text-3xl font-bold text-amber-950 mb-3">
+                        <span class="lang-en">🧘 Jagriti (Awareness) Assessment</span>
+                        <span class="lang-hi">🧘 जागृति (जागरूकता) मूल्यांकन</span>
+                    </h2>
+                    <p class="text-stone-700 leading-relaxed text-sm sm:text-base">
+                        <span class="lang-en">Test your soul's level of detachment and identification with the material script. The higher your Jagriti Vishwas (Awareness Score), the closer you are to Shunya.</span>
+                        <span class="lang-hi">भौतिक स्क्रिप्ट के साथ अपनी आत्मा के वैराग्य और पहचान के स्तर का परीक्षण करें।</span>
+                    </p>
+                </div>
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-6">
+                    <div class="space-y-6">
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-stone-900">
+                                <span class="lang-en">1. When faced with sudden, unfair criticism, how does your internal state react?</span>
+                                <span class="lang-hi">1. अचानक, अनुचित आलोचना का सामना करने पर, आपकी आंतरिक स्थिति कैसे प्रतिक्रिया करती है?</span>
+                            </label>
+                            <select id="q1" class="w-full p-3 rounded-xl border border-stone-300 bg-stone-50 outline-none">
+                                <option value="10">Immediate intense anger or prolonged resentment.</option>
+                                <option value="20">I defend myself logically but feel a lingering sting.</option>
+                                <option value="30">I observe the criticism as a script playing out, feeling minimal shift.</option>
+                                <option value="40">Complete stillness. The criticism passes through me like wind.</option>
+                            </select>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-stone-900">
+                                <span class="lang-en">2. When experiencing deep physical or emotional pain, where is your focal point?</span>
+                                <span class="lang-hi">2. जब गहरा दर्द हो रहा हो, तो आपकी जागरूकता का केंद्र बिंदु कहाँ होता है?</span>
+                            </label>
+                            <select id="q2" class="w-full p-3 rounded-xl border border-stone-300 bg-stone-50 outline-none">
+                                <option value="10">Totally absorbed in the pain. I am the sufferer.</option>
+                                <option value="20">I try to distract myself or rationalize the pain away.</option>
+                                <option value="30">I step back and observe "the body" experiencing pain.</option>
+                                <option value="40">I consistently rest in the Shunya corridor, observing pain as distant.</option>
+                            </select>
+                        </div>
+                        <button onclick="calculateJagriti()" class="w-full sm:w-auto px-6 py-3 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl transition shadow-sm">
+                            <span class="lang-en">Calculate Jagriti Score</span><span class="lang-hi">जागृति स्कोर की गणना करें</span>
+                        </button>
+                    </div>
+                    <div class="mt-8 bg-stone-50 border border-stone-200 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-4">
+                        <div class="w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center border-2 border-amber-800 shrink-0">
+                            <span id="jagriti-score" class="font-serif-title font-bold text-2xl text-amber-900">--%</span>
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <h3 id="jagriti-status" class="font-serif-title font-bold text-lg text-stone-900">
+                                <span class="lang-en">State: Awaiting Assessment</span><span class="lang-hi">स्थिति: मूल्यांकन की प्रतीक्षा में</span>
+                            </h3>
+                            <p id="jagriti-presc" class="text-sm text-stone-600 mt-1">Answer the questions above to determine your soul's level of wakefulness.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: SIMULATORS (HIDDEN BY DEFAULT AT VERY END) -->
+        <section id="sec-simulators" class="tab-content hidden h-full overflow-y-auto bg-[#faf6f0] p-6 sm:p-10">
+            <div class="max-w-6xl mx-auto space-y-12 pb-20">
+                <div class="bg-amber-900/10 border border-amber-800/20 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+                    <h2 class="font-serif-title text-2xl sm:text-3xl font-bold text-amber-950 mb-3 flex items-center gap-2">
+                        <span class="lang-en">⚙️ Interactive Mechanics Lab</span>
+                        <span class="lang-hi">⚙️ इंटरएक्टिव मैकेनिक्स लैब</span>
+                    </h2>
+                    <p class="text-stone-700 leading-relaxed text-sm sm:text-base">
+                        <span class="lang-en">Visualize the mechanics of the soul. Adjust the Linga Key, explore the 14 Threads radar, and inspect the Mental Tetrad.</span>
+                        <span class="lang-hi">आत्मा के यांत्रिकी की कल्पना करने के लिए इन सिमुलेटरों का उपयोग करें।</span>
+                    </p>
+                </div>
+
+                <!-- SIM 1: Linga Key -->
+                <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-6">
+                    <div>
+                        <h3 class="font-serif-title text-xl font-bold text-stone-900 mb-2 flex items-center gap-2">
+                            <span class="lang-en">1. Linga Key Reality Frame Simulator</span>
+                            <span class="lang-hi">1. लिंग कुंजी वास्तविकता सिम्युलेटर</span>
+                        </h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-6 bg-stone-50 p-6 rounded-xl border border-stone-200">
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold text-stone-800 mb-2">
+                                    <span class="lang-en">Karma Burden:</span><span class="lang-hi">कर्म का भार:</span>
+                                    <span id="val-karma" class="text-amber-800 font-bold">50</span>
+                                </div>
+                                <input type="range" id="input-karma" min="0" max="100" value="50" oninput="updateLingaSimulator()" class="w-full accent-amber-700 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold text-stone-800 mb-2">
+                                    <span class="lang-en">Desire Intensity:</span><span class="lang-hi">इच्छा की तीव्रता:</span>
+                                    <span id="val-desire" class="text-amber-800 font-bold">65</span>
+                                </div>
+                                <input type="range" id="input-desire" min="0" max="100" value="65" oninput="updateLingaSimulator()" class="w-full accent-amber-700 cursor-pointer">
+                            </div>
+                            <div class="p-3 bg-amber-100/60 border border-amber-300/60 rounded-lg text-xs text-amber-900 font-medium">
+                                <span class="font-bold">Param-Bhasha Code:</span>
+                                <div id="binary-code" class="font-mono text-sm tracking-widest text-amber-950 mt-1">K-01100101 | I-10000001</div>
+                            </div>
+                        </div>
+
+                        <div id="linga-result-card" class="bg-stone-900 text-stone-100 p-6 rounded-xl space-y-4 border border-stone-800 shadow-inner transition-colors">
+                            <div class="flex justify-between items-center border-b border-stone-700 pb-3">
+                                <span class="text-xs font-semibold tracking-wider text-amber-400 uppercase">Target Reality Track</span>
+                                <span id="linga-status-tag" class="text-xs px-2.5 py-1 rounded-full font-mono transition-colors">--</span>
+                            </div>
+                            <h4 id="linga-track-title" class="font-serif-title text-xl font-bold text-amber-100">--</h4>
+                            <p id="linga-track-desc" class="text-stone-300 text-sm leading-relaxed">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIM 2: Threads Radar -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-6">
+                    <h3 class="font-serif-title text-xl font-bold text-stone-900 mb-2">
+                        <span class="lang-en">2. The 14 Threads Consciousness Radar</span>
+                        <span class="lang-hi">2. चेतना के 14 तारों का रडार</span>
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <div class="lg:col-span-7 space-y-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <label class="text-sm font-bold text-stone-900"><span class="lang-en">Select Thread Level:</span><span class="lang-hi">चेतना का स्तर चुनें:</span></label>
+                                    <span id="thread-badge" class="px-3.5 py-1.5 rounded-full bg-amber-800 text-white font-mono text-sm font-bold">Level 6</span>
+                                </div>
+                                <input type="range" id="thread-slider" min="6" max="14" step="1" value="6" oninput="updateThreadView()" class="w-full accent-amber-700 cursor-pointer h-2 bg-stone-200 rounded-lg">
+                            </div>
+                            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 space-y-4">
+                                <h3 id="thread-title" class="font-serif-title text-xl font-bold text-amber-900">--</h3>
+                                <p id="thread-desc" class="text-stone-700 text-sm leading-relaxed">--</p>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 flex flex-col justify-between">
+                            <div class="chart-container"><canvas id="threadsRadarChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // STATE & BILINGUAL DATA
+        let currentLang = 'en';
+        let currentChapterIndex = 0;
+        let threadsChart = null;
+
+        const bookChapters = [
+            {
+                id: "preface",
+                num: { en: "Preface", hi: "प्रस्तावना" },
+                title: { en: "The Meeting", hi: "भेंट" },
+                content: {
+                    en: `<p>On a seemingly ordinary afternoon in a dense forest, two middle-aged men lay hidden behind a tree. With their long, untamed beards and disheveled hair, they appeared as tribals. However, the serene birds perched on the branches above were not fooled by their disguise; even a forest ant could tell they were outsiders. Their eyes were fixed on a group of tribals gathering firewood in the distance.</p>
+                         <p>"Another day wasted. Oh Hanudas! We must accept there is nothing special about these tribals. We foolishly believed they could see the immortal Hanuman," one of the men exhaled deeply, abandoning his stealthy posture.</p>
+                         <p>Hanudas, his mind still tethered to the tribal gathering, replied in a defeated tone, "You are right, Swami ji." Before his spiritual journey, Hanudas was a wealthy man in Toronto who had lost his wife and son to tragic circumstances, leaving him in a profound state of emptiness.</p>
+                         <p>It was in that absolute void—returning from his son's funeral—that Hanudas had witnessed a miraculous sight: a majestic, airborne figure of Lord Hanuman gliding above a vehicle. This event transformed him from a slave of materialism into a seeker of supreme truth. Now, after months of aimless wandering to silence his mind, destiny had brought him to the Matang tribe, isolated forest dwellers who were rumored to be the secret disciples of the immortal Hanuman, receiving ultimate cosmic knowledge every 41 years.</p>
+                         <p>On that very day, watching a young Matang woman fall into what looked like an epileptic fit, Hanudas saw three pulsating entities of light near her. The illusion shattered when the woman rose, bowed to an invisible presence, and began speaking to empty air. The other saint saw nothing, but Hanudas knew: the immortal Hanuman was standing right there.</p>`,
+                    hi: `<p>घने जंगल की एक साधारण दोपहर में कुछ असाधारण था तो वे अधेड़ आयु के दो पुरुष जो एक पेड़ की आड़ में छिपकर घात लगाए बैठे थे। उनकी लंबी, जंगली दाढ़ी और बेतरतीब बालों से ऐसा लग रहा था जैसे वे आदिवासी हों। परंतु उनके नकली भेष से ऊपर डाल पर बैठे शांत पक्षी भी भ्रमित नहीं थे। जंगल की चींटी भी बता सकती थी कि वे दोनों बाहरी थे। कुछ अस्पष्ट था तो उन अतिक्रमणकारियों का उद्देश्य। पेड़ की आड़ लेकर वे क्या देख रहे थे?</p>
+                         <p>"एक और दिन व्यर्थ हो गया। हे हनुदास जी ! अब तो हमें मान लेना चाहिए कि इन आदिवासियों में कोई विशेष बात नहीं है। कहाँ हम मान बैठे थे कि ये जन चिरंजीवी हनुमान जी को देख सकते हैं," एक बाहरी पुरुष गहरी श्वास छोड़ते हुए बोला।</p>
+                         <p>हनुदास जी ने भी परास्त स्वर में उत्तर दिया, "ठीक कहते हो आप, स्वामी जी।" पाँच वर्ष पहले तक हनुदास जी के लिए 'हनुमान' शब्द भी अबोधगम्य था। कनाडा देश के टोरंटो नगर में एक कुलीन जीवन शैली जीने वाले हनुदास जी का जीवन तब बदला जब उन्होंने अपनी पत्नी और पुत्र को खो दिया।</p>
+                         <p>अपने पुत्र के अंतिम संस्कार के दिन, जब उनका मन पूर्णतः रिक्त था, उन्होंने एक तिलस्मी दृश्य देखा था: अद्भुत वानर जैसी सजीव आकृति गाड़ी के साथ-साथ उड़ रही थी। वह दिव्य आकृति कोई और नहीं अपितु चिरंजीवी देव हनुमान थे। इसी खोज में वे आज उन आदिवासियों (मातंगों) की गुप्तचरी कर रहे थे जो हनुमान जी के शिष्य माने जाते थे।</p>
+                         <p>उसी दिन, एक मातंग युवती को मिर्गी का दौरा पड़ने के बाद, हनुदास जी ने उस सुप्त युवती के समीप तीन प्रकाशमय आकृतियाँ देखीं। जब वह युवती उठी, तो उसने एक अदृश्य शक्ति को साष्टांग प्रणाम किया। स्वामी जी को केवल एक बीमार युवती दिखी, परंतु हनुदास जी की आत्मा जानती थी कि वह अदृश्य शक्ति चिरंजीवी हनुमान ही थे।</p>`
+                }
+            },
+            {
+                id: "ch1",
+                num: { en: "Chapter 1", hi: "अध्याय 1" },
+                title: { en: "Born of Two Mothers", hi: "दो माताओं से जना" },
+                content: {
+                    en: `<p>A strange environment of conflict and confusion clouded the Matang tribe. Two women, Sucheta and Vicheta, were claiming to be the real mother of a child named Chitta. How could a child be born from two wombs?</p>
+                         <p>Baba Matang, the elderly tribal chief, addressed the gathering. "We all know Sucheta gave birth to Chitta a year ago. But since the new moon night, Vicheta has not only developed maternal affection for him, but also deep memories of birthing him. Furthermore, Chitta has forgotten Sucheta and only recognizes Vicheta as his mother."</p>
+                         <p>Seeking clarity, Baba Matang scaled the 'Ancestors' Rock' at night to commune with spirits. Instead of ancestors, he found Lord Hanuman meditating there in a radiant halo. Baba Matang prostrated, and brought the mothers and the child before the immortal Guru.</p>
+                         <p>Hanuman smiled. "How can we decide who the mother is? Whoever Chitta is attached to is his mother." He explained that Chitta, an old soul, was laughing because he remembered his past life. In his previous life, he was an ascetic who died of thirst after failing to save a dying mother in a village. Before reincarnating, his soul was given a choice in the Shunya (Void) corridors between seven different reality tracks.</p>
+                         <p>He chose a reality track (Track 6) where both Sucheta and Vicheta would alternate as his mother every fortnight, creating conflict. Why? Because adversity and shifting attachments would keep his soul awakened to the illusion of Maya, preventing him from falling into the deep sleep of material identification, aiding his ultimate liberation (Moksha).</p>`,
+                    hi: `<p>द्वंद्व एवं भ्रम का वातावरण था। जिस स्थान पर हनुमान जी के मातंग शिष्य बसे हों वहाँ पर ऐसा होना आश्चर्य की बात थी। सुचेता एवं विचेता नामक दो महिलाएँ चित्ता नामक एक बालक की वास्तविक माता होने का दावा कर रही थीं। एक बालक दो कोखों से कैसे जन्म ले सकता था?</p>
+                         <p>बाबा मातंग ने सभा को संबोधित किया, "हम सभी जानते हैं कि लगभग एक वर्ष पहले सुचेता ने चित्ता को जन्म दिया था। किंतु दो रात्रि पहले जब अमावस्या की रात थी तब से विचेता के मन में चित्ता के प्रति वात्सल्य उमड़ पड़ा है और ऐसी स्मृतियाँ पनप गई हैं कि उसने चित्ता को जन्म दिया था। और चित्ता भी अब विचेता को ही अपनी माता मानने लगा है।"</p>
+                         <p>सत्य जानने के लिए बाबा मातंग 'पूर्वजों की चट्टान' पर गए। वहाँ उन्हें पूर्वज नहीं, अपितु स्वयं चिरंजीवी हनुमान जी ध्यान मुद्रा में मिले। बाबा ने दोनों माताओं और बालक को हनुमान जी के समक्ष प्रस्तुत किया।</p>
+                         <p>हनुमान जी ने शांत स्वर में कहा, "जिससे चित्ता को आसक्ति है, वहीं उसकी माता है।" उन्होंने बताया कि चित्ता की आत्मा ने पिछले जन्म में एक साधु के रूप में देह त्यागी थी। मोक्ष प्राप्त करने की लालसा में, शून्य सुरंगों में उसकी आत्मा ने सात विभिन्न वास्तविकताओं में से एक जटिल वास्तविकता का चुनाव किया था।</p>
+                         <p>उसकी आत्मा ने छठा जीवन चुना, जिसमें सुचेता और विचेता बारी-बारी से एक-एक पखवाड़े के लिए उसकी माँ बनेंगी। आत्मा ने यह संघर्षपूर्ण जीवन इसलिए चुना क्योंकि इस जीवन में उसकी आत्मा संसार की मोह-माया और बंधनों के प्रति जागृत रहेगी, जिससे उसको मोक्ष प्राप्त करने में सहायता मिलेगी।</p>`
+                }
+            },
+            {
+                id: "ch2",
+                num: { en: "Chapter 2", hi: "अध्याय 2" },
+                title: { en: "The Mermaid", hi: "जलकन्या" },
+                content: {
+                    en: `<p>Young Urva, the future chief of the Matangs, suffered from a recurring nightmare. In it, he was stranded on a rock in the middle of a vast ocean. A beautiful mermaid appeared, offering to rescue him. Intoxicated by her innocence, he reached out, only to be dragged into the depths, transforming into a sea-dweller himself, forever enslaved in an emotionally barren underwater kingdom.</p>
+                         <p>Hanuman revealed the esoteric meaning of the "Jalkanya" (Mermaid). "Any soul you are attached to, whether through love, anger, pity, or hatred, becomes a mermaid for you. Because of your attachment, they drag you into their reservoir of bad karma."</p>
+                         <p>Attachment digs karmic canals between souls. If you feel extreme pity for a dying dog, or extreme rage towards a thief, you form a link. The other soul, naturally seeking to shed its dense, negative karma, inadvertently pours it into you through this canal. You are dragged underwater.</p>
+                         <p>The only defense is *Jagriti* (Awareness). A Matang must perform duties—saving the dog, protecting the tribe—not out of emotional identification, but with the detached awareness that they are merely an observing soul playing a character in the grand, static theater of Maya. Baba Matang learned this the hard way when his anger towards a monkey caused his beloved nephews to suffer a snakebite due to karmic transfer.</p>`,
+                    hi: `<p>युवा उर्वा को बचपन से एक भयानक सपना आता था। विशाल समुद्र के बीच एक चट्टान पर मृत्यु की प्रतीक्षा करते हुए, उसे एक जलकन्या दिखाई देती है। वह उसे बचाने के लिए हाथ बढ़ाता है, परंतु जलकन्या उसे गहरे समुद्र में खींच लेती है और वह स्वयं एक जलमानव बनकर उस घुटन भरे जलचरी जीवन में फँस जाता है।</p>
+                         <p>बाबा मातंग ने उर्वा को समझाया, "कोई भी आत्मा जिससे आप जुड़ गए हैं, जिससे आपको किसी भी प्रकार की आसक्ति है, वह आत्मा आपके लिए जलकन्या है क्योंकि वह आत्मा अपने बुरे कर्मों के सरोवर में आपको डुबा देती है।"</p>
+                         <p>आसक्ति (लगाव, घृणा, दया, क्रोध) दो आत्माओं के बीच एक आध्यात्मिक नहर खोद देती है। दूसरी आत्मा, अनजाने में ही, अपने बुरे कर्मों का भार उस नहर के माध्यम से आप पर उड़ेल देती है। यही जलकन्या का रहस्य है। जब बाबा मातंग को सड़े हुए कुत्ते के घावों को देखकर घृणा हुई, तो वह उन कीड़ों की जलकन्या का शिकार हो गए, जिससे उनके भतीजों को सांप ने काट लिया।</p>
+                         <p>इससे बचने का एकमात्र उपाय 'जागृति' है। आपको सहायता करनी चाहिए, कर्तव्य निभाना चाहिए, परंतु इस जागृति के साथ कि आप माया के इस महानाटक में केवल एक किरदार का अभिनय कर रहे हैं। आप आत्मा हैं, भावनाएं नहीं।</p>`
+                }
+            },
+            {
+                id: "ch3",
+                num: { en: "Chapter 3", hi: "अध्याय 3" },
+                title: { en: "Describing the Indescribable", hi: "अवर्णीय का वर्णन" },
+                content: {
+                    en: `<p>Urmi, a brilliant young Matang woman, suffered from severe epileptic seizures. During one such violent attack, while her friends watched helplessly, the Ashwin Kumars (twin gods of health) and Lord Hanuman arrived invisibly to treat her soul.</p>
+                         <p>To cure her, Hanuman had to decouple her soul from the dense karmic bindings causing the illness. To do this, he transmitted cosmic knowledge directly into her mind, describing the fundamental structure of the universe: The Kaal-Akaash Matrix.</p>
+                         <p>"The universe," Hanuman revealed, "is a static, infinite white sphere. It is filled with the fluid of Space (Akaash) and structured by golden threads of Time (Kaal). Everything that has ever happened or will ever happen already exists simultaneously within this sphere as static frames."</p>
+                         <p>Motion is an illusion. The soul resides in absolute stillness in the 'Shunya (Void) Corridors'. It slides across the threads of time, illuminating sequential static frames with its presence, experiencing the illusion of a moving life. To heal, Urmi's soul needed to realize she was not the sick body, but the untouchable observer in the void, capable of shifting to a healthier reality track.</p>`,
+                    hi: `<p>उर्मी, एक कुशाग्र युवा मातंग कन्या, मिर्गी के भयानक दौरों से पीड़ित थी। एक ऐसे ही दौरे के दौरान, जब वह अचेत लेटी थी, स्वास्थ्य के देवता अश्विन कुमार और हनुमान जी उसकी आत्मा का उपचार करने के लिए अदृश्य रूप से वहाँ पहुँचे।</p>
+                         <p>उपचार के लिए हनुमान जी ने उर्मी के मस्तिष्क में सीधे ज्ञान का संचार किया। उन्होंने काल-आकाश (अंतरिक्ष और समय) के मैट्रिक्स का वर्णन किया: "यह ब्रह्मांड अंतरिक्ष (आकाश) के द्रव से भरे और समय (काल) के तारों द्वारा संरचित एक स्थिर, अनंत श्वेत क्षेत्र है। जो कुछ भी कभी हुआ है या कभी होगा वह पहले से ही स्थिर फ्रेम के रूप में मौजूद है।"</p>
+                         <p>गति एक भ्रम है। आत्मा शून्य सुरंगों में विश्राम करती है और समय के तारों पर खिसकती है। जैसे ही आत्मा अनुक्रमिक फ्रेमों को रोशन करती है, उसे जीवन का अनुभव होता है। उर्मी को यह बोध होना था कि वह रोगग्रस्त देह नहीं, अपितु शून्य में स्थित एक स्वतंत्र आत्मा है, जो किसी भी समय एक स्वस्थ वास्तविकता का चुनाव कर सकती है।</p>`
+                }
+            },
+            {
+                id: "ch4",
+                num: { en: "Chapter 4", hi: "अध्याय 4" },
+                title: { en: "Threads of Time", hi: "समय के तार" },
+                content: {
+                    en: `<p>Following Urmi's metaphysical lesson, Hanuman unveiled the intricate workings of the "Threads of Time." The universe is an infinite white sphere filled with the fluid of Space (Akaash) and woven with threads of Time (Kaal). Souls rest in the Shunya corridors, observing the static frames of reality.</p>
+                         <p>Hanuman explained that a soul's spiritual maturity is quantified by how many "Threads of Time" it commands. At Level 6, the soul is primal, driven entirely by animalistic instincts of survival and reproduction. At Level 7, it begins to follow basic belief systems and tribal dogmas. As the soul matures to Level 10 and 11, it becomes fanatic, completely absorbed in its own superiority and religious dogma.</p>
+                         <p>At Level 13, the soul recognizes the universe itself as the ultimate expression of the divine, needing no specific dogma. Finally, at Level 14, the soul splits into two mirror images (Dual-Soul state). One part engages with the script of Maya (the material world), while the other part acts as the detached observer, pulling the character toward absolute Moksha (Liberation).</p>
+                         <p>Hanuman recounted the past life of a farmer's wife named Chandra. She selflessly fed starving monkeys who had accidentally caused a severe head injury to her child. Because she fed them without religious pretense or expectation of reward, her compassion reached a divine crescendo. Her soul, currently at 13 threads, needed to split to save her dying child without violating the static laws of the Kaal-Akaash matrix.</p>`,
+                    hi: `<p>उर्मी को ज्ञान देने के पश्चात, हनुमान जी ने "समय के तारों" की जटिल कार्यप्रणाली का अनावरण किया। आत्मा शून्य सुरंगों में विश्राम करती है और समय के तारों पर खिसककर वास्तविकता के स्थिर फ्रेमों का निरीक्षण करती है।</p>
+                         <p>हनुमान जी ने बताया कि एक आत्मा की आध्यात्मिक परिपक्वता इस बात से मापी जाती है कि वह कितने "समय के तारों" को नियंत्रित करती है। स्तर 6 पर, आत्मा आदिम होती है, जो पूरी तरह से पशु प्रवृत्तियों से प्रेरित होती है। स्तर 7 पर, वह बुनियादी मान्यताओं का पालन करना शुरू करती है। जैसे-जैसे आत्मा 10 और 11 स्तर तक परिपक्व होती है, वह कट्टर हो जाती है, अपने स्वयं के धार्मिक हठधर्मिता में पूरी तरह से लीन हो जाती है।</p>
+                         <p>स्तर 13 पर, आत्मा ब्रह्मांड को ही परमात्मा की अंतिम अभिव्यक्ति के रूप में पहचानती है। अंततः, स्तर 14 पर, आत्मा दो दर्पण छवियों (दोहरी आत्मा स्थिति) में विभाजित हो जाती है। एक भाग माया की स्क्रिप्ट के साथ जुड़ता है, जबकि दूसरा भाग एक तटस्थ पर्यवेक्षक के रूप में कार्य करता है, जो मोक्ष की ओर खींचता है।</p>
+                         <p>हनुमान जी ने चंद्रा नामक एक किसान की पत्नी के पिछले जन्म का वर्णन किया। उसने उन भूखे वानरों को निःस्वार्थ भाव से भोजन कराया, जिनके कारण गलती से उसके बच्चे को सिर में गंभीर चोट लग गई थी। बिना किसी दिखावे के उसकी इस करुणा ने ब्रह्मांडीय नियमों को पार कर लिया, और उसके बच्चे को बचाने के लिए उसकी 13 तारों वाली आत्मा का विभाजन आवश्यक हो गया।</p>`
+                }
+            },
+            {
+                id: "ch5",
+                num: { en: "Chapter 5", hi: "अध्याय 5" },
+                title: { en: "Defeating Death", hi: "मृत्यु को हराना" },
+                content: {
+                    en: `<p>Hanuman revealed the profound secret of bypassing pre-destined death. The Ashwin Kumars were baffled as to how Urmi could be cured of her crippling seizures, knowing her physical body was destined to die under a falling tree branch. Hanuman explained that the script of the Kaal-Akaash matrix cannot be overwritten; however, the soul experiencing it can be shifted.</p>
+                         <p>The universe operates like a pre-recorded play. While the events (the branch falling) are static and inevitable, the soul is merely the audience member looking through the eyes of the character. To defeat death, Hanuman taught Urmi the mantra of "Ram," which allowed her soul to detach from the bodily identification of "Urmi."</p>
+                         <p>As the fatal branch fell, Urmi's soul temporarily slipped into the Shunya corridor. Simultaneously, the soul of a dying, unloved old man named Ramnarayan, seeking a family's warmth for his final moments, was slotted into Urmi's body. Ramnarayan's soul experienced the physical death destined for Urmi's body, while Urmi's soul safely bypassed the fatal frame, returning to her body once the danger had passed. Thus, destiny was fulfilled, but the character of Urmi survived.</p>`,
+                    hi: `<p>हनुमान जी ने पूर्व-निर्धारित मृत्यु को चकमा देने का गहरा रहस्य उजागर किया। अश्विन कुमार इस बात को लेकर असमंजस में थे कि उर्मी को मिर्गी के भयानक दौरों से कैसे ठीक किया जा सकता है, यह जानते हुए कि उसकी भौतिक देह एक गिरती हुई पेड़ की शाखा के नीचे मरने वाली थी। हनुमान जी ने समझाया कि काल-आकाश मैट्रिक्स की स्क्रिप्ट को अधिलेखित नहीं किया जा सकता; हालाँकि, इसका अनुभव करने वाली आत्मा को स्थानांतरित किया जा सकता है।</p>
+                         <p>ब्रह्मांड एक पूर्व-रिकॉर्ड किए गए नाटक की तरह काम करता है। घटनाएँ (शाखा का गिरना) स्थिर और अपरिहार्य हैं, लेकिन आत्मा केवल चरित्र की आँखों से देखने वाली दर्शक है। मृत्यु को हराने के लिए, हनुमान जी ने उर्मी को "राम" का मंत्र सिखाया, जिसने उसकी आत्मा को शारीरिक पहचान से अलग होने में मदद की।</p>
+                         <p>जैसे ही घातक शाखा गिरी, उर्मी की आत्मा अस्थायी रूप से शून्य सुरंग में खिसक गई। उसी समय, रामनारायण नामक एक मरते हुए, प्यार से वंचित बूढ़े व्यक्ति की आत्मा, जो अपने अंतिम क्षणों के लिए परिवार की गर्माहट की तलाश में थी, उर्मी के शरीर में डाल दी गई। रामनारायण की आत्मा ने मृत्यु का अनुभव किया, जबकि उर्मी की आत्मा सुरक्षित रूप से घातक फ्रेम से बच गई। इस प्रकार भाग्य पूरा हुआ, लेकिन उर्मी का चरित्र बच गया।</p>`
+                }
+            },
+            {
+                id: "ch6",
+                num: { en: "Chapter 6", hi: "अध्याय 6" },
+                title: { en: "Cursed Souls", hi: "अभिशप्त आत्माएँ" },
+                content: {
+                    en: `<p>The tranquility of the Matang's sacred "Char Pooja" was violently interrupted when Uncle Basant, sleepwalking in a trance-like state, nearly breached the protective boundary of the ritual. Baba Matang realized quickly that Basant's body had been hijacked by an "Asura"—a cursed soul.</p>
+                         <p>Hanuman explained the mechanics of these bodiless entities. Suras and Asuras are cursed souls trapped without physical forms, wandering the astral plane. Unlike regular souls that attach to a character and experience its natural ups and downs, these entities behave as parasites. Suras exclusively feed on the nectar of positive emotions (joy, hope, extreme belief), while Asuras gorge on negative emotions (fear, anger, grief, extreme dogma).</p>
+                         <p>When a human experiences a prolonged bout of sadness or anger, it acts as a beacon for an Asura. The Asura enters the mind, artificially prolonging and amplifying the negative state to feast on the emotional output. The only defense against these cursed souls is <em>Jagriti</em> (Awareness). Once the soul becomes aware that its emotions are being manipulated and asserts its identity separate from the mind, the Suras and Asuras flee like thieves caught in the light.</p>`,
+                    hi: `<p>मातंगों की पवित्र "चार पूजा" की शांति तब हिंसक रूप से बाधित हो गई जब चाचा बसंत, नींद में चलते हुए, अनुष्ठान की सुरक्षात्मक सीमा को पार करने वाले थे। बाबा मातंग ने तुरंत महसूस किया कि बसंत के शरीर को एक "असुर"—एक अभिशप्त आत्मा—द्वारा अपहृत कर लिया गया था।</p>
+                         <p>हनुमान जी ने इन देहरहित संस्थाओं के यांत्रिकी को समझाया। सुर और असुर अभिशप्त आत्माएं हैं जो भौतिक रूपों के बिना फंसी हुई हैं, और सूक्ष्म विमान में भटक रही हैं। सामान्य आत्माओं के विपरीत जो एक चरित्र से जुड़ती हैं, ये संस्थाएं परजीवियों की तरह व्यवहार करती हैं। सुर विशेष रूप से सकारात्मक भावनाओं (आनंद, आशा) के अमृत पर भोजन करते हैं, जबकि असुर नकारात्मक भावनाओं (भय, क्रोध, शोक) का भोजन करते हैं।</p>
+                         <p>जब एक इंसान लंबे समय तक उदासी या क्रोध का अनुभव करता है, तो यह असुर के लिए एक बीकन का काम करता है। असुर दिमाग में प्रवेश करता है, भावनात्मक उत्पादन पर दावत देने के लिए नकारात्मक स्थिति को कृत्रिम रूप से बढ़ाता है। इन अभिशप्त आत्माओं के खिलाफ एकमात्र बचाव <em>जागृति</em> (जागरूकता) है। एक बार जब आत्मा को पता चल जाता है कि उसकी भावनाओं में हेरफेर किया जा रहा है, तो सुर और असुर रोशनी में पकड़े गए चोरों की तरह भाग जाते हैं।</p>`
+                }
+            },
+            {
+                id: "ch7",
+                num: { en: "Chapter 7", hi: "अध्याय 7" },
+                title: { en: "A Thousand Lives", hi: "सहस्त्र जीवन" },
+                content: {
+                    en: `<p>To illustrate the vast multiplicity of the Kaal-Akaash matrix, Hanuman shifted the Matangs' vision to a modern city, far away from their jungle. They observed Anita, a woman drowning in extreme poverty and medical debt after the tragic loss of her child. Her only solace was a "Pingal Yantra" (a smartphone), which she used to escape her grim reality.</p>
+                         <p>Hanuman explained that there isn't just one Anita. In the vast architecture of the universe, there are a thousand parallel lives for every character. These parallel tracks represent every possible choice and outcome. In "Life-1," Anita has no hidden wealth and is driven to the brink of despair. In "Life-2," a wooden chest in her attic contains hidden ancestral gold.</p>
+                         <p>Because Anita had fallen into a deep trance of detachment due to her immense suffering (accidentally achieving a state of Shunya in the middle of a supermarket), her soul became untethered. Hanuman seized this moment of momentary awakening to gently slide her soul from the destitute "Life-1" track into the prosperous "Life-2" track. Suddenly, Anita-849 received a call on her Pingal Yantra informing her of an inheritance, unaware that she had just traversed across reality frames.</p>`,
+                    hi: `<p>काल-आकाश मैट्रिक्स की विशाल बहुलता को स्पष्ट करने के लिए, हनुमान जी ने मातंगों की दृष्टि को उनके जंगल से दूर एक आधुनिक शहर में स्थानांतरित कर दिया। उन्होंने अनीता को देखा, एक महिला जो अपने बच्चे के दुखद नुकसान के बाद अत्यधिक गरीबी और चिकित्सा ऋण में डूब रही थी। उसकी एकमात्र सांत्वना एक "पिंगल यंत्र" (स्मार्टफोन) था।</p>
+                         <p>हनुमान जी ने समझाया कि केवल एक अनीता नहीं है। ब्रह्मांड की विशाल वास्तुकला में, प्रत्येक चरित्र के लिए एक हजार समानांतर जीवन हैं। ये समानांतर ट्रैक हर संभव विकल्प और परिणाम का प्रतिनिधित्व करते हैं। "जीवन-1" में, अनीता के पास कोई छिपा हुआ धन नहीं है। "जीवन-2" में, उसकी अटारी में एक लकड़ी के संदूक में छिपा हुआ पैतृक सोना है।</p>
+                         <p>क्योंकि अनीता अपने अत्यधिक कष्टों के कारण वैराग्य के गहरे समाधि में गिर गई थी, उसकी आत्मा मुक्त हो गई। हनुमान जी ने इस क्षणिक जागृति का लाभ उठाकर उसकी आत्मा को "जीवन-1" ट्रैक से "जीवन-2" ट्रैक में धीरे से सरका दिया। अचानक, अनीता-849 को अपने पिंगल यंत्र पर विरासत की सूचना देने वाला एक कॉल प्राप्त हुआ, इस बात से अनजान कि वह अभी-अभी वास्तविकता के फ्रेम को पार कर चुकी थी।</p>`
+                }
+            },
+            {
+                id: "ch8",
+                num: { en: "Chapter 8", hi: "अध्याय 8" },
+                title: { en: "Linga Key", hi: "लिंग कुंजी" },
+                content: {
+                    en: `<p>Fascinated by the Pingal Yantra (smartphone) they observed in Anita's hand, the young Matangs marveled at how modern humans could capture and replay scenes (videos) using a binary language. Hanuman gently corrected their awe, stating that the universe itself is coded in an infinitely superior binary language called *Param-Bhasha*.</p>
+                         <p>Unlike human binary code which uses 0s and 1s, *Param-Bhasha* uses only two cosmic variables: **Karma** (Action/Experience) and **Desire** (Ichha). Every single frame of reality in the Kaal-Akaash matrix is encoded using these two variables. To access any specific scene or life track, a soul must adorn the exact combination of Karma and Desire that corresponds to that reality.</p>
+                         <p>This specific configuration of Karma and Desire that a soul wears is known as the **Linga Key** (Linga Deha). When a sleeping soul identifies too closely with its current character, it rigidly holds onto its current Linga Key, forcing it to trudge linearly through the painful script of that specific life. But an awakened soul can easily discard its Karma and Desire parameters, allowing it to instantly teleport through the Shunya corridors and plug its new Linga Key into a vastly superior reality track.</p>`,
+                    hi: `<p>अनीता के हाथ में देखे गए पिंगल यंत्र (स्मार्टफोन) से मुग्ध होकर, युवा मातंगों ने इस बात पर आश्चर्य किया कि आधुनिक इंसान बाइनरी भाषा का उपयोग करके दृश्यों (वीडियो) को कैसे पकड़ और फिर से चला सकते हैं। हनुमान जी ने कहा कि ब्रह्मांड स्वयं *परम-भाषा* नामक असीम रूप से बेहतर बाइनरी भाषा में कोडित है।</p>
+                         <p>मानव बाइनरी कोड के विपरीत, जो 0 और 1 का उपयोग करता है, *परम-भाषा* केवल दो ब्रह्मांडीय चर का उपयोग करती है: **कर्म** और **इच्छा**। काल-आकाश मैट्रिक्स में वास्तविकता के प्रत्येक फ्रेम को इन दो चरों का उपयोग करके एन्कोड किया गया है। किसी विशिष्ट दृश्य तक पहुंचने के लिए, एक आत्मा को कर्म और इच्छा के उस सटीक संयोजन को धारण करना चाहिए जो उस वास्तविकता से मेल खाता है।</p>
+                         <p>कर्म और इच्छा के इस विशिष्ट विन्यास को **लिंग कुंजी** (लिंग देह) के रूप में जाना जाता है। जब एक सोती हुई आत्मा अपने वर्तमान चरित्र के साथ बहुत अधिक पहचान करती है, तो वह अपनी वर्तमान लिंग कुंजी को कठोरता से पकड़ लेती है। लेकिन एक जागृत आत्मा आसानी से अपने कर्म और इच्छा के मापदंडों को छोड़ सकती है, जिससे वह तुरंत शून्य सुरंगों के माध्यम से टेलीपोर्ट कर सकती है और अपनी नई लिंग कुंजी को एक बेहतर वास्तविकता ट्रैक में प्लग कर सकती है।</p>`
+                }
+            },
+            {
+                id: "ch9",
+                num: { en: "Chapter 9", hi: "अध्याय 9" },
+                title: { en: "Incomplete", hi: "अपूर्ण" },
+                content: {
+                    en: `<p>During the profound discourse, Dhanushk's body became overwhelmed by severe thirst. His physical body desperately signaled for water, while his mind, bound by the social decorum of the sacred gathering, stubbornly tried to suppress the urge. Hanuman used this internal conflict to explain the concept of the "Incomplete Character."</p>
+                         <p>Every character in the Maya matrix is fundamentally incomplete. They are just fragments of the infinite Kaal-Akaash whole. Because they are incomplete, characters are in a constant, frantic state of trying to "complete" themselves. The body tries to complete itself by consuming water or food, while the mind tries to complete itself through social validation, power, or rigid discipline.</p>
+                         <p>Hanuman revealed that the soul is not the one doing the desiring. The soul is merely the passenger attached to this incomplete vehicle. The tragedy is that the soul mistakenly begins to mimic the character's desires, adopting the thirst or the pride as its own. Hanuman urged Dhanushk to quench his body's thirst, not as an act of surrender to Maya, but with the detached awareness that the "character" is drinking, leaving the soul resting perfectly whole and still in the Shunya corridor.</p>`,
+                    hi: `<p>गहन प्रवचन के दौरान, धनुष्क का शरीर गंभीर प्यास से अभिभूत हो गया। उसके भौतिक शरीर ने सख्त रूप से पानी का संकेत दिया, जबकि उसके दिमाग ने, पवित्र सभा की सामाजिक मर्यादा से बंधे होकर, जिद से उस आग्रह को दबाने की कोशिश की। हनुमान जी ने "अपूर्ण चरित्र" की अवधारणा को समझाने के लिए इस आंतरिक संघर्ष का उपयोग किया।</p>
+                         <p>माया मैट्रिक्स में हर चरित्र मौलिक रूप से अपूर्ण है। वे अनंत काल-आकाश के अंश मात्र हैं। क्योंकि वे अधूरे हैं, पात्र स्वयं को "पूर्ण" करने की निरंतर, उन्मत्त अवस्था में हैं। शरीर पानी या भोजन का सेवन करके खुद को पूरा करने की कोशिश करता है, जबकि मन सामाजिक मान्यता, शक्ति, या कठोर अनुशासन के माध्यम से खुद को पूरा करने की कोशिश करता है।</p>
+                         <p>हनुमान जी ने बताया कि आत्मा इच्छा करने वाली नहीं है। आत्मा केवल इस अपूर्ण वाहन से जुड़ा यात्री है। त्रासदी यह है कि आत्मा गलती से चरित्र की इच्छाओं की नकल करना शुरू कर देती है, प्यास या गर्व को अपना मान लेती है। हनुमान जी ने धनुष्क से अपने शरीर की प्यास बुझाने का आग्रह किया, माया के प्रति समर्पण के रूप में नहीं, बल्कि इस जागरूक ज्ञान के साथ कि "चरित्र" पानी पी रहा है, जबकि आत्मा शून्य सुरंग में विश्राम कर रही है।</p>`
+                }
+            },
+            {
+                id: "ch10",
+                num: { en: "Chapter 10", hi: "अध्याय 10" },
+                title: { en: "The Invisible Four", hi: "अदृश्य चार" },
+                content: {
+                    en: `<p>To demonstrate the invisible architecture of the human mind, Hanuman ordered young Urva to step directly into the sacred, blazing fire. Without hesitation, rooted in absolute faith, Urva walked into the flames. Instead of burning, he felt an icy chill wash over him. Suddenly, his head seemed to bloom open like a lotus, and four glowing, distinct astral bodies emerged from his skull.</p>
+                         <p>These were the <em>Manasika Chatushkaya</em>, the Mental Tetrad. Hanuman explained that the human "mind" is not a single entity, but an alliance of four invisible bodies: <strong>Buddhi</strong> (Intellect, dealing with logic and future security), <strong>Vivek</strong> (Conscience/Relational, dealing with attachments and social circles), <strong>Sanskar</strong> (Habit/Identity, maintaining routines and public image), and <strong>Chitta</strong> (Chaos/Spontaneity, desiring rebellion and the unknown).</p>
+                         <p>These four bodies constantly war with each other over how best to make the "incomplete" character feel "complete." An individual's daily actions are just the result of which of these four bodies won the internal democratic vote at any given second. True awakening happens when the soul stops identifying with the unified "mind" and realizes it is just a silent observer watching the Tetrad bicker among themselves.</p>`,
+                    hi: `<p>मानव मन की अदृश्य वास्तुकला को प्रदर्शित करने के लिए, हनुमान जी ने युवा उर्वा को सीधे पवित्र, धधकती आग में कदम रखने का आदेश दिया। पूर्ण विश्वास के साथ, उर्वा लपटों में चला गया। जलने के बजाय, उसे एक बर्फीली ठंडक महसूस हुई। अचानक, उसका सिर एक कमल की तरह खुलता हुआ लगा, और उसकी खोपड़ी से चार चमकते हुए सूक्ष्म शरीर निकले।</p>
+                         <p>ये <em>मानसिक चतुष्काय</em> (Mental Tetrad) थे। हनुमान जी ने समझाया कि मानव "मन" एक इकाई नहीं है, बल्कि चार अदृश्य शरीरों का गठबंधन है: <strong>बुद्धि</strong> (तर्क और भविष्य की सुरक्षा), <strong>विवेक</strong> (रिश्ते और सामाजिक चक्र), <strong>संस्कार</strong> (आदतें और सार्वजनिक छवि), और <strong>चित्त</strong> (अराजकता और विद्रोह)।</p>
+                         <p>ये चार शरीर लगातार एक-दूसरे से युद्ध करते हैं कि "अपूर्ण" चरित्र को "पूर्ण" कैसे महसूस कराया जाए। एक व्यक्ति के दैनिक कार्य केवल इस बात का परिणाम हैं कि किसी भी सेकंड में इन चार निकायों में से किसने आंतरिक लोकतांत्रिक वोट जीता। सच्ची जागृति तब होती है जब आत्मा एकीकृत "मन" के साथ पहचान करना बंद कर देती है और यह महसूस करती है कि वह केवल एक मौन पर्यवेक्षक है जो चतुष्काय को आपस में झगड़ते हुए देख रहा है।</p>`
+                }
+            },
+            {
+                id: "ch11",
+                num: { en: "Chapter 11", hi: "अध्याय 11" },
+                title: { en: "Awakening Configuration", hi: "जागृति विन्यास" },
+                content: {
+                    en: `<p>The Matangs pondered deeply over the mechanics of the soul's detachment. Hanuman introduced the concept of <em>Jagriti Vishwas</em>—the Awakening Score—a metric that scales from 0 to 99. When a soul's score is at 0, it is deeply asleep, fully believing it <em>is</em> the character, suffering every digital blow of Maya as absolute agony. When the score rises toward 99, the soul views life merely as a passing film, fully aware of its sovereign nature.</p>
+                         <p>Hanuman narrated the tragic tale of Sulochana, a young girl whose body had been hijacked by a well-meaning but utterly asleep divine helper soul named Dirghayu. Dirghayu had been sent to heal Sulochana after a trauma but had forgotten her own identity, effectively trapping both souls in a state of excruciating bodily conflict.</p>
+                         <p>Through a process of intense psychological dismantling, Hanuman forced Dirghayu's soul to step back and re-evaluate her "Jagriti Vishwas." By attacking Dirghayu's false emotional attachments and refusing to offer her human reassurance, Hanuman successfully spiked her Awakening Score just enough to break her hypnotic grip on Sulochana's body, proving that even a momentary flash of absolute detachment can rewrite cosmic destiny.</p>`,
+                    hi: `<p>मातंगों ने आत्मा के वैराग्य के यांत्रिकी पर गहराई से विचार किया। हनुमान जी ने <em>जागृति विन्यास</em>—जागृति स्कोर—की अवधारणा पेश की, जो 0 से 99 तक है। जब किसी आत्मा का स्कोर 0 होता है, तो वह गहरी नींद में होती है, पूरी तरह से मानती है कि वह चरित्र <em>है</em>, माया के हर वार को पूर्ण पीड़ा के रूप में सहती है। जब स्कोर 99 की ओर बढ़ता है, तो आत्मा जीवन को केवल एक गुजरती हुई फिल्म के रूप में देखती है।</p>
+                         <p>हनुमान जी ने सुलोचना की दुखद कहानी सुनाई, एक युवा लड़की जिसका शरीर एक अच्छी लेकिन पूरी तरह से सोई हुई दिव्य सहायक आत्मा दीर्घायु द्वारा अपहृत कर लिया गया था। दीर्घायु को सुलोचना को एक आघात के बाद ठीक करने के लिए भेजा गया था, लेकिन वह अपनी पहचान भूल गई थी।</p>
+                         <p>गहन मनोवैज्ञानिक विघटन की प्रक्रिया के माध्यम से, हनुमान जी ने दीर्घायु की आत्मा को पीछे हटने और उसके "जागृति विन्यास" का पुनर्मूल्यांकन करने के लिए मजबूर किया। दीर्घायु के झूठे भावनात्मक लगाव पर हमला करके, हनुमान जी ने उसके जागृति स्कोर को सुलोचना के शरीर पर उसकी पकड़ को तोड़ने के लिए पर्याप्त रूप से बढ़ा दिया, यह साबित करते हुए कि पूर्ण वैराग्य की क्षणिक चमक भी ब्रह्मांडीय भाग्य को फिर से लिख सकती है।</p>`
+                }
+            },
+            {
+                id: "ch12",
+                num: { en: "Chapter 12", hi: "अध्याय 12" },
+                title: { en: "Continuity", hi: "निरंतरता" },
+                content: {
+                    en: `<p>The final metaphysical hurdle the Matangs faced was understanding the illusion of "Continuity." Why does life feel like a seamless, unbroken stream of time if it is merely a collection of static frames illuminated by a traveling soul?</p>
+                         <p>Using the climax of Sulochana's possession, Hanuman illustrated that when Dirghayu's soul exited the body and Sulochana's original soul snapped back into place, there was zero disruption in the physical conversation taking place in the room. The mother didn't notice, and the room didn't glitch. The illusion of continuity remained flawless because the <em>memories</em> of the conversation were stored in the character's physical brain, not the soul.</p>
+                         <p>Hanuman compared this to a tourist mistakenly taking over the job of a shepherd in a mysterious valley, forgetting their original home. Time, space, and motion are a masterfully woven tapestry. The soul is merely the light passing through the fabric. Once a seeker comprehends that "continuity" is just Maya's most successful magic trick—designed to keep the soul hooked to the storyline—the soul can finally laugh at the drama, achieving supreme liberation from the relentless cycles of Kaal-Akaash.</p>`,
+                    hi: `<p>अंतिम आध्यात्मिक बाधा जिसका मातंगों ने सामना किया, वह "निरंतरता" के भ्रम को समझना था। जीवन समय की एक निर्बाध धारा की तरह क्यों लगता है यदि यह केवल एक यात्रा करने वाली आत्मा द्वारा रोशन किए गए स्थिर फ्रेम का संग्रह है?</p>
+                         <p>सुलोचना की कहानी का उपयोग करते हुए, हनुमान जी ने स्पष्ट किया कि जब दीर्घायु की आत्मा शरीर से बाहर निकल गई और सुलोचना की मूल आत्मा वापस आ गई, तो कमरे में हो रही भौतिक बातचीत में शून्य व्यवधान था। भ्रम निर्दोष रहा क्योंकि बातचीत की <em>स्मृतियां</em> चरित्र के भौतिक मस्तिष्क में जमा थीं, आत्मा में नहीं।</p>
+                         <p>हनुमान जी ने इसकी तुलना एक रहस्यमयी घाटी में एक पर्यटक द्वारा चरवाहे का काम संभालने से की, जो अपना मूल घर भूल जाता है। समय, स्थान और गति एक उत्कृष्ट रूप से बुनी हुई टेपेस्ट्री है। आत्मा केवल कपड़े से गुजरने वाला प्रकाश है। एक बार जब कोई साधक समझ जाता है कि "निरंतरता" माया का सबसे सफल जादू है—जो आत्मा को कहानी से जोड़े रखने के लिए बनाया गया है—तो आत्मा अंततः नाटक पर हंस सकती है, और काल-आकाश के चक्रों से सर्वोच्च मुक्ति प्राप्त कर सकती है।</p>`
+                }
+            }
+        ];
+
+        // --- CORE READER LOGIC ---
+
+        function initBookReader() {
+            const tocBook1 = document.getElementById('toc-book1');
+            tocBook1.innerHTML = ''; // Clear
+
+            bookChapters.forEach((chapter, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <button onclick="loadChapter(${index})" id="toc-btn-${index}" class="w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all duration-200 text-stone-600 hover:bg-stone-200/50 flex flex-col">
+                        <span class="text-[0.65rem] font-bold text-amber-700/70 uppercase tracking-wider mb-0.5">${chapter.num[currentLang]}</span>
+                        <span class="font-medium">${chapter.title[currentLang]}</span>
+                    </button>
+                `;
+                tocBook1.appendChild(li);
+            });
+
+            loadChapter(0);
+        }
+
+        function loadChapter(index) {
+            if (index < 0 || index >= bookChapters.length) return;
+            currentChapterIndex = index;
+            const chapter = bookChapters[index];
+
+            // Update Content
+            document.getElementById('reader-ch-num').innerText = chapter.num[currentLang];
+            document.getElementById('reader-ch-title').innerText = chapter.title[currentLang];
+            document.getElementById('reader-ch-body').innerHTML = chapter.content[currentLang];
+
+            // Update TOC Active State
+            document.querySelectorAll('#toc-book1 button').forEach(btn => btn.classList.remove('toc-active'));
+            const activeBtn = document.getElementById(`toc-btn-${index}`);
+            if (activeBtn) activeBtn.classList.add('toc-active');
+
+            // Update Pagination Buttons
+            const prevBtn = document.getElementById('btn-prev-ch');
+            const nextBtn = document.getElementById('btn-next-ch');
+            
+            prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+            nextBtn.style.visibility = index === bookChapters.length - 1 ? 'hidden' : 'visible';
+
+            // Scroll to top
+            document.getElementById('reader-scroll-area').scrollTop = 0;
+            
+            // Close mobile TOC if open
+            const sidebar = document.getElementById('toc-sidebar');
+            if (window.innerWidth < 768 && !sidebar.classList.contains('-translate-x-full')) {
+                toggleMobileTOC();
+            }
+        }
+
+        function navigateChapter(direction) {
+            loadChapter(currentChapterIndex + direction);
+        }
+
+        function toggleMobileTOC() {
+            const sidebar = document.getElementById('toc-sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+
+        // --- UI & TAB LOGIC ---
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            document.body.setAttribute('data-lang', currentLang);
+            
+            // Update placeholders
+            const placeholders = {
+                en: { parable: "e.g., I am stressed about my corporate job...", chat: "Ask the Oracle a question..." },
+                hi: { parable: "उदा., मैं अपनी कॉर्पोरेट नौकरी को लेकर तनाव में हूँ...", chat: "दिव्य मार्गदर्शक से प्रश्न पूछें..." }
+            };
+            document.getElementById('ai-parable-input').placeholder = placeholders[currentLang].parable;
+            document.getElementById('ai-chat-input').placeholder = placeholders[currentLang].chat;
+
+            // Re-render components
+            initBookReader(); // Reloads TOC and current chapter in new lang
+            renderParables(currentParableFilter);
+            
+            // Re-render Simulators if they were generated
+            if (typeof updateLingaSimulator === 'function') updateLingaSimulator();
+            if (typeof updateThreadView === 'function') updateThreadView();
+            if (threadsChart) {
+                threadsChart.options.scales.r.pointLabels.font.family = currentLang === 'hi' ? 'Yatra One' : 'Plus Jakarta Sans';
+                threadsChart.update();
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block', 'flex'); // reader uses flex
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('nav-btn-active');
+                btn.classList.add('text-stone-300', 'hover:text-white', 'hover:bg-stone-700/50');
+            });
+
+            const targetSection = document.getElementById(`sec-${tabId}`);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                targetSection.classList.add(tabId === 'reader' ? 'flex' : 'block');
+            }
+            
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('nav-btn-active');
+                activeBtn.classList.remove('text-stone-300', 'hover:text-white', 'hover:bg-stone-700/50');
+            }
+            if (tabId === 'simulators' && threadsChart) {
+                setTimeout(() => threadsChart.update(), 50);
+            }
+        }
+
+        // --- PARABLES LOGIC ---
+        const parableData = [
+            { category: "karma", en: { title: "Born of Two Mothers", summary: "Chitta's soul chose a fractured maternal setting to prevent attachments, proving adversity is often a soul's deliberate choice.", takeaway: "Adversity is a tool for liberation." }, hi: { title: "दो माताओं से जन्म", summary: "चित्ता की आत्मा ने आसक्ति रोकने के लिए खंडित परिवार चुना।", takeaway: "विपरीत परिस्थितियां मुक्ति का साधन हैं।" } },
+            { category: "attachment", en: { title: "The Mermaid Principle", summary: "Urva saves a mermaid, only to be dragged into the deep sea, showing how attachment pulls you into others' bad karma.", takeaway: "Attachment equals drowning in others' pain." }, hi: { title: "जलकन्या सिद्धांत", summary: "जलपरी को बचाने के चक्कर में उर्वा समुद्र में खिंच गया।", takeaway: "आसक्ति दूसरों की पीड़ा में खींचती है।" } },
+            { category: "matrix", en: { title: "A Thousand Lives", summary: "Anita's soul was shifted from a life of destitution to one of prosperity (discovering hidden gold) after achieving momentary detachment in a supermarket.", takeaway: "Reality is a matrix of parallel tracks." }, hi: { title: "सहस्त्र जीवन", summary: "अनीता की आत्मा को दरिद्रता के जीवन से निकालकर एक समृद्ध समानांतर जीवन में डाल दिया गया, जब उसने क्षणिक वैराग्य प्राप्त किया।", takeaway: "वास्तविकता समानांतर ट्रैकों का एक मैट्रिक्स है।" } },
+            { category: "attachment", en: { title: "The Hijacked Body", summary: "Dirghayu, a divine helper, forgot her identity and became trapped in Sulochana's body. Hanuman had to spike her Awakening Score to break the hypnotic grip.", takeaway: "Even divine souls can fall asleep in Maya." }, hi: { title: "अपहृत देह", summary: "दीर्घायु नामक दिव्य आत्मा अपनी पहचान भूलकर सुलोचना के शरीर में फँस गई। हनुमान जी ने उसकी जागृति बढ़ाकर उसे मुक्त किया।", takeaway: "दिव्य आत्माएँ भी माया में सो सकती हैं।" } },
+            { category: "matrix", en: { title: "The Mental Tetrad", summary: "Rooted in absolute faith, Urva walked into a blazing fire, revealing the four invisible astral bodies comprising the human mind: Intellect, Conscience, Habit, and Chaos.", takeaway: "You are the silent observer, not the warring mind." }, hi: { title: "मानसिक चतुष्काय", summary: "पूर्ण विश्वास के साथ उर्वा आग में चला गया, जिससे मानव मन को बनाने वाले चार अदृश्य शरीर प्रकट हुए।", takeaway: "आप दर्शक हैं, मन नहीं।" } },
+            { category: "karma", en: { title: "The Compassionate Split", summary: "Chandra selflessly fed the starving monkeys who had injured her child. Her pure compassion forced her highly evolved soul to split to save her son.", takeaway: "True compassion transcends earthly logic." }, hi: { title: "करुणा का विभाजन", summary: "चंद्रा ने उन भूखे वानरों को निःस्वार्थ भाव से भोजन कराया जिन्होंने उसके बच्चे को घायल किया था। उसकी करुणा ने उसकी आत्मा को विभाजित कर दिया।", takeaway: "सच्ची करुणा सांसारिक तर्कों से परे है।" } },
+            { category: "attachment", en: { title: "The Cursed Parasites", summary: "Uncle Basant was hijacked by an Asura feeding on negative emotions. Hanuman taught that prolonged sadness or anger acts as a beacon for these cursed entities.", takeaway: "Awareness is the only defense against emotional parasites." }, hi: { title: "अभिशप्त परजीवी", summary: "चाचा बसंत को एक असुर ने अपहृत कर लिया जो उनकी नकारात्मक भावनाओं को खा रहा था।", takeaway: "जागरूकता ही भावनात्मक परजीवियों के खिलाफ एकमात्र बचाव है।" } },
+            { category: "matrix", en: { title: "The Incomplete Character", summary: "Dhanushk stubbornly tried to suppress his physical thirst out of social decorum. Hanuman explained that characters are perpetually incomplete, and the soul shouldn't mimic their desires.", takeaway: "Observe your character's needs without becoming them." }, hi: { title: "अपूर्ण चरित्र", summary: "धनुष्क ने सामाजिक मर्यादा के कारण अपनी प्यास को दबाने की कोशिश की। हनुमान जी ने बताया कि चरित्र हमेशा अधूरे होते हैं।", takeaway: "अपने चरित्र की जरूरतों को देखें, लेकिन वे न बनें।" } }
+        ];
+
+        let currentParableFilter = 'all';
+        function renderParables(filter = 'all') {
+            currentParableFilter = filter;
+            const container = document.getElementById('parables-grid');
+            container.innerHTML = '';
+            const filtered = filter === 'all' ? parableData : parableData.filter(p => p.category === filter);
+            filtered.forEach(p => {
+                const d = p[currentLang];
+                container.innerHTML += `
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition">
+                        <h4 class="font-serif-title text-lg font-bold text-stone-900 mb-2">${d.title}</h4>
+                        <p class="text-stone-600 text-sm mb-4">${d.summary}</p>
+                        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs font-medium text-amber-950">
+                            <strong>${currentLang === 'hi' ? 'निष्कर्ष:' : 'Takeaway:'}</strong> ${d.takeaway}
+                        </div>
+                    </div>`;
+            });
+        }
+        function filterParables(cat) {
+            document.querySelectorAll('.parable-filter-btn').forEach(b => b.className = "parable-filter-btn px-4 py-2 rounded-lg bg-white border border-stone-300 text-stone-700 font-medium hover:bg-stone-100 transition");
+            event.currentTarget.className = "parable-filter-btn px-4 py-2 rounded-lg bg-stone-900 text-white font-medium shadow-sm transition";
+            renderParables(cat);
+        }
+
+        // --- GEMINI AI INTEGRATION (ORACLE & PARABLES) ---
+        async function callGeminiAPI(prompt, systemInstruction) {
+            const apiKey = ""; // Native Canvas Handling
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ parts: [{ text: prompt }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
+            try {
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (!response.ok) throw new Error(`API Error`);
+                const result = await response.json();
+                return result.candidates?.[0]?.content?.parts?.[0]?.text || "Silence.";
+            } catch (error) {
+                return currentLang === 'hi' ? "क्षमा करें, ब्रह्मांडीय संबंध बाधित है।" : "The cosmic connection is disturbed. Try again.";
+            }
+        }
+
+        async function generateCustomParable() {
+            const inputEl = document.getElementById('ai-parable-input');
+            const btnEl = document.getElementById('ai-parable-btn');
+            const outputEl = document.getElementById('ai-parable-output');
+            const dilemma = inputEl.value.trim();
+            if (!dilemma) return;
+            
+            btnEl.disabled = true;
+            btnEl.innerHTML = currentLang === 'hi' ? 'मैट्रिक्स से परामर्श...' : 'Consulting Matrix...';
+            outputEl.classList.remove('hidden');
+            outputEl.innerHTML = `<div class="animate-pulse space-y-2"><div class="h-2 bg-stone-200 rounded w-3/4"></div><div class="h-2 bg-stone-200 rounded w-1/2"></div></div>`;
+            
+            const systemPrompt = `You are Hanuman from Kalihanuvani. Weave a short parable applying Shunya, Linga Key, or 14 Threads to the user's dilemma. Use HTML tags. Reply entirely in ${currentLang === 'hi' ? 'HINDI (Devanagari)' : 'English'}.`;
+            outputEl.innerHTML = await callGeminiAPI(`Dilemma: ${dilemma}`, systemPrompt);
+            btnEl.disabled = false;
+            btnEl.innerHTML = currentLang === 'hi' ? `दृष्टांत उत्पन्न करें` : `Generate Parable`;
+            inputEl.value = '';
+        }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const inputEl = document.getElementById('ai-chat-input');
+            const submitBtn = document.getElementById('ai-chat-submit');
+            const userText = inputEl.value.trim();
+            if (!userText) return;
+
+            appendMessage('user', userText);
+            inputEl.value = ''; submitBtn.disabled = true;
+            const loadingId = appendLoading();
+
+            const systemPrompt = `You are the Divine Oracle of Kalihanuvani. Answer through Kaal-Akaash, Linga Key, Mental Tetrad. Be concise. Reply entirely in ${currentLang === 'hi' ? 'HINDI' : 'English'}.`;
+            const responseText = await callGeminiAPI(userText, systemPrompt);
+
+            document.getElementById(loadingId).remove();
+            appendMessage('oracle', responseText);
+            submitBtn.disabled = false;
+            const historyEl = document.getElementById('chat-history');
+            historyEl.scrollTop = historyEl.scrollHeight;
+        }
+
+        function appendMessage(sender, text) {
+            const historyEl = document.getElementById('chat-history');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex gap-4 ${sender === 'user' ? 'flex-row-reverse' : ''}`;
+            const avatar = sender === 'user' ? `<div class="w-8 h-8 rounded-full bg-stone-300 flex items-center justify-center shrink-0 shadow-sm">👤</div>` : `<div class="w-8 h-8 rounded-full bg-amber-800 flex items-center justify-center text-white shrink-0 shadow-md">🪷</div>`;
+            const bubbleClasses = sender === 'user' ? `bg-stone-800 text-stone-100 p-4 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] text-sm` : `bg-white border border-stone-200 text-stone-800 p-4 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] text-sm`;
+            msgDiv.innerHTML = `${avatar}<div class="${bubbleClasses}">${text}</div>`;
+            historyEl.appendChild(msgDiv);
+        }
+        function appendLoading() {
+            const historyEl = document.getElementById('chat-history');
+            const id = 'loading-' + Date.now();
+            historyEl.innerHTML += `<div id="${id}" class="flex gap-4"><div class="w-8 h-8 rounded-full bg-amber-800 flex items-center justify-center text-white shrink-0 shadow-md">🪷</div><div class="bg-white border border-stone-200 p-4 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-600 animate-bounce"></div><div class="w-2 h-2 rounded-full bg-amber-600 animate-bounce" style="animation-delay:0.1s"></div></div></div>`;
+            return id;
+        }
+
+        // --- JAGRITI ASSESSMENT ---
+        function calculateJagriti() {
+            const q1 = parseInt(document.getElementById('q1').value);
+            const q2 = parseInt(document.getElementById('q2').value);
+            const percentage = Math.min(99, Math.round(((q1 + q2) / 80) * 99));
+            document.getElementById('jagriti-score').innerText = `${percentage}%`;
+            
+            const txt = {
+                en: { s1: "Deep Sleep", p1: "Absorbed in the script.", s2: "Emerging", p2: "Stepping back.", s3: "Sovereign", p3: "High Jagriti." },
+                hi: { s1: "गहरी नींद", p1: "स्क्रिप्ट में अवशोषित।", s2: "उभरते दर्शक", p2: "पीछे हट रहे हैं।", s3: "संप्रभु", p3: "उच्च जागृति।" }
+            };
+            const lang = currentLang;
+            const statusEl = document.getElementById('jagriti-status');
+            const prescEl = document.getElementById('jagriti-presc');
+            
+            if (percentage < 35) { statusEl.innerText = txt[lang].s1; prescEl.innerText = txt[lang].p1; } 
+            else if (percentage < 70) { statusEl.innerText = txt[lang].s2; prescEl.innerText = txt[lang].p2; } 
+            else { statusEl.innerText = txt[lang].s3; prescEl.innerText = txt[lang].p3; }
+        }
+
+        // --- SIMULATORS LOGIC (HIDDEN AT END) ---
+        function updateLingaSimulator() {
+            const karma = document.getElementById('input-karma').value;
+            const desire = document.getElementById('input-desire').value;
+            document.getElementById('val-karma').innerText = karma;
+            document.getElementById('val-desire').innerText = desire;
+            document.getElementById('binary-code').innerText = `K-${parseInt(karma).toString(2).padStart(8,'0')} | I-${parseInt(desire).toString(2).padStart(8,'0')}`;
+            
+            const titleEl = document.getElementById('linga-track-title');
+            const descEl = document.getElementById('linga-track-desc');
+            const tagEl = document.getElementById('linga-status-tag');
+            if (karma < 25 && desire < 25) {
+                tagEl.innerText = currentLang === 'hi' ? "शून्य कॉरिडोर" : "Shunya Corridor"; 
+                titleEl.innerText = currentLang === 'hi' ? "मुक्त प्रक्षेपवक्र" : "Liberated Trajectory";
+                tagEl.className = "text-xs px-2.5 py-1 rounded-full bg-emerald-900/80 text-emerald-200 font-mono";
+            } else {
+                tagEl.innerText = currentLang === 'hi' ? "माया से बंधा" : "Bound to Maya"; 
+                titleEl.innerText = currentLang === 'hi' ? "मानक मानव अनुभव" : "Standard Human Track";
+                tagEl.className = "text-xs px-2.5 py-1 rounded-full bg-amber-900/80 text-amber-200 font-mono";
+            }
+        }
+
+        const threadData = {
+            6: { radar: [100, 0, 10, 0, 0], en: {t: "Level 6: Primal", d: "The soul is driven entirely by basic animalistic instincts of survival and reproduction. No belief systems exist yet."}, hi: {t: "स्तर 6: आदिम", d: "आत्मा पूरी तरह से अस्तित्व और प्रजनन की बुनियादी पशु प्रवृत्तियों से प्रेरित होती है। अभी तक कोई विश्वास प्रणाली नहीं है।"} },
+            7: { radar: [80, 30, 30, 0, 0], en: {t: "Level 7: Tribal", d: "The soul begins to follow basic belief systems and group dogmas. It forms its first structured identity."}, hi: {t: "स्तर 7: जनजातीय", d: "आत्मा बुनियादी मान्यताओं और समूह हठधर्मिता का पालन करना शुरू करती है। यह अपनी पहली संरचित पहचान बनाती है।"} },
+            8: { radar: [60, 50, 50, 0, 0], en: {t: "Level 8: Cultic", d: "The soul deeply embeds itself into a specific group or cult, finding safety in shared, rigid beliefs."}, hi: {t: "स्तर 8: पंथिक", d: "आत्मा साझा और कठोर विश्वासों में सुरक्षा पाते हुए, एक विशिष्ट समूह या पंथ में गहराई से जुड़ जाती है।"} },
+            9: { radar: [40, 70, 70, 0, 0], en: {t: "Level 9: Devout", d: "Dedication to a belief system becomes the primary driver. The soul sacrifices personal comfort for its dogma."}, hi: {t: "स्तर 9: निष्ठावान", d: "किसी विश्वास प्रणाली के प्रति समर्पण प्राथमिक चालक बन जाता है। आत्मा अपनी हठधर्मिता के लिए व्यक्तिगत सुख का त्याग करती है।"} },
+            10: { radar: [20, 90, 90, 0, 0], en: {t: "Level 10: Fanatic", d: "The soul becomes completely absorbed in its own superiority. It isolates itself from differing belief systems."}, hi: {t: "स्तर 10: कट्टर", d: "आत्मा अपनी स्वयं की श्रेष्ठता में पूरी तरह लीन हो जाती है। यह स्वयं को भिन्न मान्यताओं से अलग कर लेती है।"} },
+            11: { radar: [10, 100, 100, 0, 0], en: {t: "Level 11: Supremacist", d: "Peak dogma. The soul views its own religious or ideological system as the absolute, only truth, actively attacking alternatives."}, hi: {t: "स्तर 11: वर्चस्ववादी", d: "चरम हठधर्मिता। आत्मा अपनी धार्मिक या वैचारिक प्रणाली को एकमात्र सत्य मानती है, और विकल्पों पर हमला करती है।"} },
+            12: { radar: [10, 80, 60, 40, 10], en: {t: "Level 12: Transition", d: "The rigid structures of dogma begin to crack. The soul starts to see divinity beyond its own narrow belief system."}, hi: {t: "स्तर 12: संक्रमण", d: "हठधर्मिता के कठोर ढांचे टूटने लगते हैं। आत्मा अपनी संकीर्ण मान्यताओं से परे दिव्यता को देखना शुरू करती है।"} },
+            13: { radar: [5, 20, 20, 100, 40], en: {t: "Level 13: Universal", d: "The soul recognizes the entire universe as the ultimate expression of the divine, shedding specific dogmas and earthly logic."}, hi: {t: "स्तर 13: सार्वभौमिक", d: "आत्मा पूरे ब्रह्मांड को परमात्मा की अंतिम अभिव्यक्ति के रूप में पहचानती है, विशिष्ट हठधर्मिता और सांसारिक तर्कों को त्याग देती है।"} },
+            14: { radar: [0, 0, 0, 100, 100], en: {t: "Level 14: Dual-Soul", d: "The soul splits into two mirror images. One plays the character in Maya, while the other rests as a detached, silent observer in the Shunya corridor, achieving liberation."}, hi: {t: "स्तर 14: दोहरी आत्मा", d: "आत्मा दो दर्पण छवियों में विभाजित हो जाती है। एक माया में चरित्र निभाता है, जबकि दूसरा शून्य सुरंग में एक तटस्थ, मौन पर्यवेक्षक के रूप में रहता है, मुक्ति प्राप्त करता है।"} }
+        };
+        
+        function updateThreadView() {
+            const level = document.getElementById('thread-slider').value;
+            const data = threadData[level]; 
+            document.getElementById('thread-badge').innerText = currentLang === 'en' ? `Level ${level}` : `स्तर ${level}`;
+            document.getElementById('thread-title').innerText = data[currentLang].t;
+            document.getElementById('thread-desc').innerText = data[currentLang].d;
+            if(threadsChart) {
+                threadsChart.data.datasets[0].data = data.radar;
+                threadsChart.update();
+            }
+        }
+        function initChart() {
+            const ctx = document.getElementById('threadsRadarChart').getContext('2d');
+            threadsChart = new Chart(ctx, { type: 'radar', data: { labels: ['Instinct', 'Dogma', 'Ego', 'Universal', 'Observer'], datasets: [{ data: [100,10,10,0,0], borderColor: '#9a3412', borderWidth: 2 }] }, options: { scales: { r: { min: 0, max: 100, ticks:{display:false} } }, plugins: { legend: { display: false } } } });
+        }
+
+        // INIT
+        window.addEventListener('DOMContentLoaded', () => {
+            initBookReader();
+            renderParables();
+            initChart();
+            updateLingaSimulator();
+        });
+    </script>
+</body>
+</html>
