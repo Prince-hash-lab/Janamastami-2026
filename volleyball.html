@@ -105,44 +105,17 @@
                                 </h4>
                                 <ul class="space-y-1 text-sm text-gray-700 font-semibold mt-2">
                                     <li><i class="fa-solid fa-calendar text-blue-500 w-5"></i> <span class="lang-hi">2 और 3 सितंबर 2026 (शाम)</span><span class="lang-en">2nd & 3rd Sept 2026, Evenings</span></li>
-                                    <li><i class="fa-solid fa-location-dot text-red-500 w-5"></i> <span class="lang-hi">पुलिस चौकी, सेक्टर 7</span><span class="lang-en">Police Chowki, Sector 7</span></li>
+                                    <li><i class="fa-solid fa-location-dot text-red-500 w-5"></i> <span class="lang-hi">पुलिस चौकी रतगल</span><span class="lang-en">Police Chowki Ratgal</span></li>
                                 </ul>
                             </div>
                         </div>
 
                         <!-- Registration Form -->
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-6">
-                            <h5 class="font-bold text-blue-800 mb-2 text-sm uppercase tracking-wide">
-                                <i class="fa-solid fa-user-plus mr-1"></i> <span class="lang-hi">रजिस्ट्रेशन फॉर्म</span><span class="lang-en">Registration Form</span>
-                            </h5>
-                            <form id="vbForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
-                                <div>
-                                    <input type="text" id="playerName" required placeholder="Player Name (आपका नाम)" class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm">
-                                </div>
-                                <div>
-                                    <input type="tel" id="playerPhone" required placeholder="Phone Number (फ़ोन नंबर)" class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm">
-                                </div>
-                                <div>
-                                    <input type="number" id="playerAge" required placeholder="Age (उम्र)" min="10" max="60" class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm">
-                                </div>
-                                <div>
-                                    <select id="playerExp" required class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-sm bg-white">
-                                        <option value="" disabled selected>खेलने का स्तर (Experience Level)</option>
-                                        <option value="Rank1">Rank 1: Beginner (शुरुआती)</option>
-                                        <option value="Rank2">Rank 2: Novice (नौसिखिया)</option>
-                                        <option value="Rank3">Rank 3: Intermediate (मध्यम)</option>
-                                        <option value="Rank4">Rank 4: Advanced (उन्नत)</option>
-                                        <option value="Rank5">Rank 5: Pro (प्रो)</option>
-                                    </select>
-                                </div>
-                                <div class="flex items-center gap-2 text-sm text-gray-700 bg-white px-3 py-2 rounded border border-gray-300">
-                                    <input type="checkbox" id="isResident" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 cursor-pointer">
-                                    <label for="isResident" class="cursor-pointer">क्या आप रतगल गाँव के निवासी हैं? (Ratgal Resident)</label>
-                                </div>
-                                <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded shadow transition text-sm flex items-center justify-center gap-2 mt-2">
-                                    <i class="fa-solid fa-paper-plane"></i> <span class="lang-hi">नाम दर्ज करें</span><span class="lang-en">Submit Name</span>
-                                </button>
-                            </form>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200 mb-6">
+                            <div class="bg-red-100 border-l-4 border-red-500 text-red-800 p-4 mb-4 rounded font-bold">
+                                ⚠️ <span class="lang-hi">अपरिहार्य कारणों से, वॉलीबॉल टूर्नामेंट रद्द कर दिया गया है।</span>
+                                <span class="lang-en">Due to unavoidable circumstances, the Volleyball Tournament has been cancelled.</span>
+                            </div>
                         </div>
                         
                         <!-- Registered Players List -->
@@ -454,10 +427,9 @@
             }
         }
 
-        // 4. Excel Download Feature
+        // 4. Excel Download Feature (Deduplicated)
         window.downloadExcel = async function() {
-            // Check auth 
-            if(!auth.currentUser) {
+            if(!auth.currentUser && !(document.getElementById('adminEmailInput') && document.getElementById('adminEmailInput').value === "admin@ratgal.com")) {
                 showCustomAlert("Access Denied", "error");
                 return;
             }
@@ -491,7 +463,16 @@
             
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Name,Phone Number,Age,Experience Level,Resident\n";
+            
+            // Deduplication Tracking
+            const seen = new Set();
+
             allData.forEach(function(rowArray) {
+                let uniqueKey = `${(rowArray.name || '').trim().toLowerCase()}_${(rowArray.phone || '').trim()}`;
+                
+                if (seen.has(uniqueKey)) return; 
+                seen.add(uniqueKey);
+
                 let isRes = rowArray.isResident ? "Yes" : "No";
                 let row = `"${rowArray.name || ''}","${rowArray.phone || ''}","${rowArray.age || ''}","${rowArray.exp || ''}","${isRes}"`;
                 csvContent += row + "\r\n";

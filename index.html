@@ -7,7 +7,8 @@
     <title>रतगल जन्माष्टमी महोत्सव 2026</title>
 
     <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
 
     <!-- Google Fonts -->
     <link
@@ -91,21 +92,185 @@
             position: relative;
             z-index: 10;
         }
+
+        /* Welcome Overlay Styles */
+        #welcomeOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        #welcomeOverlay.fade-out {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .overlay-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.85));
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 60px rgba(245, 158, 11, 0.15), 0 25px 50px rgba(0, 0, 0, 0.5);
+            max-width: 440px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .overlay-card::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .overlay-card::-webkit-scrollbar-thumb {
+            background: #F59E0B;
+            border-radius: 10px;
+        }
+
+        .overlay-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .golden-glow {
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: #000;
+            font-weight: 800;
+            padding: 0.875rem 2.5rem;
+            border-radius: 9999px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+        }
+
+        @keyframes pulseGold {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+            }
+        }
+
+        .pulse-gold {
+            animation: pulseGold 2s ease-in-out infinite;
+        }
     </style>
+
+    <!-- Open Graph Meta Tags for WhatsApp & Social Media Preview -->
+    <meta property="og:title" content="श्री कृष्ण जन्माष्टमी महोत्सव 2026 - रतगल" />
+    <meta property="og:description"
+        content="दही हांडी (4 सितंबर) और वॉलीबॉल टूर्नामेंट की जानकारी के लिए क्लिक करें!" />
+    <meta property="og:image" content="https://ratgal-event.web.app/media/finalinvitation.jpg" />
+    <meta property="og:url" content="https://ratgal-event.web.app" />
+    <meta property="og:type" content="website" />
 </head>
 
 <body
     class="lang-hi bg-orange-50 font-sans text-gray-800 antialiased selection:bg-krishna-gold selection:text-white overflow-x-hidden w-full">
 
+    <!-- Welcome Notification Overlay (auto-expires after 4 Sept 2026) -->
+    <div id="welcomeOverlay">
+        <div class="overlay-card font-hindi">
+            <!-- Close Button -->
+            <button onclick="dismissOverlay()"
+                class="absolute top-3 right-3 text-gray-400 hover:text-white transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
+                aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <p class="text-yellow-400 text-xs tracking-[0.3em] uppercase font-semibold mb-1">जय श्री कृष्णा</p>
+                <h2 class="text-xl font-extrabold text-white golden-glow leading-tight">
+                    🎉 रतगल जन्माष्टमी<br>महोत्सव 2026 🎉
+                </h2>
+                <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto mt-2">
+                </div>
+            </div>
+
+            <!-- Section 1: Cancellation Alert -->
+            <div class="overlay-section" style="border-color: rgba(239, 68, 68, 0.8); background: rgba(239, 68, 68, 0.2);">
+                <p class="text-lg font-bold text-red-400 mb-2">
+                    <i class="fa-solid fa-triangle-exclamation mr-1 animate-pulse"></i>
+                    <span class="lang-en">URGENT NOTICE: All Programs Cancelled</span>
+                    <span class="lang-hi">आवश्यक सूचना: सभी कार्यक्रम रद्द</span>
+                </p>
+                <p class="text-sm text-gray-200 leading-relaxed mb-3">
+                    <span class="lang-en">It is with deep regret that we announce the complete cancellation of ALL Janmashtami events (Dahi Handi, Singing, and Volleyball Tournament). This is due to unavoidable circumstances: Mourning Period & Safety Hazard.</span>
+                    <span class="lang-hi">अत्यंत खेद के साथ सूचित करना पड़ रहा है कि कल होने वाले सभी जन्माष्टमी कार्यक्रम (दही हांडी, संगीत और वॉलीबॉल टूर्नामेंट) पूर्ण रूप से रद्द कर दिए गए हैं। यह निर्णय शोक के माहौल और सुरक्षा कारणों से लिया गया है।</span>
+                </p>
+            </div>
+
+            <!-- Enter Button -->
+            <div class="text-center mt-4">
+                <button onclick="dismissOverlay()" class="enter-btn pulse-gold">
+                    <i class="fa-solid fa-music"></i>
+                    प्रवेश करें — Enter
+                </button>
+                <p class="text-xs text-gray-500 mt-2">बांसुरी का संगीत बजेगा 🎶</p>
+            </div>
+        </div>
+    </div>
+
     <header class="w-full bg-gradient-to-r from-orange-600 to-red-600 text-white sticky top-0 z-50 shadow-lg">
         <div class="w-[95%] max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="w-10"></div> <!-- spacer -->
-                <h1 class="text-xl md:text-3xl font-extrabold font-sans tracking-widest text-center flex-1">
-                    JANAMASTAMI 2026
-                </h1>
+                <div class="text-center flex-1">
+                    <p class="text-xs md:text-sm font-semibold tracking-widest text-yellow-300 mb-1">
+                        <span class="lang-en">Jai Shri Krishna</span>
+                        <span class="lang-hi">जय श्री कृष्णा</span>
+                    </p>
+                    <h1 class="text-xl md:text-3xl font-extrabold font-sans tracking-widest leading-tight">
+                        <span class="lang-en">JANAMASTAMI 2026</span>
+                        <span class="lang-hi">जन्माष्टमी 2026</span>
+                    </h1>
+                    <p class="text-xs md:text-sm font-semibold tracking-wide text-orange-200 mt-1">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="lang-en">Kurukshetra, Haryana</span>
+                        <span class="lang-hi">कुरुक्षेत्र, हरियाणा</span>
+                    </p>
+                </div>
                 <div class="flex items-center gap-3">
-                    <button onclick="promptAdmin()" title="Admin Login"
+                    <button onclick="promptAdmin()" id="adminUnlockBtn" title="Admin Access"
+                        class="bg-white/20 hover:bg-white/30 text-white font-bold px-3 py-1 rounded-full transition text-sm border border-white/40 shadow-sm flex items-center gap-1">
+                        <i class="fa-solid fa-lock text-red-200"></i> Admin
+                    </button>
+                    <!-- Language Toggle Button -->
+                    <button onclick="toggleLanguage()" title="Switch Language"
+                        class="bg-white/20 hover:bg-white/30 text-white font-bold px-3 py-1 rounded-full transition text-sm border border-white/40 shadow-sm flex items-center gap-1">
+                        <i class="fa-solid fa-language text-lg"></i> <span class="hidden sm:inline">A / अ</span>
+                    </button>
+                    <button onclick="promptAdmin()" title="Admin Login" style="display:none;"
                         class="text-yellow-300 hover:text-white transition">
                         <i class="fa-solid fa-lock"></i>
                     </button>
@@ -123,49 +288,117 @@
             <div
                 class="bg-white rounded-2xl shadow-lg border-t-4 border-yellow-500 p-8 flex flex-col justify-center items-center text-center transform transition duration-300">
                 <div class="w-64 h-64 mb-4 flex justify-center items-center">
-                    <img src="media/mainmanhandi.jpeg" alt="Dahi Handi" class="w-full h-full object-cover rounded-lg" style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+                    <img src="media/mainmanhandi.jpeg" alt="Dahi Handi" class="w-full h-full object-cover rounded-lg"
+                        style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
                 </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ratgal Dahi Handi</h3>
-                <p class="text-sm text-gray-500 font-semibold"><i class="fa-solid fa-calendar text-yellow-500 mr-1"></i> 4
-                    Sept 2026, 4:00 PM</p>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                    <span class="lang-en">Ratgal Dahi Handi</span>
+                    <span class="lang-hi">रतगल दही हांडी</span>
+                </h3>
+                <p class="text-sm text-red-500 font-bold mb-1">
+                    <i class="fa-solid fa-circle-xmark mr-1"></i>
+                    <span class="lang-en">EVENT CANCELLED</span>
+                    <span class="lang-hi">कार्यक्रम रद्द</span>
+                </p>
+                <p class="text-sm text-gray-500 font-semibold mb-4">
+                    <span class="lang-en">Due to mourning period & safety hazards</span>
+                    <span class="lang-hi">शोक और सुरक्षा कारणों से</span>
+                </p>
+                <button disabled
+                    class="mt-auto w-full bg-red-200 text-red-800 cursor-not-allowed font-bold py-2 rounded-full shadow-lg transition">
+                    <span class="lang-en">Registration Closed</span>
+                    <span class="lang-hi">पंजीकरण बंद है</span>
+                </button>
+                <!-- Admin Excel Download Button for Dahi Handi -->
+                <button onclick="downloadExcel('dahi_handi_registrations', 'dahihandi_2026.csv', 'dahihandi')" id="excelBtnDH"
+                    class="hidden mt-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-full shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-file-excel"></i> Download Excel
+                </button>
             </div>
 
-            <!-- Card 2: Ratgal Music Live Card (Clickable) -->
-            <a href="music-live.html"
-                class="block bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-xl border-2 border-yellow-600 p-8 flex flex-col justify-center items-center text-center transform hover:scale-105 transition duration-300 relative overflow-hidden group">
-                <div class="absolute inset-0 bg-yellow-500 opacity-0 group-hover:opacity-10 transition"></div>
-                <i class="fa-solid fa-music text-6xl text-yellow-400 mb-6 animate-pulse mt-4"></i>
-                <h3 class="text-2xl font-bold text-white mb-2">Ratgal Music Live</h3>
-                <p class="text-sm text-gray-300 font-semibold mb-4 z-10"><i
-                        class="fa-solid fa-calendar text-yellow-400 mr-1"></i> 4 Sept 2026, 4:30 PM</p>
-                <span class="inline-block bg-yellow-500 text-black font-bold px-6 py-2 text-sm rounded-full shadow-lg z-10">Join
-                    Now <i class="fa-solid fa-arrow-right ml-1"></i></span>
-            </a>
-
-            <!-- Card 3: Ratgal Volleyball Match Card (Clickable) -->
-            <a href="volleyball.html"
-                class="block bg-white rounded-2xl shadow-xl border-t-4 border-blue-600 p-8 flex flex-col justify-center items-center text-center transform hover:scale-105 transition duration-300">
-                <div class="w-64 h-64 mb-4 flex justify-center items-center">
-                    <img src="media/vollyicon.webp" alt="Volleyball" class="w-full h-full object-cover rounded-lg" style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+            <!-- Card 2: Ratgal Music Live Card (Cancelled) -->
+            <div
+                class="block bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-xl border-2 border-red-600 p-8 flex flex-col justify-center items-center text-center transform transition duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-red-500 opacity-5 transition"></div>
+                <div class="w-64 h-64 mb-4 flex justify-center items-center opacity-50 grayscale">
+                    <img src="media/groupsinggif.gif" alt="Music Live" class="w-full h-full object-cover rounded-lg"
+                        style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
                 </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ratgal Volleyball Match</h3>
-                <p class="text-sm text-gray-500 font-semibold mb-4"><i class="fa-solid fa-calendar text-blue-500 mr-1"></i> 2nd
-                    & 3rd Sept 2026</p>
-                <span class="inline-block bg-blue-600 text-white font-bold px-6 py-2 text-sm rounded-full shadow-lg">Register
-                    Here <i class="fa-solid fa-pen-to-square ml-1"></i></span>
-            </a>
+                <h3 class="text-2xl font-bold text-white mb-2">
+                    <span class="lang-en">Ratgal Music Live</span>
+                    <span class="lang-hi">रतगल संगीत लाइव</span>
+                </h3>
+                <p class="text-sm text-red-400 font-bold mb-4 z-10"><i
+                        class="fa-solid fa-circle-xmark mr-1"></i> <span class="lang-en">EVENT CANCELLED</span><span class="lang-hi">कार्यक्रम रद्द</span></p>
+                <span
+                    class="inline-block bg-red-900/80 text-red-200 font-bold px-10 py-4 text-lg rounded-full border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] z-10 mb-2">
+                    <span class="lang-en">Cancelled</span>
+                    <span class="lang-hi">रद्द</span>
+                </span>
+                <span class="mt-auto block z-10 w-full">
+                    <button disabled
+                        class="w-full border-2 border-red-800 bg-red-900/50 text-red-400 cursor-not-allowed font-bold py-2 px-4 rounded-full transition">
+                        <span class="lang-en">Registration Closed</span>
+                        <span class="lang-hi">पंजीकरण बंद है</span>
+                    </button>
+                </span>
+                <!-- Admin Excel Download Button for Singing -->
+                <button onclick="downloadExcel('singing_registrations', 'singing_2026.csv', 'singing')"
+                    id="excelBtnSinging"
+                    class="hidden mt-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition flex items-center justify-center gap-2 z-20 relative">
+                    <i class="fa-solid fa-file-excel"></i> Download Excel
+                </button>
+            </div>
+
+            <!-- Card 3: Ratgal Volleyball Match Card (Cancelled) -->
+            <div
+                class="block bg-white rounded-2xl shadow-xl border-t-4 border-red-600 p-8 flex flex-col justify-center items-center text-center transform transition duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-red-500 opacity-5 transition"></div>
+                <div class="w-64 h-64 mb-4 flex justify-center items-center opacity-50 grayscale">
+                    <img src="media/vollyicon.webp" alt="Volleyball" class="w-full h-full object-cover rounded-lg"
+                        style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                    <span class="lang-en">Ratgal Volleyball Match</span>
+                    <span class="lang-hi">रतगल वॉलीबॉल मैच</span>
+                </h3>
+                <p class="text-sm text-red-500 font-bold mb-1">
+                    <i class="fa-solid fa-circle-xmark mr-1"></i>
+                    <span class="lang-en">EVENT CANCELLED</span>
+                    <span class="lang-hi">कार्यक्रम रद्द</span>
+                </p>
+                <p class="text-sm text-gray-500 font-semibold mb-4">
+                    <span class="lang-en">Due to mourning period</span>
+                    <span class="lang-hi">शोक के कारण</span>
+                </p>
+                <button disabled
+                    class="mt-auto w-full bg-red-200 text-red-800 cursor-not-allowed font-bold py-2 rounded-full shadow-lg transition">
+                    <span class="lang-en">Registration Closed</span>
+                    <span class="lang-hi">पंजीकरण बंद है</span>
+                </button>
+            </div>
 
             <!-- Card 4: Ratgal Event 2025 Archive Card (Clickable PDF) -->
             <a href="archive.html"
                 class="block bg-white rounded-2xl shadow-xl border-t-4 border-red-600 p-8 flex flex-col justify-center items-center text-center transform hover:scale-105 transition duration-300">
                 <div class="w-64 h-64 mb-4 flex justify-center items-center">
-                    <img src="media/archiveicon.jpg" alt="Archive" class="w-full h-full object-cover rounded-lg" style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
+                    <img src="media/archiveicon.jpeg" alt="Archive" class="w-full h-full object-cover rounded-lg"
+                        style="-webkit-mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent, black 8px, black calc(100% - 8px), transparent), linear-gradient(to left, transparent, black 8px, black calc(100% - 8px), transparent); mask-composite: intersect;">
                 </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ratgal Event 2025 Archive</h3>
-                <p class="text-sm text-gray-500 font-semibold mb-4"><i class="fa-solid fa-book-open text-red-500 mr-1"></i> View
-                    past memories & videos</p>
-                <span class="inline-block bg-red-600 text-white font-bold px-6 py-2 text-sm rounded-full shadow-lg">View Archive
-                    <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                    <span class="lang-en">Ratgal Event 2025 Archive</span>
+                    <span class="lang-hi">रतगल इवेंट 2025 आर्काइव</span>
+                </h3>
+                <p class="text-sm text-gray-500 font-semibold mb-4">
+                    <i class="fa-solid fa-book-open text-red-500 mr-1"></i>
+                    <span class="lang-en">View past memories & videos</span>
+                    <span class="lang-hi">पुरानी यादें और वीडियो देखें</span>
+                </p>
+                <span class="inline-block bg-red-600 text-white font-bold px-6 py-2 text-sm rounded-full shadow-lg">
+                    <span class="lang-en">View Archive</span>
+                    <span class="lang-hi">आर्काइव देखें</span>
+                    <i class="fa-solid fa-arrow-right ml-1"></i>
+                </span>
             </a>
 
         </div>
@@ -188,14 +421,18 @@
             <!-- Header -->
             <div class="text-center mb-16">
                 <h2
-                    class="text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 mb-8 drop-shadow-lg tracking-wide uppercase">
-                    The Cosmic Play of Janmashtami
+                    class="text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 mb-8 drop-shadow-lg tracking-wide uppercase pt-4 pb-2 leading-normal">
+                    <span class="lang-en">The Cosmic Play of Janmashtami</span><span class="lang-hi">जन्माष्टमी की लौकिक
+                        लीला</span>
                 </h2>
                 <p
                     class="text-base md:text-xl text-gray-300 font-light max-w-4xl mx-auto leading-relaxed border-l-4 border-r-4 border-orange-500 px-6 py-2">
-                    When we gather to celebrate Janmashtami in the heart of village Ratgal, we are not simply
-                    re-enacting ancient history; we are participating in a profound cosmic mechanism that bends time,
-                    space, and human illusion.
+                    <span class="lang-en">When we gather to celebrate Janmashtami in the heart of village Ratgal, we are
+                        not simply re-enacting ancient history; we are participating in a profound cosmic mechanism that
+                        bends time, space, and human illusion.</span>
+                    <span class="lang-hi">जब हम रतगल गांव के बीचों-बीच जन्माष्टमी मनाने के लिए इकट्ठा होते हैं, तो हम
+                        केवल प्राचीन इतिहास को नहीं दोहरा रहे होते; हम एक ऐसे गहरे लौकिक तंत्र का हिस्सा बन रहे होते हैं
+                        जो समय, स्थान और मानव भ्रम को मोड़ देता है।</span>
                 </p>
             </div>
 
@@ -217,15 +454,23 @@
                             </div>
                             <h3
                                 class="text-2xl md:text-4xl font-bold text-white group-hover:text-yellow-400 transition">
-                                The Architect of Time<br><span
-                                    class="text-base md:text-xl text-gray-400 font-medium block mt-1">Krishna & Sudama</span></h3>
+                                <span class="lang-en">The Architect of Time</span><span class="lang-hi">समय के
+                                    रचनाकार</span><br><span
+                                    class="text-base md:text-xl text-gray-400 font-medium block mt-1"><span
+                                        class="lang-en">Krishna & Sudama</span><span class="lang-hi">कृष्ण और
+                                        सुदामा</span></span>
+                            </h3>
                         </div>
                         <div class="space-y-6 text-gray-300 text-base md:text-lg leading-relaxed">
                             <p>
-                                Consider the beautiful reunion of Lord Krishna and His dear friend, Sudama. When the
-                                impoverished Brahmin visited Dwarka with a mere handful of beaten rice, Krishna did not
-                                just snap His fingers to build a new house for him. <strong class="text-white">He
-                                    rewrote the very threads of time.</strong>
+                                <span class="lang-en">Consider the beautiful reunion of Lord Krishna and His dear
+                                    friend, Sudama. When the impoverished Brahmin visited Dwarka with a mere handful of
+                                    beaten rice, Krishna did not just snap His fingers to build a new house for him.
+                                    <strong class="text-white">He rewrote the very threads of time.</strong></span><span
+                                    class="lang-hi">भगवान कृष्ण और उनके प्रिय मित्र सुदामा के सुंदर पुनर्मिलन पर विचार
+                                    करें। जब गरीब ब्राह्मण मुट्ठी भर पीटा हुआ चावल लेकर द्वारका गया, तो कृष्ण ने उसके
+                                    लिए नया घर बनाने के लिए सिर्फ अपनी उंगलियां नहीं चटकाईं। <strong
+                                        class="text-white">उन्होंने समय के धागों को ही फिर से लिख दिया।</strong></span>
                             </p>
 
                             <!-- Creative Image Integration -->
@@ -240,29 +485,39 @@
                                     class="absolute bottom-6 left-6 z-20 transform translate-y-2 group-hover/img2:translate-y-0 transition duration-500">
                                     <span
                                         class="bg-yellow-600/80 backdrop-blur-md text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-yellow-400/50 shadow-lg whitespace-nowrap inline-flex items-center">
-                                        <i class="fa-solid fa-clock-rotate-left text-orange-200 mr-2 animate-pulse"></i>Rewriting Time
+                                        <i
+                                            class="fa-solid fa-clock-rotate-left text-orange-200 mr-2 animate-pulse"></i>Rewriting
+                                        Time
                                     </span>
                                 </div>
                             </div>
 
                             <p>
-                                By the time Sudama returned home, his humble hut had not just been replaced—the
-                                magnificent palace had <em class="text-yellow-200">always</em> been there. The memories
-                                of the passers-by, the history of the town, and the physical fabric of reality were
-                                instantly altered in perfect, unnoticeable proportion.
+                                <span class="lang-en">By the time Sudama returned home, his humble hut had not just been
+                                    replaced—the magnificent palace had <em class="text-yellow-200">always</em> been
+                                    there. The memories of the passers-by, the history of the town, and the physical
+                                    fabric of reality were instantly altered in perfect, unnoticeable
+                                    proportion.</span><span class="lang-hi">जब तक सुदामा घर लौटा, तब तक उसकी साधारण
+                                    झोपड़ी की जगह न केवल ले ली गई थी - बल्कि वह शानदार महल <em
+                                        class="text-yellow-200">हमेशा</em> वहीं था। राहगीरों की यादें, कस्बे का इतिहास
+                                    और वास्तविकता का भौतिक ताना-बाना तुरंत और अचूक अनुपात में बदल गया था।</span>
                             </p>
 
                             <div
                                 class="mt-8 bg-gray-900/80 border-l-4 border-yellow-500 p-6 md:p-8 rounded-r-2xl italic text-gray-400 text-base shadow-inner">
-                                "This teaches us a brilliant cosmic truth: humanity is trapped in the illusion of linear
-                                time, only noticing relative, day-to-day changes. The divine, however, operates in
-                                absolute transformations, molding the past, present, and future in a single stroke of
-                                compassion to erase suffering entirely without the mind even realizing the shift."
+                                <span class="lang-en">"This teaches us a brilliant cosmic truth: humanity is trapped in
+                                    the illusion of linear time, only noticing relative, day-to-day changes. The divine,
+                                    however, operates in absolute transformations, molding the past, present, and future
+                                    in a single stroke of compassion to erase suffering entirely without the mind even
+                                    realizing the shift."</span><span class="lang-hi">"यह हमें एक शानदार लौकिक सत्य
+                                    सिखाता है: मानवता रैखिक समय के भ्रम में फंसी हुई है, जो केवल दिन-प्रतिदिन के सापेक्ष
+                                    परिवर्तनों को देखती है। हालांकि, परमात्मा पूर्ण परिवर्तनों में काम करता है, अतीत,
+                                    वर्तमान और भविष्य को करुणा के एक ही झटके में ढालता है ताकि मन को इस बदलाव का एहसास
+                                    हुए बिना दुख को पूरी तरह से मिटाया जा सके।"</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Ratgal Dahi Handi -->
                 <div
                     class="bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-3xl p-8 md:p-10 hover:bg-gray-800/60 transition duration-500 group shadow-2xl relative overflow-hidden">
@@ -278,14 +533,20 @@
                             </div>
                             <h3
                                 class="text-2xl md:text-4xl font-bold text-white group-hover:text-orange-400 transition">
-                                Ratgal Dahi Handi<br><span
-                                    class="text-base md:text-xl text-gray-400 font-medium block mt-1">Shattering the Cage of
-                                    "I"</span></h3>
+                                <span class="lang-en">Ratgal Dahi Handi</span><span class="lang-hi">रतगल दही
+                                    हांडी</span><br><span
+                                    class="text-base md:text-xl text-gray-400 font-medium block mt-1"><span
+                                        class="lang-en">Shattering the Cage of "I"</span><span class="lang-hi">"मैं" के
+                                        पिंजरे को तोड़ना</span></span>
+                            </h3>
                         </div>
                         <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-8">
-                            This mastery over the physical universe is exactly what we celebrate during the Ratgal Dahi
-                            Handi festival. The earthen pot suspended high above the streets of Ratgal is much more than
-                            a vessel for buttermilk; it is a living metaphor for the human ego.
+                            <span class="lang-en">This mastery over the physical universe is exactly what we celebrate
+                                during the Ratgal Dahi Handi festival. The earthen pot suspended high above the streets
+                                of Ratgal is much more than a vessel for buttermilk; it is a living metaphor for the
+                                human ego.</span><span class="lang-hi">भौतिक ब्रह्मांड पर यही महारत है जिसका हम रतगल दही
+                                हांडी उत्सव के दौरान जश्न मनाते हैं। रतगल की सड़कों के ऊपर लटका मिट्टी का बर्तन छाछ के
+                                बर्तन से कहीं अधिक है; यह मानव अहंकार का एक जीवित रूपक है।</span>
                         </p>
 
                         <!-- Creative Image Integration -->
@@ -300,9 +561,8 @@
                                 class="absolute bottom-6 left-6 z-20 transform translate-y-2 group-hover/img:translate-y-0 transition duration-500">
                                 <span
                                     class="bg-orange-500/80 backdrop-blur-md text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-orange-400/50 shadow-lg whitespace-nowrap inline-flex items-center">
-                                    <i class="fa-solid fa-bolt text-yellow-300 mr-2 animate-pulse"></i>Shattering Space
-                                    & Time
-                                </span>
+                                    <i class="fa-solid fa-bolt text-yellow-300 mr-2 animate-pulse"></i><span
+                                        class="lang-en">Liberating Space Time</span><span class="lang-hi">काल-आकाश से मुक्ति</span></span>
                             </div>
                         </div>
 
@@ -310,41 +570,67 @@
                             <div class="flex gap-5 items-start group/item">
                                 <div
                                     class="mt-1 bg-gray-700/80 p-4 rounded-2xl group-hover/item:bg-orange-500/20 transition">
-                                    <i class="fa-solid fa-jar text-orange-400 text-base md:text-xl"></i></div>
+                                    <i class="fa-solid fa-jar text-orange-400 text-base md:text-xl"></i>
+                                </div>
                                 <div>
-                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2 flex flex-wrap items-center">The Clay Pot <span
-                                            class="text-orange-400 text-xs font-bold uppercase tracking-widest ml-2 bg-orange-900/30 px-3 py-1 rounded-full border border-orange-500/30 whitespace-nowrap">The
-                                            Ego</span></h4>
-                                    <p class="text-gray-400 text-lg leading-relaxed">It represents the rigid, earthly
-                                        cage of human identity, hardened by our accumulated desires, habits, and the
-                                        stubborn sense of "I" that separates us from the rest of the universe.</p>
+                                    <h4
+                                        class="text-lg md:text-xl font-bold text-white mb-2 flex flex-wrap items-center">
+                                        <span class="lang-en">The Clay Pot</span><span class="lang-hi">मिट्टी का
+                                            बर्तन</span> <span
+                                            class="text-orange-400 text-xs font-bold uppercase tracking-widest ml-2 bg-orange-900/30 px-3 py-1 rounded-full border border-orange-500/30 whitespace-nowrap"><span
+                                                class="lang-en">The Ego</span><span class="lang-hi">अहंकार</span></span>
+                                    </h4>
+                                    <p class="text-gray-400 text-lg leading-relaxed"><span class="lang-en">It represents
+                                            the rigid, earthly cage of human identity, hardened by our accumulated
+                                            desires, habits, and the stubborn sense of "I" that separates us from the
+                                            rest of the universe.</span><span class="lang-hi">यह मानव पहचान के कठोर,
+                                            सांसारिक पिंजरे का प्रतिनिधित्व करता है, जो हमारी संचित इच्छाओं, आदतों और
+                                            "मैं" की जिद्दी भावना से कठोर हो गया है जो हमें शेष ब्रह्मांड से अलग करता
+                                            है।</span></p>
                                 </div>
                             </div>
                             <div class="flex gap-5 items-start group/item">
                                 <div
                                     class="mt-1 bg-gray-700/80 p-4 rounded-2xl group-hover/item:bg-yellow-500/20 transition">
-                                    <i class="fa-solid fa-droplet text-yellow-300 text-base md:text-xl"></i></div>
+                                    <i class="fa-solid fa-droplet text-yellow-300 text-base md:text-xl"></i>
+                                </div>
                                 <div>
-                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2">The White Butter <span
-                                            class="text-yellow-300 text-xs font-bold uppercase tracking-widest ml-2 bg-yellow-900/30 px-3 py-1 rounded-full border border-yellow-500/30">Cosmic
-                                            Purity</span></h4>
-                                    <p class="text-gray-400 text-lg leading-relaxed">The rich butter spilling forth
-                                        symbolizes pure, unconfigured consciousness—the joyful essence of life, finally
-                                        liberated from the confines of mortal limitations.</p>
+                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2"><span class="lang-en">The
+                                            White Butter</span><span class="lang-hi">सफेद मक्खन</span> <span
+                                            class="text-yellow-300 text-xs font-bold uppercase tracking-widest ml-2 bg-yellow-900/30 px-3 py-1 rounded-full border border-yellow-500/30"><span
+                                                class="lang-en">Cosmic Purity</span><span class="lang-hi">लौकिक
+                                                शुद्धता</span></span></h4>
+                                    <p class="text-gray-400 text-lg leading-relaxed"><span class="lang-en">The rich
+                                            butter spilling forth symbolizes pure, unconfigured consciousness—the joyful
+                                            essence of life, finally liberated from the confines of mortal
+                                            limitations.</span><span class="lang-hi">बाहर फैलता हुआ समृद्ध मक्खन शुद्ध,
+                                            असीमित चेतना का प्रतीक है-जीवन का आनंदमय सार, जो अंततः नश्वर सीमाओं के
+                                            बंधनों से मुक्त हो गया है।</span></p>
                                 </div>
                             </div>
                             <div class="flex gap-5 items-start group/item">
                                 <div
                                     class="mt-1 bg-gray-700/80 p-4 rounded-2xl group-hover/item:bg-red-500/20 transition">
-                                    <i class="fa-solid fa-users text-red-400 text-base md:text-xl"></i></div>
+                                    <i class="fa-solid fa-users text-red-400 text-base md:text-xl"></i>
+                                </div>
                                 <div>
-                                    <h4 class="text-lg md:text-xl font-bold text-white mb-2 flex flex-wrap items-center">The Human Pyramid <span
-                                            class="text-red-400 text-xs font-bold uppercase tracking-widest ml-2 bg-red-900/30 px-3 py-1 rounded-full border border-red-500/30 whitespace-nowrap">Universal
-                                            Unity</span></h4>
-                                    <p class="text-gray-400 text-lg leading-relaxed">A single soul cannot break the
-                                        illusion of space and time while acting out of selfish ambition. The towering
-                                        pyramid proves that only by discarding individual egos, supporting one another,
-                                        and uniting in a selfless focus can humanity reach divine heights.</p>
+                                    <h4
+                                        class="text-lg md:text-xl font-bold text-white mb-2 flex flex-wrap items-center">
+                                        <span class="lang-en">The Human Pyramid</span><span class="lang-hi">मानव
+                                            पिरामिड</span> <span
+                                            class="text-red-400 text-xs font-bold uppercase tracking-widest ml-2 bg-red-900/30 px-3 py-1 rounded-full border border-red-500/30 whitespace-nowrap"><span
+                                                class="lang-en">Universal Unity</span><span class="lang-hi">सार्वभौमिक
+                                                एकता</span></span>
+                                    </h4>
+                                    <p class="text-gray-400 text-lg leading-relaxed"><span class="lang-en">A single soul
+                                            cannot break the illusion of space and time while acting out of selfish
+                                            ambition. The towering pyramid proves that only by discarding individual
+                                            egos, supporting one another, and uniting in a selfless focus can humanity
+                                            reach divine heights.</span><span class="lang-hi">स्वार्थी महत्वाकांक्षा से
+                                            काम करते हुए कोई एक आत्मा स्थान और समय के भ्रम को नहीं तोड़ सकती। ऊँचा
+                                            पिरामिड यह साबित करता है कि केवल व्यक्तिगत अहंकार को त्याग कर, एक-दूसरे का
+                                            समर्थन करके और निस्वार्थ ध्यान में एकजुट होकर ही मानवता दिव्य ऊंचाइयों तक
+                                            पहुंच सकती है।</span></p>
                                 </div>
                             </div>
                         </div>
@@ -360,21 +646,26 @@
                 </div>
                 <p
                     class="text-xl md:text-3xl font-light text-orange-200 italic max-w-5xl mx-auto leading-relaxed pt-12 px-4 drop-shadow-md">
-                    "As the Govindas of Ratgal rise together this Janmashtami, they are not just reaching for a prize.
-                    They are shattering the illusions of the universe and letting pure, unbound joy rain down upon the
-                    village."
+                    <span class="lang-en">"As the Govindas of Ratgal rise together this Janmashtami, they are not just
+                        reaching for a prize. They are shattering the illusions of the universe and letting pure,
+                        unbound joy rain down upon the village."</span><span class="lang-hi">"जैसे-जैसे रतगल के गोविंदा
+                        इस जन्माष्टमी पर एक साथ उठते हैं, वे केवल पुरस्कार तक ही नहीं पहुंच रहे होते। वे ब्रह्मांड के
+                        भ्रम को तोड़ रहे हैं और गांव पर शुद्ध, असीम आनंद की बारिश होने दे रहे हैं।"</span>
                 </p>
-                <div class="mt-10 flex justify-center items-center text-2xl md:text-4xl text-yellow-500 space-x-4 md:space-x-6">
+                <div
+                    class="mt-10 flex justify-center items-center text-2xl md:text-4xl text-yellow-500 space-x-4 md:space-x-6">
                     <i class="fa-solid fa-sparkles text-2xl animate-pulse"></i>
-                    <i class="fa-solid fa-dharmachakra text-4xl md:text-5xl animate-[spin_10s_linear_infinite] text-orange-500"></i>
+                    <i
+                        class="fa-solid fa-dharmachakra text-4xl md:text-5xl animate-[spin_10s_linear_infinite] text-orange-500"></i>
                     <i class="fa-solid fa-sparkles text-2xl animate-pulse" style="animation-delay: 0.5s;"></i>
                 </div>
 
                 <!-- Philosophy Book Reader Button -->
                 <div class="mt-12">
-                    <a href="philosophy.html" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold text-base md:text-lg px-6 md:px-10 py-3 md:py-4 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.4)] transition transform hover:-translate-y-1 hover:scale-105 border border-orange-400/50">
+                    <a href="philosophy.html"
+                        class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold text-base md:text-lg px-6 md:px-10 py-3 md:py-4 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.4)] transition transform hover:-translate-y-1 hover:scale-105 border border-orange-400/50">
                         <i class="fa-solid fa-book-open-reader text-2xl"></i>
-                        <span>OUR PHILOSOPHY</span>
+                        <span><span class="lang-en">OUR PHILOSOPHY</span><span class="lang-hi">हमारा दर्शन</span></span>
                     </a>
                 </div>
             </div>
@@ -387,7 +678,9 @@
         <div class="w-[95%] max-w-[2400px] mx-auto text-center">
             <h2
                 class="text-2xl md:text-3xl font-bold text-gray-800 inline-block border-b-4 border-double border-red-500 pb-1 mb-6 md:mb-10">
-                Glimpses of Past Events</h2>
+                <span class="lang-en">Glimpses of Past Events</span><span class="lang-hi">पिछले आयोजनों की
+                    झलकियाँ</span>
+            </h2>
 
             <div id="past-events-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div class="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
@@ -414,17 +707,94 @@
         </div>
     </section>
 
+
+    <!-- One-Click WhatsApp & Instagram Status Share Box -->
+    <div
+        class="py-8 bg-gradient-to-r from-orange-100 to-yellow-100 text-center px-4 rounded-3xl max-w-xl mx-auto my-8 shadow-lg border-2 border-orange-300">
+        <h3 class="text-xl md:text-2xl font-bold text-orange-900 mb-2">
+            <i class="fa-solid fa-share-nodes text-orange-600 mr-2"></i>
+            <span class="lang-en">Share Status & Story</span>
+            <span class="lang-hi">स्टेटस और स्टोरी शेयर करें</span>
+        </h3>
+        <p class="text-sm text-gray-700 mb-6 font-medium">
+            <span class="lang-en">Download the invitation card in one click and send it to your friends!</span>
+            <span class="lang-hi">एक क्लिक में इनविटेशन कार्ड डाउनलोड करें और अपने दोस्तों को भेजें!</span>
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <!-- WhatsApp Status / Direct Share Button -->
+            <a href="https://api.whatsapp.com/send?text=श्री%20कृष्ण%20जन्माष्टमी%20महोत्सव%202026%20में%20आपकी%20हार्दिक%20शुभकामनाएँ!%20दही%20हांडी%20और%20वॉलीबॉल%20टूर्नामेंट%20की%20डिटेल्स%20देखें:%20https://ratgal-event.web.app"
+                target="_blank"
+                class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition text-sm flex items-center gap-2 transform hover:scale-105">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span class="lang-en">Share on WhatsApp</span>
+                <span class="lang-hi">WhatsApp पर शेयर करें</span>
+            </a>
+
+            <!-- Direct Image Download Button for Status -->
+            <a href="media/finalinvitation.jpg" download="Ratgal_Janmashtami_2026.jpg"
+                class="bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-6 rounded-full shadow-lg transition text-sm flex items-center gap-2 transform hover:scale-105">
+                <i class="fa-solid fa-download text-lg"></i>
+                <span class="lang-en">Download Status Card</span>
+                <span class="lang-hi">स्टेटस कार्ड डाउनलोड करें</span>
+            </a>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-10 text-center flex flex-col items-center gap-4">
         <a href="practice.html"
             class="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 px-6 py-2 rounded-full font-bold transition border border-gray-700 hover:border-gray-500 shadow-lg mb-2">
             <i class="fa-solid fa-microphone-lines text-orange-500"></i>
-            Volunteer Karaoke Practice
+            <span class="lang-en">Volunteer Karaoke Practice</span><span class="lang-hi">स्वयंसेवक कराओके अभ्यास</span>
         </a>
-        <p class="mb-1">Made with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by <strong>Prince Saini / रतगल युवा संघ</strong>
+        <p class="mb-1"><span class="lang-en">Made with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by
+                <strong>Prince Saini / Ratgal Yuva Sangh</strong></span><span class="lang-hi"><strong>प्रिंस सैनी / रतगल
+                    युवा संघ</strong> द्वारा <i class="fa-solid fa-heart text-red-500 mx-1"></i> से निर्मित</span>
         </p>
-        <p class="text-sm">RATGAL JANAMASHTAMI 2026</p>
+        <p class="text-sm"><span class="lang-en">RATGAL JANAMASHTAMI 2026</span><span class="lang-hi">रतगल जन्माष्टमी
+                2026</span></p>
     </footer>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal"
+        class="fixed inset-0 bg-black bg-opacity-75 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-105 relative">
+            <button onclick="closeRegistrationModal()"
+                class="absolute top-4 right-4 text-gray-500 hover:text-red-500"><i
+                    class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 border-b pb-2 flex items-center">
+                <i id="regIcon" class="fa-solid fa-jar text-orange-500 mr-2"></i>
+                <span class="flex-1 text-center">
+                    <span id="regTitleEn" class="lang-en">Registration</span>
+                    <span id="regTitleHi" class="lang-hi">पंजीकरण</span>
+                </span>
+            </h3>
+            <form id="eventRegForm" onsubmit="handleEventRegistration(event)" class="space-y-3 mt-4">
+                <input type="hidden" id="regEventType" value="">
+                <div>
+                    <input type="text" id="regName" required placeholder="Name (नाम)"
+                        class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-orange-500 text-sm">
+                </div>
+                <div>
+                    <input type="tel" id="regPhone" required placeholder="Phone Number (फ़ोन नंबर)"
+                        class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-orange-500 text-sm">
+                </div>
+                <div
+                    class="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded border border-gray-300">
+                    <input type="checkbox" id="regResident"
+                        class="w-4 h-4 text-orange-600 rounded border-gray-300 cursor-pointer">
+                    <label for="regResident" class="cursor-pointer">Resident of Ratgal? (रतगल निवासी)</label>
+                </div>
+                <button type="submit" id="regSubmitBtn"
+                    class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 rounded shadow transition text-sm flex items-center justify-center gap-2 mt-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span class="lang-en">Submit</span>
+                    <span class="lang-hi">रजिस्टर करें</span>
+                </button>
+            </form>
+        </div>
+    </div>
     <!-- Admin Login Modal -->
     <div id="pinModal"
         class="fixed inset-0 bg-black bg-opacity-75 z-[70] hidden flex items-center justify-center px-4 backdrop-blur-sm transition-opacity">
@@ -526,6 +896,71 @@
             setTimeout(() => document.getElementById('adminSecretCode').focus(), 100);
         }
 
+
+        window.openRegistrationModal = function (eventType, e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            document.getElementById('registrationModal').classList.remove('hidden');
+            document.getElementById('regEventType').value = eventType;
+
+            const titleEn = document.getElementById('regTitleEn');
+            const titleHi = document.getElementById('regTitleHi');
+            const icon = document.getElementById('regIcon');
+
+            if (eventType === 'dahi_handi') {
+                titleEn.innerText = 'Dahi Handi Register';
+                titleHi.innerText = 'दही हांडी पंजीकरण';
+                icon.className = 'fa-solid fa-jar text-orange-500 mr-2';
+            } else if (eventType === 'singing') {
+                titleEn.innerText = 'Singing Register';
+                titleHi.innerText = 'गायन पंजीकरण';
+                icon.className = 'fa-solid fa-microphone-lines text-yellow-500 mr-2';
+            }
+        }
+
+        window.closeRegistrationModal = function () {
+            document.getElementById('registrationModal').classList.add('hidden');
+            document.getElementById('eventRegForm').reset();
+        }
+
+        window.handleEventRegistration = async function (e) {
+            e.preventDefault();
+            const btn = document.getElementById('regSubmitBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i>`;
+            btn.disabled = true;
+
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+            const isResident = document.getElementById('regResident').checked;
+            const eventType = document.getElementById('regEventType').value;
+
+            const collectionName = eventType === 'dahi_handi' ? 'dahi_handi_registrations' : 'singing_registrations';
+
+            try {
+                if (db) {
+                    const colRef = collection(db, collectionName);
+                    await addDoc(colRef, {
+                        name: name,
+                        phone: phone,
+                        isResident: isResident,
+                        timestamp: Date.now()
+                    });
+                }
+
+                closeRegistrationModal();
+                showCustomAlert("Successfully Registered! / सफलतापूर्वक पंजीकृत!", "success");
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                showCustomAlert("Error saving. Please try again.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
         window.closePinModal = function () {
             document.getElementById('pinModal').classList.add('hidden');
         }
@@ -603,6 +1038,13 @@
 
         function unlockAdminUI() {
             document.getElementById('pinModal').classList.add('hidden');
+            const adminBtn = document.getElementById('adminUnlockBtn');
+            if (adminBtn) adminBtn.classList.add('hidden');
+
+            const excelDH = document.getElementById('excelBtnDH');
+            if (excelDH) excelDH.classList.remove('hidden');
+            const excelSinging = document.getElementById('excelBtnSinging');
+            if (excelSinging) excelSinging.classList.remove('hidden');
             document.getElementById('adminUnlockBtn').classList.add('hidden');
             document.getElementById('excelBtn').classList.remove('hidden');
 
@@ -704,9 +1146,8 @@
             }
         }
 
-        // 4. Excel Download Feature
-        window.downloadExcel = async function () {
-            // Check auth (allow local fallback if credentials are 'admin@ratgal.com')
+        // 4. Excel Download Feature (Dynamic & Deduplicated)
+        window.downloadExcel = async function (collectionName, fileName, eventType) {
             if (!auth.currentUser && !(document.getElementById('adminEmailInput') && document.getElementById('adminEmailInput').value === "admin@ratgal.com")) {
                 showCustomAlert("Access Denied", "error");
                 return;
@@ -718,10 +1159,12 @@
 
             if (db) {
                 try {
-                    const privCol = collection(db, "volleyball_registrations_private");
-                    const snapshot = await getDocs(privCol);
+                    const colRef = collection(db, collectionName);
+                    const snapshot = await getDocs(colRef);
                     snapshot.forEach(doc => {
-                        allData.push(doc.data());
+                        if (doc.id !== 'music_sync_state' && doc.data().name) {
+                            allData.push(doc.data());
+                        }
                     });
                 } catch (e) {
                     console.error("Fetch error", e);
@@ -729,25 +1172,49 @@
                     return;
                 }
             } else {
-                allData = JSON.parse(localStorage.getItem('vbPlayers') || '[]');
+                const localKey = eventType === 'volleyball' ? 'vbPlayers' : (eventType === 'singing' ? 'musicPlayers' : 'dahiPlayers');
+                allData = JSON.parse(localStorage.getItem(localKey) || '[]');
             }
 
             if (allData.length === 0) {
-                showCustomAlert("कोई डेटा नहीं मिला", "error");
+                showCustomAlert("कोई डेटा नहीं मिला (No Data)", "error");
                 return;
             }
 
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Name,Phone Number\n";
-            allData.forEach(function (rowArray) {
-                let row = `"${rowArray.name}","${rowArray.phone}"`;
-                csvContent += row + "\r\n";
+            
+            if (eventType === 'volleyball') {
+                csvContent += "Name,Phone Number,Age,Experience Level,Resident\n";
+            } else {
+                csvContent += "Name,Phone Number,Resident\n";
+            }
+
+            // Deduplication Tracking
+            const seen = new Set();
+            
+            allData.forEach(function (row) {
+                // Create unique fingerprint using name and phone
+                let uniqueKey = `${(row.name || '').trim().toLowerCase()}_${(row.phone || '').trim()}`;
+                
+                if (seen.has(uniqueKey)) return; // Skip if we've already added this person
+                seen.add(uniqueKey);
+
+                let isRes = row.isResident ? "Yes" : "No";
+                let rowStr = "";
+                
+                if (eventType === 'volleyball') {
+                    rowStr = `"${row.name || ''}","${row.phone || ''}","${row.age || ''}","${row.exp || ''}","${isRes}"`;
+                } else {
+                    rowStr = `"${row.name || ''}","${row.phone || ''}","${isRes}"`;
+                }
+                
+                csvContent += rowStr + "\r\n";
             });
 
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "volleyball_registrations_2026.csv");
+            link.setAttribute("download", fileName);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -974,7 +1441,103 @@
                 });
             }
         });
+        // --- Background Music Logic ---
+        let isMusicPlaying = false;
+
+        window.toggleBackgroundMusic = function () {
+            const bgMusic = document.getElementById('bgMusic');
+            const musicIcon = document.getElementById('musicIcon');
+            const musicBtn = document.getElementById('musicToggleBtn');
+
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                if (musicIcon) {
+                    musicIcon.classList.remove('fa-pause', 'animate-pulse');
+                    musicIcon.classList.add('fa-music');
+                }
+                if (musicBtn) musicBtn.classList.remove('shadow-[0_0_30px_rgba(250,204,21,0.8)]');
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    if (musicIcon) {
+                        musicIcon.classList.remove('fa-music');
+                        musicIcon.classList.add('fa-pause', 'animate-pulse');
+                    }
+                    if (musicBtn) musicBtn.classList.add('shadow-[0_0_30px_rgba(250,204,21,0.8)]');
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    console.log("Audio playback failed:", error);
+                });
+            }
+        };
+
+        let playCount = 0;
+        const bgMusicEl = document.getElementById('bgMusic');
+        if (bgMusicEl) {
+            bgMusicEl.addEventListener('ended', function () {
+                playCount++;
+                if (playCount < 2) {
+                    this.currentTime = 0;
+                    this.play().catch(e => console.log("Audio replay failed:", e));
+                } else {
+                    isMusicPlaying = false;
+                    const musicIcon = document.getElementById('musicIcon');
+                    const musicBtn = document.getElementById('musicToggleBtn');
+                    if (musicIcon) {
+                        musicIcon.classList.remove('fa-pause', 'animate-pulse');
+                        musicIcon.classList.add('fa-music');
+                    }
+                    if (musicBtn) {
+                        musicBtn.classList.remove('shadow-[0_0_30px_rgba(250,204,21,0.8)]');
+                    }
+                    playCount = 0;
+                }
+            });
+        }
+
+        // --- Welcome Overlay Dismiss & Music Start ---
+        window.dismissOverlay = function () {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (!overlay) return;
+            overlay.classList.add('fade-out');
+            // Start music on dismiss
+            if (!isMusicPlaying && document.getElementById('bgMusic')) {
+                toggleBackgroundMusic();
+            }
+            setTimeout(() => {
+                overlay.remove();
+            }, 700);
+        };
+
+        // Auto-expiry: don't show overlay after 4th September 2026 IST
+        (function () {
+            const expiryDate = new Date('2026-09-04T23:59:59+05:30');
+            const overlay = document.getElementById('welcomeOverlay');
+            
+            // Session Storage check to prevent repetitive notifications
+            if (sessionStorage.getItem('hasSeenWelcomeAlert') || new Date() > expiryDate) {
+                if (overlay) overlay.remove();
+                // Fallback: start music on first click if overlay is gone
+                document.body.addEventListener('click', function () {
+                    if (!isMusicPlaying && document.getElementById('bgMusic')) {
+                        toggleBackgroundMusic();
+                    }
+                }, { once: true });
+            } else {
+                sessionStorage.setItem('hasSeenWelcomeAlert', 'true');
+            }
+        })();
     </script>
+    <!-- Background Music Audio Element -->
+    <audio id="bgMusic" preload="auto">
+        <source src="media/flutemusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Music Toggle Button -->
+    <button id="musicToggleBtn" onclick="toggleBackgroundMusic()"
+        class="fixed bottom-6 right-6 z-[100] bg-gradient-to-r from-orange-600 to-red-600 text-white p-4 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.6)] transform hover:scale-110 transition duration-300 border-2 border-yellow-400 flex items-center justify-center group">
+        <i id="musicIcon" class="fa-solid fa-music text-xl group-hover:animate-bounce"></i>
+    </button>
 </body>
 
 </html>
