@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्री राम विजय महोत्सव 2026 | Ratgal Pitch</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600;700&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        mukta: ['Mukta', 'sans-serif'], // Great for Hindi text
+                    },
+                    colors: {
+                        saffron: {
+                            50: '#fff8ed',
+                            100: '#ffefd4',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            900: '#7c2d12',
+                        },
+                        gold: '#fbbf24'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Mukta', 'Inter', sans-serif; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url('media/ravaan.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .pattern-bg {
+            background-color: #fff8ed;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#f97316' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-saffron-500 selection:text-white">
+
+    <nav class="fixed w-full z-50 bg-slate-900/95 backdrop-blur shadow-lg border-b border-saffron-500/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <i class="fa-solid fa-om text-gold text-3xl"></i>
+                    <span class="font-cinzel font-bold text-xl text-white tracking-wider">Dussehra 2026</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#vision" class="text-gray-300 hover:text-gold transition-colors font-medium">दृष्टिकोण</a>
+                    <a href="#attractions" class="text-gray-300 hover:text-gold transition-colors font-medium">आकर्षण</a>
+                    <a href="#schedule" class="text-gray-300 hover:text-gold transition-colors font-medium">कार्यक्रम</a>
+                    <a href="#guests" class="text-gray-300 hover:text-gold transition-colors font-medium">अतिथि</a>
+                    <a href="#budget" class="text-gold font-semibold hover:text-white transition-colors border border-gold/30 px-4 py-1 rounded-full bg-gold/10">बजट और स्पॉन्सरशिप</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#vision" class="block px-3 py-2 text-gray-300 hover:text-gold font-medium">दृष्टिकोण</a>
+                <a href="#attractions" class="block px-3 py-2 text-gray-300 hover:text-gold font-medium">आकर्षण</a>
+                <a href="#schedule" class="block px-3 py-2 text-gray-300 hover:text-gold font-medium">कार्यक्रम</a>
+                <a href="#guests" class="block px-3 py-2 text-gray-300 hover:text-gold font-medium">अतिथि</a>
+                <a href="#budget" class="block px-3 py-2 text-gold font-medium">बजट और स्पॉन्सरशिप</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-bg relative min-h-screen flex items-center justify-center pt-32 pb-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/90"></div>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <div class="inline-flex items-center gap-2 mb-12 px-6 py-2 border border-gold/50 rounded-full bg-slate-900/70 backdrop-blur">
+                <i class="fa-solid fa-location-dot text-saffron-500"></i>
+                <p class="text-gold font-semibold tracking-widest uppercase text-sm">हुड्डा ग्राउंड, सेक्टर 10, रतगल, कुरुक्षेत्र | Hooda Ground, Ratgal</p>
+            </div>
+            
+            <h1 class="font-cinzel text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[6rem] font-black text-white mb-2 md:mb-4 drop-shadow-2xl leading-snug md:leading-tight">
+                श्री राम विजय <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-saffron-500">महोत्सव 2026</span>
+            </h1>
+            <h2 class="font-cinzel text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-400 mb-6 font-bold tracking-[0.2em] uppercase">
+                Shri Ram Vijay Mahotsav
+            </h2>
+            
+            <p class="text-xl md:text-2xl text-gray-200 mb-2 max-w-3xl mx-auto font-medium leading-relaxed">
+                मास्टर ऑपरेशनल डॉसियर और पिच डॉक्यूमेंट
+            </p>
+            <p class="text-sm md:text-base text-gray-400 mb-8 max-w-3xl mx-auto font-light leading-relaxed uppercase tracking-widest">
+                Master Operational Dossier & Pitch Document
+            </p>
+
+            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700 p-6 rounded-3xl max-w-2xl mx-auto mb-10">
+                <p class="text-gold font-bold mb-1 uppercase tracking-widest text-sm">प्रस्तावित मुख्य संरक्षक</p>
+                <p class="text-gray-400 font-semibold mb-2 uppercase tracking-widest text-xs">Proposed Grand Patrons</p>
+                <h3 class="text-2xl md:text-3xl font-bold text-white">श्री साहिल सुधा एवं श्री सुभाष सुधा जी</h3>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#guests" class="bg-saffron-600 hover:bg-saffron-500 text-white font-bold py-4 px-8 rounded-full shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all transform hover:scale-105">
+                    अतिथि एवं प्रोटोकॉल <span class="text-xs font-normal opacity-80 block">Guest Protocol</span>
+                </a>
+                <a href="#budget" class="bg-transparent border-2 border-gold text-gold hover:bg-gold hover:text-slate-900 font-bold py-4 px-8 rounded-full transition-all transform hover:scale-105">
+                    बजट ब्लूप्रिंट देखें <span class="text-xs font-normal opacity-80 block">View Budget Blueprint</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="vision" class="py-20 pattern-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-slate-900 mb-2">1. दृष्टिकोण और नेतृत्व</h2>
+                <h3 class="text-xl text-slate-500 font-cinzel font-bold tracking-widest uppercase mb-4">Vision & Leadership</h3>
+                <div class="w-24 h-1 bg-saffron-500 mx-auto mb-6"></div>
+                <p class="text-lg text-slate-800 max-w-3xl mx-auto leading-relaxed font-medium">
+                    रतगल युवा संघ गाँव की सांस्कृतिक धरोहर को <strong>आधुनिक इंजीनियरिंग</strong> और <strong>कॉर्पोरेट स्तर के प्रबंधन</strong> के साथ आयोजित करने के लिए प्रतिबद्ध है।
+                </p>
+                <p class="text-sm text-slate-500 max-w-3xl mx-auto mt-2 italic">
+                    The Ratgal Youth Association is committed to executing the village's cultural heritage with modern engineering and corporate-level management.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="relative bg-white p-8 rounded-3xl shadow-sm border-t-4 border-t-saffron-500 hover:shadow-lg transition-shadow overflow-hidden group">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-5 group-hover:opacity-10 transition-transform duration-700 group-hover:scale-105" style="background-image: url('media/mainmanhandi.jpeg');"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-saffron-100 rounded-full flex items-center justify-center text-saffron-600 text-2xl mb-6">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-1">नेतृत्व</h3>
+                        <h4 class="text-sm font-semibold text-saffron-600 mb-3 uppercase">Leadership</h4>
+                        <p class="text-slate-700 leading-relaxed text-sm mb-2 font-medium">
+                            <strong>प्रिंस सैनी (B.Tech, MBA, US Corporate Exp.)</strong> द्वारा निर्देशित, यह आयोजन गाँव की परंपराओं में सुरक्षा और तकनीकी मापदंडों को सुनिश्चित करता है।
+                        </p>
+                        <p class="text-slate-500 text-xs italic">Directed by Prince Saini, ensuring top-tier safety and technical standards in village traditions.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="relative bg-white p-8 rounded-3xl shadow-sm border-t-4 border-t-blue-500 hover:shadow-lg transition-shadow overflow-hidden group">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-5 group-hover:opacity-10 transition-transform duration-700 group-hover:scale-105" style="background-image: url('media/archiveicon.jpeg');"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
+                            <i class="fa-solid fa-anchor"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-1">पारिवारिक जड़ें</h3>
+                        <h4 class="text-sm font-semibold text-blue-600 mb-3 uppercase">Deep Roots</h4>
+                        <p class="text-slate-700 leading-relaxed text-sm mb-2 font-medium">
+                            हमारी टीम भारतीय नौसेना (अनुशासन) और चिकित्सा क्षेत्र (सामुदायिक स्वास्थ्य) जैसी पृष्ठभूमियों से आती है, जो गाँव में गहरा विश्वास स्थापित करती है।
+                        </p>
+                        <p class="text-slate-500 text-xs italic">Backed by families from the Indian Navy and Medical fields, establishing deep community trust and discipline.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="relative bg-white p-8 rounded-3xl shadow-sm border-t-4 border-t-rose-500 hover:shadow-lg transition-shadow overflow-hidden group">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-5 group-hover:opacity-10 transition-transform duration-700 group-hover:scale-105" style="background-image: url('media/dahihandi.jpeg');"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-rose-50 rounded-full flex items-center justify-center text-rose-500 text-2xl mb-6">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-1">समुदाय सर्वोपरि</h3>
+                        <h4 class="text-sm font-semibold text-rose-500 mb-3 uppercase">Community First</h4>
+                        <p class="text-slate-700 leading-relaxed text-sm mb-2 font-medium">
+                            2025 में गाँव की एक शिक्षिका के आकस्मिक निधन पर हमने अपना कार्यक्रम रद्द कर दिया था। हमारे लिए गाँव की भावनाएं उत्सव से ऊपर हैं।
+                        </p>
+                        <p class="text-slate-500 text-xs italic">In 2025, we canceled our mega event to mourn a village teacher. Community sentiments always supersede celebrations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="attractions" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-white mb-2">2. मुख्य आकर्षण</h2>
+                <h3 class="text-xl text-gold font-cinzel font-bold tracking-widest uppercase mb-4">Core Upgrades</h3>
+                <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex gap-5">
+                        <div class="flex-shrink-0 w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center border border-slate-700">
+                            <i class="fa-solid fa-fire text-3xl text-saffron-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gold mb-1">25-फुट स्वयंभू रावण</h3>
+                            <h4 class="text-xs font-semibold text-gray-400 mb-2 uppercase">25-ft Self-Balancing Effigy</h4>
+                            <p class="text-gray-200 leading-relaxed mb-1 font-medium">
+                                यह एक इंजीनियरिंग का उत्कृष्ट नमूना है। यह अपने स्वयं के संतुलन (Center of Gravity) पर खड़ा होगा। रस्सियों का उपयोग नहीं होगा, जिससे गिरने का खतरा शून्य हो जाएगा।
+                            </p>
+                            <p class="text-gray-400 text-sm italic">An engineering marvel balancing on its own center of gravity with zero trip-hazards or guy-wires.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5">
+                        <div class="flex-shrink-0 w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center border border-slate-700">
+                            <i class="fa-solid fa-drum text-3xl text-saffron-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gold mb-1">10-सदस्यीय लाइव ढाक ट्रूप</h3>
+                            <h4 class="text-xs font-semibold text-gray-400 mb-2 uppercase">10-Member Live Dhak Troupe</h4>
+                            <p class="text-gray-200 leading-relaxed mb-1 font-medium">
+                                4 घंटे की निरंतर लाइव परफॉर्मेंस (शाम 4:00 से 8:00 बजे तक) जो VIP आगमन और दहन के समय पूरे माहौल को ऊर्जावान बनाएगी।
+                            </p>
+                            <p class="text-gray-400 text-sm italic">Continuous 4-hour high-energy traditional percussion for VIP escort and Dahan climax.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5">
+                        <div class="flex-shrink-0 w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center border border-slate-700">
+                            <i class="fa-solid fa-mobile-screen-button text-3xl text-saffron-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gold mb-1">डिजिटल और स्मार्ट इकोसिस्टम</h3>
+                            <h4 class="text-xs font-semibold text-gray-400 mb-2 uppercase">Digital & Smart Ecosystem</h4>
+                            <p class="text-gray-200 leading-relaxed mb-1 font-medium">
+                                कागज की बर्बादी रोकने के लिए E-Invites और पूर्ण पारदर्शिता के लिए हमारी कस्टम वेबसाइट का उपयोग।
+                            </p>
+                            <p class="text-gray-400 text-sm italic">100% paperless E-Invites and an interactive website for absolute financial transparency.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <img src="media/ravaan.jpeg" alt="25ft Ravan with the Team" class="rounded-3xl shadow-2xl border border-slate-700 w-full object-cover">
+                    <div class="absolute -bottom-6 -left-6 bg-slate-800 p-5 rounded-2xl border border-slate-600 shadow-xl max-w-xs">
+                        <p class="text-sm text-gray-300 font-medium">
+                            <strong class="text-white block mb-1">जीरो ट्रिप-हज़ार्ड (Zero Trip-Hazard)</strong>
+                            कोई लंगर या रस्सियां नहीं होने से भारी भीड़ के लिए 100% सुरक्षा।
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-slate-900 mb-2">3. VIP आगमन और कार्यक्रम की रूपरेखा</h2>
+                <h3 class="text-xl text-saffron-600 font-cinzel font-bold tracking-widest uppercase mb-4">VIP Itinerary & Event Schedule</h3>
+                <div class="w-24 h-1 bg-saffron-500 mx-auto mb-6"></div>
+                <p class="text-lg text-slate-800 max-w-3xl mx-auto font-medium">
+                    चूंकि मुख्य संरक्षक अन्य कार्यक्रमों के बाद पधारेंगे, इसलिए इस आयोजन को एक <strong>"Night Climax Event"</strong> के रूप में डिज़ाइन किया गया है।
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-4">
+                
+                <!-- 04:30 PM -->
+                <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all flex flex-col md:flex-row gap-2 md:gap-6 items-start md:items-center group relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-200 group-hover:bg-saffron-400 transition-colors"></div>
+                    <div class="md:w-32 flex-shrink-0 pl-3">
+                        <span class="text-xl font-bold text-slate-800 group-hover:text-saffron-600 transition-colors">04:30 PM</span>
+                    </div>
+                    <div class="md:w-48 flex-shrink-0 md:border-l-2 md:border-slate-100 pl-3 md:pl-5">
+                        <h4 class="text-lg font-bold text-slate-900 group-hover:text-saffron-600 transition-colors">जनसमूह का आगमन</h4>
+                        <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-0.5">Crowd Gathering</p>
+                    </div>
+                    <div class="flex-grow pl-3 md:pl-5 mt-2 md:mt-0">
+                        <p class="text-slate-600 font-medium leading-relaxed text-sm md:text-base">Kids Zone और मुख्य मंच पर संगीत का आरंभ।</p>
+                    </div>
+                </div>
+
+                <!-- 05:00 PM -->
+                <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all flex flex-col md:flex-row gap-2 md:gap-6 items-start md:items-center group relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-200 group-hover:bg-saffron-400 transition-colors"></div>
+                    <div class="md:w-32 flex-shrink-0 pl-3">
+                        <span class="text-xl font-bold text-slate-800 group-hover:text-saffron-600 transition-colors">05:00 PM</span>
+                    </div>
+                    <div class="md:w-48 flex-shrink-0 md:border-l-2 md:border-slate-100 pl-3 md:pl-5">
+                        <h4 class="text-lg font-bold text-slate-900 group-hover:text-saffron-600 transition-colors">सांस्कृतिक फाइनल</h4>
+                        <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-0.5">Cultural Finals</p>
+                    </div>
+                    <div class="flex-grow pl-3 md:pl-5 mt-2 md:mt-0">
+                        <p class="text-slate-600 font-medium leading-relaxed text-sm md:text-base">मंच पर बच्चों की नृत्य एवं कला प्रतियोगिता के फाइनल राउंड।</p>
+                    </div>
+                </div>
+
+                <!-- 06:00 PM -->
+                <div class="bg-saffron-50/50 rounded-2xl p-5 md:p-6 shadow-sm border border-saffron-100 hover:shadow-md transition-all flex flex-col md:flex-row gap-2 md:gap-6 items-start md:items-center group relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-saffron-500"></div>
+                    <div class="md:w-32 flex-shrink-0 pl-3">
+                        <span class="text-xl font-black text-saffron-600">06:00 PM</span>
+                    </div>
+                    <div class="md:w-48 flex-shrink-0 md:border-l-2 md:border-saffron-200 pl-3 md:pl-5">
+                        <h4 class="text-lg font-black text-saffron-700">ढाक ट्रूप एस्केलेशन</h4>
+                        <p class="text-xs text-saffron-600/80 font-bold uppercase tracking-wider mt-0.5">Dhak Escalation</p>
+                    </div>
+                    <div class="flex-grow pl-3 md:pl-5 mt-2 md:mt-0">
+                        <p class="text-saffron-900 font-semibold leading-relaxed text-sm md:text-base">10-सदस्यीय ढाक ट्रूप द्वारा माहौल में ऊर्जा का संचार शुरू।</p>
+                    </div>
+                </div>
+
+                <!-- 06:30 PM VIP Arrival -->
+                <div class="bg-gradient-to-r from-yellow-50 to-white rounded-2xl p-5 md:p-6 shadow-md border border-gold/30 hover:shadow-lg transition-all flex flex-col md:flex-row gap-2 md:gap-6 items-start md:items-center group relative overflow-hidden transform hover:-translate-y-1">
+                    <div class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-yellow-400 to-gold"></div>
+                    <div class="md:w-32 flex-shrink-0 pl-3">
+                        <div class="inline-flex items-center gap-2">
+                            <span class="text-xl font-black text-yellow-600">06:30 PM</span>
+                            <i class="fa-solid fa-crown text-gold hidden md:block animate-pulse"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-48 flex-shrink-0 md:border-l-2 md:border-yellow-200 pl-3 md:pl-5">
+                        <h4 class="text-lg font-black text-slate-900">VIP आगमन</h4>
+                        <p class="text-xs text-yellow-600 font-bold uppercase tracking-wider mt-0.5">VIP Arrival</p>
+                    </div>
+                    <div class="flex-grow pl-3 md:pl-5 mt-2 md:mt-0">
+                        <p class="text-slate-800 font-bold leading-relaxed text-sm md:text-base">श्री साहिल सुधा, श्री सुभाष सुधा जी एवं अन्य अतिथियों का आगमन। ढाक ट्रूप द्वारा ससम्मान VIP लाउंज तक एस्कॉर्ट।</p>
+                    </div>
+                </div>
+
+                <!-- 06:45 PM -->
+                <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all flex flex-col md:flex-row gap-2 md:gap-6 items-start md:items-center group relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-200 group-hover:bg-saffron-400 transition-colors"></div>
+                    <div class="md:w-32 flex-shrink-0 pl-3">
+                        <span class="text-xl font-bold text-slate-800 group-hover:text-saffron-600 transition-colors">06:45 PM</span>
+                    </div>
+                    <div class="md:w-48 flex-shrink-0 md:border-l-2 md:border-slate-100 pl-3 md:pl-5">
+                        <h4 class="text-lg font-bold text-slate-900 group-hover:text-saffron-600 transition-colors">सम्मान समारोह</h4>
+                        <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-0.5">Felicitation</p>
+                    </div>
+                    <div class="flex-grow pl-3 md:pl-5 mt-2 md:mt-0">
+                        <p class="text-slate-600 font-medium leading-relaxed text-sm md:text-base">मुख्य अतिथियों द्वारा विजेताओं को पुरस्कार वितरण और जनसमूह को संबोधन।</p>
+                    </div>
+                </div>
+
+                <!-- 07:15 PM Dahan -->
+                <div class="bg-gradient-to-r from-red-50 to-white rounded-2xl p-5 md:p-6 shadow-md border border-red-200 hover:shadow-lg transition-all flex flex-col md:flex-row gap-2 md:gap-6 items-start md:items-center group relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-red-500 to-red-700"></div>
+                    <div class="md:w-32 flex-shrink-0 pl-3">
+                        <div class="inline-flex items-center gap-2">
+                            <span class="text-xl font-black text-red-600">07:15 PM</span>
+                            <i class="fa-solid fa-fire text-red-500 hidden md:block"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-48 flex-shrink-0 md:border-l-2 md:border-red-200 pl-3 md:pl-5">
+                        <h4 class="text-lg font-black text-red-700">25-फुट रावण दहन</h4>
+                        <p class="text-xs text-red-600/80 font-bold uppercase tracking-wider mt-0.5">Grand Effigy Dahan</p>
+                    </div>
+                    <div class="flex-grow pl-3 md:pl-5 mt-2 md:mt-0">
+                        <p class="text-red-900 font-bold leading-relaxed text-sm md:text-base">पूर्ण अंधकार में इलेक्ट्रिक इग्निशन (Electric Squib) द्वारा भव्य और सुरक्षित रावण दहन।</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="guests" class="py-20 pattern-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="bg-gold/20 text-yellow-800 px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-4 inline-block">विशिष्ट उपस्थिति | Esteemed Presence</span>
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-slate-900 mb-2">4. आयोजन के गौरव</h2>
+                <h3 class="text-xl text-slate-500 font-cinzel font-bold tracking-widest uppercase mb-4">Guests of Honor & Patrons</h3>
+                <div class="w-24 h-1 bg-saffron-500 mx-auto mb-8"></div>
+                <p class="text-lg text-slate-800 max-w-3xl mx-auto font-medium">
+                    इस आयोजन को ऐतिहासिक बनाने के लिए शहर और गाँव के गणमान्य व्यक्तियों को आमंत्रित किया जा रहा है।
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Main Patrons -->
+                <div class="bg-slate-900 rounded-3xl p-8 border border-gold shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gold text-slate-900 text-xs font-bold px-4 py-1 rounded-bl-lg">मुख्य संरक्षक | Grand Patrons</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center text-gold text-xl">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">सुधा परिवार <span class="block text-sm text-gold font-normal mt-1">The Sudha Family</span></h3>
+                    </div>
+                    <p class="text-lg text-gray-200 font-bold mb-1">श्री साहिल सुधा जी</p>
+                    <p class="text-lg text-gray-200 font-bold mb-4">श्री सुभाष सुधा जी</p>
+                    <p class="text-sm text-gray-400 font-medium">महोत्सव के मुख्य संरक्षक जिनके मार्गदर्शन और पूर्ण सहयोग से यह भव्य आयोजन संभव हो रहा है। (The principal patrons guiding this grand event.)</p>
+                </div>
+
+                <!-- Guests of Honor -->
+                <div class="bg-white rounded-3xl p-8 border border-gray-200 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-saffron-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">विशिष्ट अतिथि | Guests of Honor</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-saffron-100 rounded-full flex items-center justify-center text-saffron-600 text-xl">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">सम्मानित अतिथि <span class="block text-sm text-saffron-600 font-normal mt-1">Esteemed Guests</span></h3>
+                    </div>
+                    <p class="text-lg text-slate-900 font-bold mb-0">श्री कैलाश सैनी जी</p>
+                    <p class="text-sm text-saffron-600 font-bold mb-4">(PA to Hon'ble CM Haryana, Nayab Saini Ji)</p>
+                    <p class="text-lg text-slate-900 font-bold mb-1">रतगल एवं आसपास के सम्मानित सरपंच गण</p>
+                    <p class="text-sm text-slate-500 font-medium">विशिष्ट अतिथियों की उपस्थिति से युवाओं का मनोबल और कार्यक्रम की गरिमा बढ़ेगी। (Their presence elevates the morale of the youth.)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="budget" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-white mb-2">5. बजट और लॉजिस्टिक्स</h2>
+                <h3 class="text-xl text-gold font-cinzel font-bold tracking-widest uppercase mb-4">Financial Blueprint</h3>
+                <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+                <p class="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed font-medium">
+                    नगर परिषद (Municipal) और आपके सहयोग से फायर टेंडर, ग्राउंड लेवलिंग और ट्रैफिक व्यवस्था जैसे भारी लॉजिस्टिक खर्चों को शून्य कर दिया गया है। 
+                </p>
+            </div>
+
+            <div class="max-w-5xl mx-auto bg-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-slate-700">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-black/40 text-gray-300 text-sm uppercase tracking-wider">
+                                <th class="px-6 py-5 font-bold">आयोजन का हिस्सा <br><span class="text-xs text-gray-500 font-normal">Operational Item</span></th>
+                                <th class="px-6 py-5 font-bold text-right">अनुमानित लागत <br><span class="text-xs text-gray-500 font-normal">Estimated Cost</span></th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-200">
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">25-फुट रावण और इको-पायरोटेक्निक्स</strong> 25ft Effigy & Green Pyrotechnics</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹80,000</td>
+                            </tr>
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">मुख्य मंच, डिजिटल साउंड और VIP लाउंज</strong> Mega Stage & Line-Array Sound (Sun 3:30 PM - 7:30 PM)</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹85,000</td>
+                            </tr>
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">10-सदस्यीय लाइव ढाक ट्रूप</strong> 10-Member Live Dhak Troupe (4-Hour Non-stop)</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹30,000</td>
+                            </tr>
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">पुरस्कार और सम्मान</strong> Prizes, Medals & VIP Mementos</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹45,000</td>
+                            </tr>
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">सुरक्षा बैरिकेडिंग (55m) और वॉकी-टॉकी</strong> 55m D-Barricading & Comms</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹35,000</td>
+                            </tr>
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">अतिथि सत्कार (Hospitality)</strong> Kids Snack Boxes & VIP Refreshments</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹40,000</td>
+                            </tr>
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                                <td class="px-6 py-4 font-medium"><strong class="text-white block">स्मार्ट मार्केटिंग और आकस्मिक रिज़र्व</strong> Marketing & Contingency Fund</td>
+                                <td class="px-6 py-4 text-right font-mono text-lg font-bold">₹35,000</td>
+                            </tr>
+                            <tr class="bg-gold/20 text-gold">
+                                <td class="px-6 py-6 font-bold text-xl uppercase tracking-wider text-right">कुल बजट (Total Target Baseline)</td>
+                                <td class="px-6 py-6 text-right font-mono font-bold text-2xl text-white">₹3,50,000</td>
+                            </tr>
+                            <tr class="bg-black/60 text-gray-400">
+                                <td class="px-6 py-3 font-medium text-sm text-right">अधिकतम सीमा (Maximum Contingency Ceiling)</td>
+                                <td class="px-6 py-3 text-right font-mono font-bold text-lg text-gray-300">₹4,15,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 pattern-bg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-white p-10 rounded-3xl shadow-xl border border-red-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-saffron-500"></div>
+                <i class="fa-solid fa-handshake-angle text-5xl text-saffron-500 mb-6"></i>
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-slate-900 mb-2">पारदर्शिता नियम</h2>
+                <h3 class="text-xl text-slate-500 font-cinzel font-bold tracking-widest uppercase mb-6">The "No Chanda" Protocol</h3>
+                
+                <p class="text-lg text-slate-800 mb-6 leading-relaxed font-medium">
+                    यह 2026 श्री राम विजय महोत्सव 100% श्री साहिल सुधा और श्री सुभाष सुधा के प्रायोजन और संरक्षण में आयोजित किया जा रहा है। 
+                </p>
+                <div class="bg-red-50 border border-red-200 p-6 rounded-2xl mb-8">
+                    <p class="text-red-800 font-bold text-lg leading-relaxed">
+                        "आपके पूर्ण संरक्षण (Full Sponsorship) के कारण, इस वर्ष रतगल गाँव के परिवारों से किसी भी प्रकार का चंदा (Donation) एकत्रित नहीं किया जाएगा।"
+                    </p>
+                    <p class="text-red-700 text-sm mt-2 italic font-medium">
+                        "Due to your full sponsorship, absolutely no donations will be collected from the families of Ratgal this year."
+                    </p>
+                </div>
+                <p class="text-slate-700 font-medium mb-2">
+                    इससे यह सुनिश्चित होता है कि गाँव में किसी भी प्रकार की राजनीति न हो और आयोजन पूरी तरह से निर्विवाद और आपकी साफ छवि के अनुरूप शानदार रहे।
+                </p>
+                <p class="text-slate-500 text-sm italic">
+                    This ensures the event remains apolitical at the grassroots level and aligns perfectly with your pristine public image.
+                </p>
+
+                <div class="mt-10 border-t border-gray-200 pt-8">
+                    <p class="text-sm text-gray-600 font-bold italic">
+                        (नगर निगम के सहयोग और इस प्रस्ताव पर आगे की चर्चा के लिए हम आपके साथ एक संक्षिप्त बैठक के आकांक्षी हैं।)
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1 italic">
+                        (We look forward to a brief meeting to discuss municipal coordination and this proposal.)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-gray-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h3 class="font-cinzel text-2xl font-bold text-white mb-2">Shri Ram Vijay Mahotsav 2026</h3>
+            <p class="mb-6">Master Operational Dossier prepared for the Honorable Patrons.</p>
+            <p class="text-sm">Prepared by: <strong>Prince Saini & Ratgal Yuva Sangh</strong></p>
+            <div class="mt-8 pt-8 border-t border-slate-800 text-xs text-slate-600">
+                &copy; 2026 Ratgal Organizing Committee. Private & Confidential Pitch Document.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
